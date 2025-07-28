@@ -244,3 +244,10 @@ section h2 {
 .site-footer .footer-links a:hover {
     color: #FF9933; /* Saffron Orange on hover */
 }
+
+.grid-item-img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px; /* Slightly rounded corners for images */
+    margin-bottom: 15px;
+}
