@@ -2,86 +2,130 @@
 
 from flask import Flask, render_template, url_for
 from flask_sqlalchemy import SQLAlchemy
-import os # Import os module to handle file paths
+import os
 
 # Initialize the Flask application
 app = Flask(__name__)
 
-# --- Database Configuration (Requirement: Database Linking) ---
-# Get the absolute path to the directory where app.py is located
+# --- Database Configuration ---
 basedir = os.path.abspath(os.path.dirname(__file__))
-
-# Configure the SQLite database file path
-# This will create a 'site.db' file in your project's root directory
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'site.db')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False # Disable tracking modifications to save memory
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+app.config['SERVER_NAME'] = 'localhost:5000'
+app.config['SECRET_KEY'] = 'your-very-secret-key-that-you-should-change'
+
 
 # Initialize the database object
 db = SQLAlchemy(app)
 
 # --- Define Database Models (Tables) ---
-# Convention: Database Model Definition
-# Each class represents a table in our database.
-# This will store information about different 'Destinations' or 'Highlights'.
-
 class Destination(db.Model):
-    # __tablename__ = 'destinations' # Optional: if you want a different table name
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.Text, nullable=False)
+    image_url = db.Column(db.String(200), nullable=True)
+    category = db.Column(db.String(50), nullable=True)
 
-    id = db.Column(db.Integer, primary_key=True) # Unique ID for each entry
-    title = db.Column(db.String(100), nullable=False) # Name of the destination/highlight
-    description = db.Column(db.Text, nullable=False) # A longer description
-    image_url = db.Column(db.String(200), nullable=True) # URL for an image (optional)
-    category = db.Column(db.String(50), nullable=True) # E.g., 'Culture', 'Nature', 'History'
-
-    # This method is for how the object is represented when printed (useful for debugging)
     def __repr__(self):
         return f"Destination('{self.title}', '{self.category}')"
 
+# NEW: Model for the image carousel
+class CarouselImage(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    image_url = db.Column(db.String(200), nullable=False)
+    caption = db.Column(db.String(100), nullable=True)
+
+    def __repr__(self):
+        return f"CarouselImage('{self.image_url}')"
+
 
 # --- Routing ---
-# This is the main route for the homepage
 @app.route('/')
 def home():
-    # --- Retrieving Data from Database ---
-    # Retrieve all destinations from the database
-    # This demonstrates the 'database linking' requirement
-    destinations = Destination.query.all()
-    return render_template('index.html', destinations=destinations)
+    # Retrieve all destinations from the database, excluding the Hero image
+    destinations = Destination.query.filter(Destination.category != 'Hero').all()
+    # Retrieve the specific hero image entry
+    hero_image = Destination.query.filter_by(category='Hero').first()
+    # NEW: Retrieve all carousel images
+    carousel_images = CarouselImage.query.all()
+    return render_template('index.html', destinations=destinations, hero_image=hero_image, carousel_images=carousel_images)
+
 
 # --- Running the Flask App ---
 if __name__ == '__main__':
-    # Convention: Create Database Tables
-    # This block ensures that the database tables are created before the app runs.
-    # You only need to run this once, or whenever you modify your models.
     with app.app_context():
         db.create_all()
-        # You can also add some initial data here if the database is empty
-        # Example: Check if any destinations exist, if not, add some
         if not Destination.query.first():
             print("Database is empty. Adding initial data...")
+            
+            # Hero image entry
+            hero_photo = Destination(
+                title='Hero Section',
+                description='High-resolution photo for the main banner.',
+                image_url=url_for('static', filename='images/hero-image.jpg'),
+                category='Hero'
+            )
+            
+            # Culture entries
             destination1 = Destination(
                 title='Vibrant Festivals',
-                description='Experience the colorful celebrations that light up India\'s calendar, from Diwali to Holi.',
-                image_url='https://via.placeholder.com/300x200?text=Festival',
+                description="Experience the colorful celebrations that light up India's calendar, from Diwali to Holi.",
+                image_url=url_for('static', filename='images/festival.jpg'),
                 category='Culture'
             )
             destination2 = Destination(
                 title='Rich Traditions',
                 description='Discover the ancient customs and diverse heritage that define Indian society.',
-                image_url='https://via.placeholder.com/300x200?text=Tradition',
+                image_url=url_for('static', filename='images/tradition.jpg'),
                 category='Culture'
             )
             destination3 = Destination(
                 title='Diverse Arts',
                 description='Explore classical dance forms, intricate music, and beautiful craftsmanship.',
-                image_url='https://via.placeholder.com/300x200?text=Art',
+                image_url=url_for('static', filename='images/art.jpg'),
                 category='Culture'
             )
-            # Add these to the session
+
+            # History entry
+            history_highlight = Destination(
+                title='Ancient Forts & Palaces',
+                description='Explore the majestic forts and opulent palaces that tell a tale of India\'s royal past.',
+                image_url=url_for('static', filename='images/history.jpg'),
+                category='History'
+            )
+
+            # Nature entry
+            nature_highlight = Destination(
+                title='Himalayan Landscapes',
+                description='Discover the breathtaking beauty of the Himalayas, from snowy peaks to lush valleys.',
+                image_url=url_for('static', filename='images/nature.jpg'),
+                category='Nature'
+            )
+            
+            # NEW: Carousel images
+            cuisine_photo1 = CarouselImage(
+                image_url=url_for('static', filename='images/cuisine1.jpg'),
+                caption='A taste of North Indian cuisine.'
+            )
+            cuisine_photo2 = CarouselImage(
+                image_url=url_for('static', filename='images/cuisine2.jpg'),
+                caption='Spicy and flavorful South Indian dishes.'
+            )
+            cuisine_photo3 = CarouselImage(
+                image_url=url_for('static', filename='images/cuisine3.jpg'),
+                caption='Delicious and traditional Indian sweets.'
+            )
+
+            db.session.add(hero_photo)
             db.session.add(destination1)
             db.session.add(destination2)
             db.session.add(destination3)
-            # Commit the changes to the database
+            db.session.add(history_highlight)
+            db.session.add(nature_highlight)
+            db.session.add(cuisine_photo1)
+            db.session.add(cuisine_photo2)
+            db.session.add(cuisine_photo3)
             db.session.commit()
             print("Initial data added.")
 

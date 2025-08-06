@@ -1,106 +1,122 @@
 /* --- GLOBAL STYLES & RESET --- */
+:root {
+    /* Define colors as CSS variables for easy updates */
+    --india-green: #138808;
+    --saffron-orange: #FF9933;
+    --dark-gray: #333333;
+    --light-gray: #f8f8f8;
+    --white: #FFFFFF;
+}
+
+/* Convention: Box sizing for consistent padding and borders */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth; /* Smooth scroll when clicking on anchor links */
+}
+
 body {
-    font-family: 'Roboto', sans-serif; /* Visual Design: Body text font */
+    font-family: 'Roboto', sans-serif;
     line-height: 1.6;
-    margin: 0; /* Remove default browser margin */
-    padding: 0; /* Remove default browser padding */
-    background-color: #f8f8f8; /* A very light gray background */
-    color: #333333; /* Visual Design: Dark gray for general text */
+    margin: 0;
+    padding: 0;
+    background-color: var(--light-gray);
+    color: var(--dark-gray);
 }
 
 /* Convention: Container for consistent layout */
 .container {
-    max-width: 1200px; /* Limits content width on large screens */
-    margin: 0 auto; /* Centers the container */
-    padding: 0 20px; /* Adds padding on left/right for smaller screens */
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
 /* --- HEADER STYLES --- */
 .site-header {
-    background-color: #138808; /* Visual Design: India Green for header background */
-    color: #FFFFFF; /* White text for header */
+    background-color: var(--india-green);
+    color: var(--white);
     padding: 1.5rem 0;
-    position: relative; /* Needed for positioning hamburger menu */
+    position: relative;
+    z-index: 1000; /* Ensure header is always on top */
 }
 
 .site-header .container {
-    display: flex; /* Aligns header items in a row */
-    justify-content: space-between; /* Pushes site title and nav to edges */
-    align-items: center; /* Vertically aligns items */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .site-title {
-    font-family: 'Playfair Display', serif; /* Visual Design: Heading font */
+    font-family: 'Playfair Display', serif;
     font-weight: 700;
     font-size: 2.8em;
     margin: 0;
-    color: #FF9933; /* Visual Design: Saffron Orange for site title */
+    color: var(--saffron-orange);
 }
 
-/* --- NAVIGATION BAR (Convention: Navigation Bar) --- */
+/* --- NAVIGATION BAR --- */
 .main-nav ul {
-    list-style: none; /* Remove bullet points */
+    list-style: none;
     padding: 0;
     margin: 0;
-    display: flex; /* Arrange links in a row */
-    justify-content: center; /* Center navigation items */
-    gap: 25px; /* Space between links */
+    display: flex;
+    justify-content: center;
+    gap: 25px;
 }
 
 .main-nav ul li a {
-    color: #FFFFFF; /* White links */
-    text-decoration: none; /* Remove underline */
+    color: var(--white);
+    text-decoration: none;
     font-weight: 400;
     font-size: 1.1em;
     padding: 0.5rem 1rem;
-    transition: color 0.3s ease; /* Smooth transition for hover effect */
+    transition: color 0.3s ease;
 }
 
 .main-nav ul li a:hover {
-    color: #FF9933; /* Visual Design: Saffron Orange on hover */
+    color: var(--saffron-orange);
 }
 
 /* Hamburger menu (initially hidden for desktop) */
 .hamburger-menu {
-    display: none; /* Will be shown with media queries for mobile */
+    display: none;
     cursor: pointer;
     position: absolute;
     right: 20px;
     top: 50%;
     transform: translateY(-50%);
-    z-index: 1000;
+    z-index: 1001;
 }
 
 .hamburger-menu .bar {
     width: 25px;
     height: 3px;
-    background-color: #FFFFFF;
+    background-color: var(--white);
     margin: 5px 0;
     transition: 0.4s;
 }
 
-
 /* --- HERO SECTION STYLES --- */
 .hero-section {
-    background-image: url('https://via.placeholder.com/1500x500/FF9933/FFFFFF?text=Stunning+India+Landscape'); /* Placeholder image for now */
     background-size: cover;
     background-position: center;
-    color: #FFFFFF;
+    color: var(--white);
     text-align: center;
     padding: 100px 20px;
     position: relative;
-    /* Optional: Overlay for better text readability */
-    background-color: rgba(0, 0, 0, 0.4); /* Dark overlay */
+    background-color: rgba(0, 0, 0, 0.4);
     background-blend-mode: overlay;
 }
 
 .hero-section h2 {
-    font-family: 'Playfair Display', serif; /* Visual Design: Heading font */
+    font-family: 'Playfair Display', serif;
     font-weight: 700;
-    font-size: 3.8em; /* Visual Design: Larger H1 (now H2 for consistency) */
+    font-size: 3.8em;
     margin-bottom: 20px;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5); /* Adds a bit of depth */
-    color: #FFFFFF; /* Ensure white color on dark background */
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    color: var(--white);
 }
 
 .hero-section p {
@@ -110,10 +126,10 @@ body {
     text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
 }
 
-/* Call to Action Button (Visual Design: Saffron Orange) */
+/* Call to Action Button */
 .cta-button {
-    background-color: #FF9933; /* Saffron Orange */
-    color: #FFFFFF;
+    background-color: var(--saffron-orange);
+    color: var(--white);
     padding: 15px 30px;
     font-size: 1.2em;
     font-weight: 700;
@@ -125,8 +141,8 @@ body {
 }
 
 .cta-button:hover {
-    background-color: #e67e22; /* Slightly darker orange on hover */
-    transform: translateY(-2px); /* Subtle lift effect */
+    background-color: #e67e22;
+    transform: translateY(-2px);
 }
 
 /* --- GENERAL SECTION STYLES --- */
@@ -136,27 +152,27 @@ section {
 }
 
 section h2 {
-    font-family: 'Playfair Display', serif; /* Visual Design: Heading font */
+    font-family: 'Playfair Display', serif;
     font-weight: 700;
     font-size: 2.8em;
-    color: #138808; /* India Green */
+    color: var(--india-green);
     margin-bottom: 40px;
 }
 
 /* --- CULTURE HIGHLIGHTS SECTION --- */
 .culture-highlights {
-    background-color: #FFFFFF; /* White background for this section */
+    background-color: var(--white);
 }
 
 .culture-highlights .grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 30px;
     margin-top: 40px;
 }
 
 .grid-item {
-    background-color: #f0f0f0; /* Light gray background for cards */
+    background-color: #f0f0f0;
     padding: 30px;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.05);
@@ -170,10 +186,10 @@ section h2 {
 }
 
 .grid-item h3 {
-    font-family: 'Playfair Display', serif; /* Visual Design: Heading font */
+    font-family: 'Playfair Display', serif;
     font-weight: 700;
     font-size: 1.8em;
-    color: #FF9933; /* Saffron Orange */
+    color: var(--saffron-orange);
     margin-top: 0;
     margin-bottom: 15px;
 }
@@ -185,46 +201,118 @@ section h2 {
 
 .read-more {
     display: inline-block;
-    color: #138808; /* India Green */
+    color: var(--india-green);
     text-decoration: none;
     font-weight: 700;
     transition: color 0.3s ease;
 }
 
 .read-more:hover {
-    color: #0d6e04; /* Darker green on hover */
+    color: #0d6e04;
 }
 
-/* --- CUISINE SECTION --- */
+.grid-item-img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+/* --- CUISINE SECTION (NEW) --- */
 .cuisine-section {
-    background-color: #f0f0f0; /* Light gray background */
+    background-color: #f0f0f0;
 }
 
-.image-carousel-placeholder {
-    background-color: #cccccc; /* Placeholder color for carousel */
-    height: 400px; /* Placeholder height */
-    width: 100%;
+.cuisine-section .container {
+    padding-bottom: 50px;
+}
+
+/* --- IMAGE CAROUSEL STYLES --- */
+.carousel-container {
+    position: relative;
+    max-width: 800px;
     margin: 40px auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Playfair Display', serif;
-    font-size: 2em;
-    color: #666;
+    overflow: hidden; /* Hide extra slides */
     border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.carousel-slides {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-slide {
+    min-width: 100%;
+    position: relative;
+}
+
+.carousel-slide img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.carousel-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: var(--white);
+    padding: 1em;
+    text-align: center;
+}
+
+.carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: var(--white);
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 1.5em;
+    z-index: 5;
+    transition: background-color 0.3s ease;
+}
+
+.carousel-button:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.carousel-button.prev {
+    left: 10px;
+    border-radius: 0 5px 5px 0;
+}
+
+.carousel-button.next {
+    right: 10px;
+    border-radius: 5px 0 0 5px;
+}
+
+/* --- HISTORY & NATURE SECTIONS --- */
+.history-section, .nature-section {
+    background-color: var(--white);
 }
 
 /* --- PLAN TRIP SECTION --- */
 .plan-trip-section {
-    background-color: #FFFFFF;
-    padding-bottom: 100px; /* More space at bottom */
+    background-color: var(--light-gray);
+    padding-bottom: 100px;
+}
+
+/* --- ABOUT SECTION --- */
+.about-section {
+    background-color: var(--white);
 }
 
 
 /* --- FOOTER STYLES --- */
 .site-footer {
-    background-color: #333333; /* Dark gray for footer */
-    color: #FFFFFF;
+    background-color: var(--dark-gray);
+    color: var(--white);
     padding: 2.5rem 0;
     text-align: center;
     font-size: 0.9em;
@@ -235,31 +323,19 @@ section h2 {
 }
 
 .site-footer .footer-links a {
-    color: #FFFFFF;
+    color: var(--white);
     text-decoration: none;
     margin: 0 10px;
     transition: color 0.3s ease;
 }
 
 .site-footer .footer-links a:hover {
-    color: #FF9933; /* Saffron Orange on hover */
-}
-
-.grid-item-img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 4px; /* Slightly rounded corners for images */
-    margin-bottom: 15px;
+    color: var(--saffron-orange);
 }
 
 
-/*
-    Responsive Design: Media Queries
-    This section uses media queries to adjust the layout for smaller screens.
-*/
-/* Convention: Cross Device Responsiveness & Responsive Navigation Adaption */
+/* --- Responsive Design: Media Queries --- */
 @media (max-width: 768px) {
-
     /* General font size adjustments for readability */
     .site-title {
         font-size: 2em;
@@ -275,12 +351,12 @@ section h2 {
 
     /* Hide the regular navigation menu */
     .main-nav {
-        display: none; /* Hide by default on small screens */
+        display: none;
         position: absolute;
-        top: 100%; /* Position it below the header */
+        top: 100%;
         left: 0;
         width: 100%;
-        background-color: #138808; /* Same background as header */
+        background-color: var(--india-green);
         box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         z-index: 999;
     }
@@ -291,8 +367,8 @@ section h2 {
     }
 
     .main-nav ul {
-        flex-direction: column; /* Stack links vertically */
-        gap: 0; /* Remove gap */
+        flex-direction: column;
+        gap: 0;
     }
 
     .main-nav ul li a {
@@ -307,12 +383,12 @@ section h2 {
         display: block;
     }
 
-    /* Rotate and animate the hamburger menu when active */
+    /* Animate the hamburger icon */
     .hamburger-menu.active .bar:nth-child(1) {
         transform: rotate(-45deg) translate(-5px, 6px);
     }
     .hamburger-menu.active .bar:nth-child(2) {
-        opacity: 0; /* Hide the middle bar */
+        opacity: 0;
     }
     .hamburger-menu.active .bar:nth-child(3) {
         transform: rotate(45deg) translate(-5px, -6px);
@@ -320,7 +396,7 @@ section h2 {
 
     /* Adjustments for content sections on small screens */
     section {
-        padding: 50px 0; /* Less padding on small screens */
+        padding: 50px 0;
     }
 
     section h2 {
@@ -328,8 +404,7 @@ section h2 {
     }
 
     .grid-container {
-        /* On small screens, the auto-fit grid will naturally stack items */
-        grid-template-columns: 1fr; /* Ensures full width single column layout */
+        grid-template-columns: 1fr;
         gap: 20px;
     }
 }
