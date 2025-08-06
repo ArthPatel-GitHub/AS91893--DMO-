@@ -30,7 +30,6 @@ class Destination(db.Model):
     def __repr__(self):
         return f"Destination('{self.title}', '{self.category}')"
 
-# NEW: Model for the image carousel
 class CarouselImage(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     image_url = db.Column(db.String(200), nullable=False)
@@ -43,11 +42,8 @@ class CarouselImage(db.Model):
 # --- Routing ---
 @app.route('/')
 def home():
-    # Retrieve all destinations from the database, excluding the Hero image
     destinations = Destination.query.filter(Destination.category != 'Hero').all()
-    # Retrieve the specific hero image entry
     hero_image = Destination.query.filter_by(category='Hero').first()
-    # NEW: Retrieve all carousel images
     carousel_images = CarouselImage.query.all()
     return render_template('index.html', destinations=destinations, hero_image=hero_image, carousel_images=carousel_images)
 
@@ -59,7 +55,7 @@ if __name__ == '__main__':
         if not Destination.query.first():
             print("Database is empty. Adding initial data...")
             
-            # Hero image entry
+            # This is where hero_photo is defined
             hero_photo = Destination(
                 title='Hero Section',
                 description='High-resolution photo for the main banner.',
@@ -67,7 +63,6 @@ if __name__ == '__main__':
                 category='Hero'
             )
             
-            # Culture entries
             destination1 = Destination(
                 title='Vibrant Festivals',
                 description="Experience the colorful celebrations that light up India's calendar, from Diwali to Holi.",
@@ -87,7 +82,6 @@ if __name__ == '__main__':
                 category='Culture'
             )
 
-            # History entry
             history_highlight = Destination(
                 title='Ancient Forts & Palaces',
                 description='Explore the majestic forts and opulent palaces that tell a tale of India\'s royal past.',
@@ -95,7 +89,6 @@ if __name__ == '__main__':
                 category='History'
             )
 
-            # Nature entry
             nature_highlight = Destination(
                 title='Himalayan Landscapes',
                 description='Discover the breathtaking beauty of the Himalayas, from snowy peaks to lush valleys.',
@@ -103,7 +96,6 @@ if __name__ == '__main__':
                 category='Nature'
             )
             
-            # NEW: Carousel images
             cuisine_photo1 = CarouselImage(
                 image_url=url_for('static', filename='images/cuisine1.jpg'),
                 caption='A taste of North Indian cuisine.'
