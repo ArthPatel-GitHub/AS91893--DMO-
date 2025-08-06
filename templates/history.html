@@ -1,20 +1,20 @@
 {% extends 'base.html' %}
 
-{% block title %}Culture & Traditions{% endblock %}
+{% block title %}History & Wonders{% endblock %}
 
 {% block content %}
-<section class="hero-section" style="background-image: url('{{ url_for('static', filename='images/culture-hero.jpg') }}');">
+<section class="hero-section" style="background-image: url('{{ url_for('static', filename='images/history-hero.jpg') }}');">
     <div class="container">
-        <h2>Vibrant Culture & Traditions</h2>
-        <p>Explore the deep-rooted customs and diverse heritage that define India.</p>
+        <h2>India's Majestic Past</h2>
+        <p>Explore the majestic forts, palaces, and ancient ruins that tell India's story.</p>
     </div>
 </section>
 
-<section id="culture-main" class="culture-highlights">
+<section id="history-main" class="history-section">
     <div class="container">
         <div class="grid-container">
             {% for destination in destinations %}
-            {% if destination.category == 'Culture' %}
+            {% if destination.category == 'History' %}
             <div class="grid-item">
                 <img src="{{ destination.image_url }}" alt="{{ destination.title }}" class="grid-item-img">
                 <h3>{{ destination.title }}</h3>

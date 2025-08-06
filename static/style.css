@@ -408,3 +408,66 @@ section h2 {
         gap: 20px;
     }
 }
+/* Style for the horizontal history grid */
+/* New style for the horizontal history grid */
+.history-grid-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap; /* Forces items onto a single line */
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 20px;
+    padding-bottom: 20px;
+    overflow-x: auto; /* Adds a horizontal scrollbar when needed */
+    scrollbar-color: #4b6f4e #f1f1f1; /* Customizes the scrollbar color */
+    scrollbar-width: thin;
+}
+
+.history-grid-item {
+    flex: 0 0 24%; /* Distributes 4 items evenly on a large screen */
+    min-width: 250px; /* Prevents items from getting too small on small screens */
+    box-sizing: border-box;
+}
+
+/* Responsive adjustments for screens smaller than 768px */
+@media (max-width: 768px) {
+    .history-grid-row {
+        justify-content: flex-start;
+        gap: 15px;
+    }
+    .history-grid-item {
+        flex: 0 0 80%; /* Allows one item to take up most of the screen, enabling scrolling */
+        min-width: unset;
+    }
+}
+/* Style for the horizontal nature grid */
+.nature-grid-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap; /* Prevents items from wrapping to a new line */
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 20px;
+    padding-bottom: 20px;
+    overflow-x: auto; /* Adds a horizontal scrollbar when needed */
+    scrollbar-color: #4b6f4e #f1f1f1; /* Customizes the scrollbar color */
+    scrollbar-width: thin;
+}
+
+.nature-grid-item {
+    flex: 0 0 24%; /* Distributes 4 items evenly on a large screen */
+    min-width: 250px; /* Prevents items from getting too small on small screens */
+    box-sizing: border-box;
+}
+
+/* Responsive adjustments for screens smaller than 768px */
+@media (max-width: 768px) {
+    .nature-grid-row {
+        justify-content: flex-start;
+        gap: 15px;
+    }
+    .nature-grid-item {
+        flex: 0 0 80%; /* Allows one item to take up most of the screen, enabling scrolling */
+        min-width: unset;
+    }
+}

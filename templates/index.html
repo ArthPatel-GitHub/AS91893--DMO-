@@ -29,33 +29,13 @@
     </div>
 </section>
 
-<section id="cuisine" class="cuisine-section">
-    <div class="container">
-        <h2>A Culinary Journey</h2>
-        <p>Taste the incredible diversity of Indian cuisine, from spicy curries to delightful sweets.</p>
-        <div class="carousel-container">
-            <div class="carousel-slides">
-                {% for image in carousel_images %}
-                <div class="carousel-slide">
-                    <img src="{{ image.image_url }}" alt="{{ image.caption }}">
-                    <div class="carousel-caption">{{ image.caption }}</div>
-                </div>
-                {% endfor %}
-            </div>
-            <button class="carousel-button prev"><span>&#10094;</span></button>
-            <button class="carousel-button next"><span>&#10095;</span></button>
-        </div>
-        <button class="cta-button">Explore Flavors</button>
-    </div>
-</section>
-
 <section id="history" class="history-section">
     <div class="container">
         <h2>Historical Wonders</h2>
-        <div class="grid-container">
+        <div class="history-grid-row">
             {% for destination in destinations %}
             {% if destination.category == 'History' %}
-            <div class="grid-item">
+            <div class="history-grid-item">
                 <img src="{{ destination.image_url }}" alt="{{ destination.title }}" class="grid-item-img">
                 <h3>{{ destination.title }}</h3>
                 <p>{{ destination.description }}</p>
@@ -70,10 +50,10 @@
 <section id="nature" class="nature-section">
     <div class="container">
         <h2>Breathtaking Nature</h2>
-        <div class="grid-container">
+        <div class="grid-container nature-grid-row">
             {% for destination in destinations %}
             {% if destination.category == 'Nature' %}
-            <div class="grid-item">
+            <div class="grid-item nature-grid-item">
                 <img src="{{ destination.image_url }}" alt="{{ destination.title }}" class="grid-item-img">
                 <h3>{{ destination.title }}</h3>
                 <p>{{ destination.description }}</p>
@@ -89,7 +69,7 @@
     <div class="container">
         <h2>Plan Your Unforgettable Trip</h2>
         <p>Get all the essential information to make your journey to India smooth and memorable.</p>
-        <button class="cta-button">Start Planning</button>
+        <a href="{{ url_for('plan') }}" class="cta-button">Start Planning</a>
     </div>
 </section>
 
