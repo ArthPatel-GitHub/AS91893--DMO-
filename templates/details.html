@@ -1,34 +1,33 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ item.title }}{% endblock %}
+{% block title %}Explore {{ item.title }}{% endblock %}
 
 {% block content %}
-<section class="hero-section" style="background-image: url('{{ item.image_url }}');">
+<section class="details-page">
     <div class="container">
-        <h2>{{ item.title }}</h2>
-        <p>{{ item.description }}</p>
-    </div>
-</section>
-
-<section class="page-content">
-    <div class="container">
-        <h3>Discover More</h3>
-        <p>This is the main body text for the page. Here I can write more detailed information about {{ item.title }}. It will help to put extra paragraphs, facts, or stories to give your visitors a richer experience.</p>
-        <p>This paragraph can provide a deeper explanation, history, or context to the image and its title. You can add more paragraphs here as needed.</p>
-
-        <h3>Explore Other {{ item.sub_category }}</h3>
-        <div class="grid-container">
-            {% for related_item in related_items %}
-            {% if related_item.id != item.id %}
-            <div class="grid-item">
-                <img src="{{ related_item.image_url }}" alt="{{ related_item.title }}" class="grid-item-img">
-                <h3>{{ related_item.title }}</h3>
-                <p>{{ related_item.description }}</p>
-                <a href="{{ url_for('details', title=related_item.title) }}" class="read-more">Learn More</a>
+        <a href="javascript:history.back()" class="back-link">&#8592; Back</a>
+        
+        <h1 class="details-title">{{ item.title }}</h1>
+        <div class="details-content-grid">
+            <div class="main-image">
+                <img src="{{ item.image_url }}" alt="{{ item.title }}" class="details-main-img">
             </div>
-            {% endif %}
-            {% endfor %}
-        </div>
+            <div class="details-text">
+                <p>{{ item.description }}</p>
+                <p>This is a custom paragraph of text to add more details about {{ item.title }}. You can edit this text directly in this HTML file or expand your database to include more detailed content. We will also have a couple more paragraphs of filler text here to add more content.</p>
+                <p>Here is another paragraph with more information. The system will now have multiple pages with dynamic content. You can explore the history, traditions, and significance of each of these unique destinations.</p>
+            </div>
+      <h2 class="details-sub-heading">Explore more from the Culture section</h2>
+<div class="related-images-grid">
+    {% for related in all_related_items %}
+        {% if related.title != item.title %}
+        <a href="{{ url_for('details', title=related.title) }}" class="related-item-link">
+            <img src="{{ related.image_url }}" alt="{{ related.title }}">
+            <p>{{ related.title }}</p>
+        </a>
+        {% endif %}
+    {% endfor %}
+</div>
     </div>
 </section>
 {% endblock %}

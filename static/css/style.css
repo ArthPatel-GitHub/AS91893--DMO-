@@ -1,0 +1,509 @@
+/* --- GLOBAL STYLES & RESET --- */
+:root {
+  /* Define colors as CSS variables for easy updates */
+  --india-green: #138808;
+  --saffron-orange: #ff9933;
+  --dark-gray: #333333;
+  --light-gray: #f8f8f8;
+  --white: #ffffff;
+}
+
+/* Convention: Box sizing for consistent padding and borders */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth; /* Smooth scroll when clicking on anchor links */
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  background-color: var(--light-gray);
+  color: var(--dark-gray);
+}
+
+/* Convention: Container for consistent layout */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* --- HEADER STYLES --- */
+.site-header {
+  background-color: var(--india-green);
+  color: var(--white);
+  padding: 1.5rem 0;
+  position: relative;
+  z-index: 1000; /* Ensure header is always on top */
+}
+
+.site-header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.site-title {
+  font-family: "Playfair Display", serif;
+  font-weight: 700;
+  font-size: 2.8em;
+  margin: 0;
+  color: var(--saffron-orange);
+}
+
+/* --- NAVIGATION BAR --- */
+.main-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+}
+
+.main-nav ul li a {
+  color: var(--white);
+  text-decoration: none;
+  font-weight: 400;
+  font-size: 1.1em;
+  padding: 0.5rem 1rem;
+  transition: color 0.3s ease;
+}
+
+.main-nav ul li a:hover {
+  color: var(--saffron-orange);
+}
+
+/* Hamburger menu (initially hidden for desktop) */
+.hamburger-menu {
+  display: none;
+  cursor: pointer;
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1001;
+}
+
+.hamburger-menu .bar {
+  width: 25px;
+  height: 3px;
+  background-color: var(--white);
+  margin: 5px 0;
+  transition: 0.4s;
+}
+
+/* --- HERO SECTION STYLES --- */
+.hero-section {
+  background-size: cover;
+  background-position: center;
+  color: var(--white);
+  text-align: center;
+  padding: 100px 20px;
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.4);
+  background-blend-mode: overlay;
+}
+
+.hero-section h2 {
+  font-family: "Playfair Display", serif;
+  font-weight: 700;
+  font-size: 3.8em;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  color: var(--white);
+}
+
+.hero-section p {
+  font-size: 1.4em;
+  max-width: 800px;
+  margin: 0 auto 30px;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* Call to Action Button */
+.cta-button {
+  background-color: var(--saffron-orange);
+  color: var(--white);
+  padding: 15px 30px;
+  font-size: 1.2em;
+  font-weight: 700;
+  text-decoration: none;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.cta-button:hover {
+  background-color: #e67e22;
+  transform: translateY(-2px);
+}
+
+/* --- GENERAL SECTION STYLES --- */
+section {
+  padding: 80px 0;
+  text-align: center;
+}
+
+section h2 {
+  font-family: "Playfair Display", serif;
+  font-weight: 700;
+  font-size: 2.8em;
+  color: var(--india-green);
+  margin-bottom: 40px;
+}
+
+/* --- CULTURE HIGHLIGHTS SECTION --- */
+.culture-highlights {
+  background-color: var(--white);
+}
+
+.culture-highlights .grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.grid-item {
+  background-color: #f0f0f0;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  text-align: left;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.grid-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.grid-item h3 {
+  font-family: "Playfair Display", serif;
+  font-weight: 700;
+  font-size: 1.8em;
+  color: var(--saffron-orange);
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+.grid-item p {
+  font-size: 1em;
+  margin-bottom: 20px;
+}
+
+.read-more {
+  display: inline-block;
+  color: var(--india-green);
+  text-decoration: none;
+  font-weight: 700;
+  transition: color 0.3s ease;
+}
+
+.read-more:hover {
+  color: #0d6e04;
+}
+
+.grid-item-img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}
+
+/* --- CUISINE SECTION (NEW) --- */
+.cuisine-section {
+  background-color: #f0f0f0;
+}
+
+.cuisine-section .container {
+  padding-bottom: 50px;
+}
+
+/* --- IMAGE CAROUSEL STYLES --- */
+.carousel-container {
+  position: relative;
+  max-width: 800px;
+  margin: 40px auto;
+  overflow: hidden; /* Hide extra slides */
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.carousel-slides {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.carousel-slide {
+  min-width: 100%;
+  position: relative;
+}
+
+.carousel-slide img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.carousel-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: var(--white);
+  padding: 1em;
+  text-align: center;
+}
+
+.carousel-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: var(--white);
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 1.5em;
+  z-index: 5;
+  transition: background-color 0.3s ease;
+}
+
+.carousel-button:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.carousel-button.prev {
+  left: 10px;
+  border-radius: 0 5px 5px 0;
+}
+
+.carousel-button.next {
+  right: 10px;
+  border-radius: 5px 0 0 5px;
+}
+
+/* --- HISTORY & NATURE SECTIONS --- */
+.history-section,
+.nature-section {
+  background-color: var(--white);
+}
+
+/* --- PLAN TRIP SECTION --- */
+.plan-trip-section {
+  background-color: var(--light-gray);
+  padding-bottom: 100px;
+}
+
+/* --- ABOUT SECTION --- */
+.about-section {
+  background-color: var(--white);
+}
+
+/* --- FOOTER STYLES --- */
+.site-footer {
+  background-color: var(--dark-gray);
+  color: var(--white);
+  padding: 2.5rem 0;
+  text-align: center;
+  font-size: 0.9em;
+}
+
+.site-footer p {
+  margin-bottom: 10px;
+}
+
+.site-footer .footer-links a {
+  color: var(--white);
+  text-decoration: none;
+  margin: 0 10px;
+  transition: color 0.3s ease;
+}
+
+.site-footer .footer-links a:hover {
+  color: var(--saffron-orange);
+}
+
+/* --- Responsive Design: Media Queries --- */
+@media (max-width: 768px) {
+  /* General font size adjustments for readability */
+  .site-title {
+    font-size: 2em;
+  }
+
+  .hero-section h2 {
+    font-size: 2.2em;
+  }
+
+  .hero-section p {
+    font-size: 1.1em;
+  }
+
+  /* Hide the regular navigation menu */
+  .main-nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: var(--india-green);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 999;
+  }
+
+  /* Show the menu when the 'active' class is toggled by JavaScript */
+  .main-nav.active {
+    display: block;
+  }
+
+  .main-nav ul {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .main-nav ul li a {
+    display: block;
+    padding: 1rem 2rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* Show the hamburger icon on small screens */
+  .hamburger-menu {
+    display: block;
+  }
+
+  /* Animate the hamburger icon */
+  .hamburger-menu.active .bar:nth-child(1) {
+    transform: rotate(-45deg) translate(-5px, 6px);
+  }
+  .hamburger-menu.active .bar:nth-child(2) {
+    opacity: 0;
+  }
+  .hamburger-menu.active .bar:nth-child(3) {
+    transform: rotate(45deg) translate(-5px, -6px);
+  }
+
+  /* Adjustments for content sections on small screens */
+  section {
+    padding: 50px 0;
+  }
+
+  section h2 {
+    font-size: 2em;
+  }
+
+  .grid-container {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+/* Style for the horizontal history grid */
+/* New style for the horizontal history grid */
+/* Consolidated styles for all horizontal sections */
+.history-grid-row,
+.nature-grid-row,
+.culture-grid-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: 20px;
+  padding-bottom: 20px;
+
+  /* This forces the scrollbar to appear */
+  overflow-x: scroll;
+
+  /* Custom scrollbar styling (works in some browsers) */
+  scrollbar-color: #4b6f4e #f1f1f1;
+  scrollbar-width: thin;
+}
+
+.history-grid-item,
+.nature-grid-item,
+.culture-grid-item {
+  /* These rules ensure items take up a specific width on a large screen */
+  flex: 0 0 24%;
+  min-width: 250px;
+  box-sizing: border-box;
+}
+
+/* Adjustments for screens smaller than 768px */
+@media (max-width: 768px) {
+  .history-grid-row,
+  .nature-grid-row,
+  .culture-grid-row {
+    justify-content: flex-start;
+    gap: 15px;
+  }
+
+  .history-grid-item,
+  .nature-grid-item,
+  .culture-grid-item {
+    /* On small screens, items will fill 80% of the screen width to enable scrolling */
+    flex: 0 0 80%;
+    min-width: unset;
+  }
+}
+/* Styling for the related images grid on the details page */
+/* Styling for the related images grid on the details page */
+.related-images-grid {
+  display: grid;
+  /* This creates a responsive grid that automatically fits as many columns
+       as possible, with each item being at least 250px wide. */
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-top: 40px;
+}
+
+.related-item-link {
+  text-decoration: none;
+  color: #333;
+  text-align: center;
+  transition: transform 0.2s ease-in-out;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  height: 300px; /* Fixed height for consistent box sizes */
+}
+
+.related-item-link:hover {
+  transform: translateY(-5px);
+}
+
+.related-item-link img {
+  width: 100%;
+  height: 200px; /* Fixed height for images */
+  object-fit: cover;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.related-item-link p {
+  padding: 15px;
+  margin: 0;
+  font-weight: bold;
+  font-size: 1rem;
+  text-align: center;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+  .related-images-grid {
+    grid-template-columns: 1fr; /* Display items in a single column */
+  }
+}

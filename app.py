@@ -81,12 +81,15 @@ def plan():
 @app.route('/about')
 def about():
     return render_template('about.html')
-
 @app.route('/details/<string:title>')
 def details(title):
     item = Destination.query.filter_by(title=title).first_or_404()
-    related_items = Destination.query.filter_by(sub_category=item.sub_category).all()
-    return render_template('details.html', item=item, related_items=related_items)
+    
+    # Retrieve all other items from the same main category
+    # (e.g., all 'Culture' items, not just the sub_category)
+    all_related_items = Destination.query.filter_by(category=item.category).all()
+    
+    return render_template('details.html', item=item, all_related_items=all_related_items)
 
 
 if __name__ == '__main__':
