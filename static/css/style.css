@@ -1,509 +1,667 @@
-/* --- GLOBAL STYLES & RESET --- */
+/* ========================================================================
+   GLOBAL STYLES & RESET
+   ------------------------------------------------------------------------
+   - Keeps the original variables and base styles.
+   - Adds a couple of accessibility improvements.
+   ======================================================================== */
+
 :root {
-  /* Define colors as CSS variables for easy updates */
-  --india-green: #138808;
-  --saffron-orange: #ff9933;
-  --dark-gray: #333333;
-  --light-gray: #f8f8f8;
-  --white: #ffffff;
+    /* Color Palette for the Discover India theme */
+    --india-green: #138808;
+    --saffron-orange: #ff9933;
+    --dark-gray: #333333;
+    --light-gray: #f8f8f8;
+    --white: #ffffff;
+    --text-color: #444;
+
+    --shadow-light: rgba(0, 0, 0, 0.1);
+    --shadow-medium: rgba(0, 0, 0, 0.2);
+
+    /* Layout helpers */
+    --container-max: 1200px;
+    --container-pad: 20px;
+
+    /* Card/image defaults (can tweak centrally) */
+    --card-img-h: 180px; 
+    --card-radius: 8px;
+    --card-gap: 20px;
+
+    /* Typography scale */
+    --fz-base: 16px;
+    --fz-sm: 0.95rem;
+    --fz-md: 1rem;
+    --fz-lg: 1.2rem;
+    --fz-xl: 2rem;
 }
 
-/* Convention: Box sizing for consistent padding and borders */
+/* Reset + box sizing */
 *,
 *::before,
 *::after {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 html {
-  scroll-behavior: smooth; /* Smooth scroll when clicking on anchor links */
+    scroll-behavior: smooth;
+    font-size: var(--fz-base);
 }
 
 body {
-  font-family: "Roboto", sans-serif;
-  line-height: 1.6;
-  margin: 0;
-  padding: 0;
-  background-color: var(--light-gray);
-  color: var(--dark-gray);
+    font-family: "Roboto", system-ui, -apple-system, Segoe UI, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: var(--light-gray);
+    color: var(--text-color);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-/* Convention: Container for consistent layout */
+/* Focus visibility for keyboard users */
+:focus-visible {
+    outline: 3px solid var(--saffron-orange);
+    outline-offset: 3px;
+}
+
+/* Container helper (kept original) */
 .container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 var(--container-pad);
 }
 
-/* --- HEADER STYLES --- */
+/* ========================================================================
+   HEADER
+   ======================================================================== */
+
 .site-header {
-  background-color: var(--india-green);
-  color: var(--white);
-  padding: 1.5rem 0;
-  position: relative;
-  z-index: 1000; /* Ensure header is always on top */
+    background-color: var(--india-green);
+    color: var(--white);
+    padding: 1.5rem 0;
+    position: relative;
+    z-index: 1000;
 }
 
 .site-header .container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 56px;
 }
 
 .site-title {
-  font-family: "Playfair Display", serif;
-  font-weight: 700;
-  font-size: 2.8em;
-  margin: 0;
-  color: var(--saffron-orange);
+    font-family: "Playfair Display", Georgia, serif;
+    font-weight: 700;
+    font-size: 2.8em;
+    margin: 0;
+    color: var(--saffron-orange);
+    letter-spacing: 0.5px;
 }
 
-/* --- NAVIGATION BAR --- */
+/* ========================================================================
+   NAVIGATION BAR
+   ======================================================================== */
+
 .main-nav ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  justify-content: center;
-  gap: 25px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    gap: 25px;
 }
 
 .main-nav ul li a {
-  color: var(--white);
-  text-decoration: none;
-  font-weight: 400;
-  font-size: 1.1em;
-  padding: 0.5rem 1rem;
-  transition: color 0.3s ease;
+    color: var(--white);
+    text-decoration: none;
+    font-weight: 400;
+    font-size: 1.1em;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    transition: color 0.25s ease, background-color 0.25s ease;
 }
 
-.main-nav ul li a:hover {
-  color: var(--saffron-orange);
+.main-nav ul li a:hover,
+.main-nav ul li a:focus-visible {
+    color: var(--saffron-orange);
+    background-color: rgba(255,255,255,0.08);
 }
 
-/* Hamburger menu (initially hidden for desktop) */
+/* Hamburger menu (hidden on desktop) */
 .hamburger-menu {
-  display: none;
-  cursor: pointer;
-  position: absolute;
-  right: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 1001;
+    display: none;
+    cursor: pointer;
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1001;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .hamburger-menu .bar {
-  width: 25px;
-  height: 3px;
-  background-color: var(--white);
-  margin: 5px 0;
-  transition: 0.4s;
+    width: 25px;
+    height: 3px;
+    background-color: var(--white);
+    margin: 5px 0;
+    transition: transform 0.4s, opacity 0.4s, background-color 0.3s;
+    border-radius: 999px;
 }
 
-/* --- HERO SECTION STYLES --- */
+/* ========================================================================
+   HERO SECTION
+   ======================================================================== */
+
 .hero-section {
-  background-size: cover;
-  background-position: center;
-  color: var(--white);
-  text-align: center;
-  padding: 100px 20px;
-  position: relative;
-  background-color: rgba(0, 0, 0, 0.4);
-  background-blend-mode: overlay;
+    background-size: cover;
+    background-position: center;
+    color: var(--white);
+    text-align: center;
+    padding: 100px 20px;
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.4);
+    background-blend-mode: overlay;
+}
+
+.hero-overlay {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-section h1 {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: clamp(1.5rem, 5vw, 3rem);
+    margin: 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .hero-section h2 {
-  font-family: "Playfair Display", serif;
-  font-weight: 700;
-  font-size: 3.8em;
-  margin-bottom: 20px;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-  color: var(--white);
+    font-family: "Playfair Display", Georgia, serif;
+    font-weight: 700;
+    font-size: clamp(2rem, 6.5vw, 3.8rem);
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    color: var(--white);
 }
 
 .hero-section p {
-  font-size: 1.4em;
-  max-width: 800px;
-  margin: 0 auto 30px;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    font-size: clamp(1rem, 3vw, 1.2rem);
+    margin: 10px 0 30px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 /* Call to Action Button */
 .cta-button {
-  background-color: var(--saffron-orange);
-  color: var(--white);
-  padding: 15px 30px;
-  font-size: 1.2em;
-  font-weight: 700;
-  text-decoration: none;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+    display: inline-block;
+    background-color: var(--saffron-orange);
+    color: var(--white);
+    padding: 12px 25px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 700;
+    transition: background-color 0.3s ease, transform 0.15s ease;
+    width: auto;
+    max-width: 90%;
+    text-align: center;
+    box-shadow: 0 2px 6px var(--shadow-light);
+    will-change: transform;
 }
 
-.cta-button:hover {
-  background-color: #e67e22;
-  transform: translateY(-2px);
+.cta-button:hover,
+.cta-button:focus-visible {
+    background-color: #e68a00;
+    transform: translateY(-1px);
 }
 
-/* --- GENERAL SECTION STYLES --- */
-section {
-  padding: 80px 0;
-  text-align: center;
+/* ========================================================================
+   GENERAL CONTENT & HIGHLIGHTS
+   ======================================================================== */
+
+.section-heading {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 2.5rem;
+    text-align: center;
+    margin: 40px 0 20px;
+    color: var(--india-green);
 }
 
-section h2 {
-  font-family: "Playfair Display", serif;
-  font-weight: 700;
-  font-size: 2.8em;
-  color: var(--india-green);
-  margin-bottom: 40px;
+.highlight-section {
+    padding: 40px 0;
 }
 
-/* --- CULTURE HIGHLIGHTS SECTION --- */
-.culture-highlights {
-  background-color: var(--white);
+/* The new unified card grid */
+.card-grid {
+    display: grid;
+    gap: var(--card-gap);
+    align-items: stretch;
 }
 
-.culture-highlights .grid-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 30px;
-  margin-top: 40px;
-}
-
-.grid-item {
-  background-color: #f0f0f0;
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  text-align: left;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.grid-item:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-.grid-item h3 {
-  font-family: "Playfair Display", serif;
-  font-weight: 700;
-  font-size: 1.8em;
-  color: var(--saffron-orange);
-  margin-top: 0;
-  margin-bottom: 15px;
-}
-
-.grid-item p {
-  font-size: 1em;
-  margin-bottom: 20px;
-}
-
-.read-more {
-  display: inline-block;
-  color: var(--india-green);
-  text-decoration: none;
-  font-weight: 700;
-  transition: color 0.3s ease;
-}
-
-.read-more:hover {
-  color: #0d6e04;
-}
-
-.grid-item-img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 4px;
-  margin-bottom: 15px;
-}
-
-/* --- CUISINE SECTION (NEW) --- */
-.cuisine-section {
-  background-color: #f0f0f0;
-}
-
-.cuisine-section .container {
-  padding-bottom: 50px;
-}
-
-/* --- IMAGE CAROUSEL STYLES --- */
-.carousel-container {
-  position: relative;
-  max-width: 800px;
-  margin: 40px auto;
-  overflow: hidden; /* Hide extra slides */
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-.carousel-slides {
-  display: flex;
-  transition: transform 0.5s ease-in-out;
-}
-
-.carousel-slide {
-  min-width: 100%;
-  position: relative;
-}
-
-.carousel-slide img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-.carousel-caption {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
-  color: var(--white);
-  padding: 1em;
-  text-align: center;
-}
-
-.carousel-button {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: rgba(0, 0, 0, 0.5);
-  color: var(--white);
-  border: none;
-  padding: 10px 15px;
-  cursor: pointer;
-  font-size: 1.5em;
-  z-index: 5;
-  transition: background-color 0.3s ease;
-}
-
-.carousel-button:hover {
-  background-color: rgba(0, 0, 0, 0.8);
-}
-
-.carousel-button.prev {
-  left: 10px;
-  border-radius: 0 5px 5px 0;
-}
-
-.carousel-button.next {
-  right: 10px;
-  border-radius: 5px 0 0 5px;
-}
-
-/* --- HISTORY & NATURE SECTIONS --- */
-.history-section,
-.nature-section {
-  background-color: var(--white);
-}
-
-/* --- PLAN TRIP SECTION --- */
-.plan-trip-section {
-  background-color: var(--light-gray);
-  padding-bottom: 100px;
-}
-
-/* --- ABOUT SECTION --- */
-.about-section {
-  background-color: var(--white);
-}
-
-/* --- FOOTER STYLES --- */
-.site-footer {
-  background-color: var(--dark-gray);
-  color: var(--white);
-  padding: 2.5rem 0;
-  text-align: center;
-  font-size: 0.9em;
-}
-
-.site-footer p {
-  margin-bottom: 10px;
-}
-
-.site-footer .footer-links a {
-  color: var(--white);
-  text-decoration: none;
-  margin: 0 10px;
-  transition: color 0.3s ease;
-}
-
-.site-footer .footer-links a:hover {
-  color: var(--saffron-orange);
-}
-
-/* --- Responsive Design: Media Queries --- */
-@media (max-width: 768px) {
-  /* General font size adjustments for readability */
-  .site-title {
-    font-size: 2em;
-  }
-
-  .hero-section h2 {
-    font-size: 2.2em;
-  }
-
-  .hero-section p {
-    font-size: 1.1em;
-  }
-
-  /* Hide the regular navigation menu */
-  .main-nav {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    background-color: var(--india-green);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    z-index: 999;
-  }
-
-  /* Show the menu when the 'active' class is toggled by JavaScript */
-  .main-nav.active {
-    display: block;
-  }
-
-  .main-nav ul {
+/* The unified card item */
+.card-item {
+    background-color: var(--white);
+    border-radius: var(--card-radius);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
     flex-direction: column;
-    gap: 0;
-  }
+    justify-content: space-between;
+    height: 100%;
+    min-height: 420px;
+    isolation: isolate;
+}
 
-  .main-nav ul li a {
+.card-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.card-item img {
+    width: 100%;
+    height: var(--card-img-h);
+    object-fit: cover;
     display: block;
-    padding: 1rem 2rem;
-    text-align: left;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  }
+    aspect-ratio: 16 / 9;
+}
 
-  /* Show the hamburger icon on small screens */
-  .hamburger-menu {
-    display: block;
-  }
+.card-item h3 {
+    font-size: var(--fz-lg);
+    color: var(--india-green);
+    margin: 15px 0 5px;
+    padding: 0 12px;
+}
 
-  /* Animate the hamburger icon */
-  .hamburger-menu.active .bar:nth-child(1) {
-    transform: rotate(-45deg) translate(-5px, 6px);
-  }
-  .hamburger-menu.active .bar:nth-child(2) {
-    opacity: 0;
-  }
-  .hamburger-menu.active .bar:nth-child(3) {
-    transform: rotate(45deg) translate(-5px, -6px);
-  }
+.card-item p {
+    font-size: var(--fz-md);
+    color: #666;
+    padding: 0 15px;
+    margin: 8px 0 0;
+    flex-grow: 1;
+}
 
-  /* Adjustments for content sections on small screens */
-  section {
-    padding: 50px 0;
-  }
+/* Card button */
+.read-more {
+    display: inline-block;
+    margin: 15px 0 18px;
+    padding: 8px 16px;
+    background-color: #ff6f00;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.25s ease, transform 0.15s ease;
+    width: auto;
+    max-width: 90%;
+    align-self: center;
+    font-weight: 700;
+    box-shadow: 0 2px 6px var(--shadow-light);
+}
 
-  section h2 {
-    font-size: 2em;
-  }
+.read-more:hover,
+.read-more:focus-visible {
+    background-color: #e65c00;
+    transform: translateY(-1px);
+}
 
-  .grid-container {
-    grid-template-columns: 1fr;
+/* ========================================================================
+   FOOTER
+   ======================================================================== */
+
+.site-footer {
+    background-color: var(--dark-gray);
+    color: var(--white);
+    padding: 20px 0;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.footer-links a {
+    color: var(--white);
+    text-decoration: none;
+    margin: 0 10px;
+    transition: color 0.3s;
+}
+
+.footer-links a:hover,
+.footer-links a:focus-visible {
+    color: var(--saffron-orange);
+}
+
+/* ========================================================================
+   DETAILS PAGE
+   ======================================================================== */
+
+.details-page {
+    padding: 40px 0;
+}
+
+.details-page .container {
+    display: flex;
+    flex-direction: column;
     gap: 20px;
-  }
-}
-/* Style for the horizontal history grid */
-/* New style for the horizontal history grid */
-/* Consolidated styles for all horizontal sections */
-.history-grid-row,
-.nature-grid-row,
-.culture-grid-row {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: space-between;
-  align-items: stretch;
-  gap: 20px;
-  padding-bottom: 20px;
-
-  /* This forces the scrollbar to appear */
-  overflow-x: scroll;
-
-  /* Custom scrollbar styling (works in some browsers) */
-  scrollbar-color: #4b6f4e #f1f1f1;
-  scrollbar-width: thin;
+    align-items: center;
 }
 
-.history-grid-item,
-.nature-grid-item,
-.culture-grid-item {
-  /* These rules ensure items take up a specific width on a large screen */
-  flex: 0 0 24%;
-  min-width: 250px;
-  box-sizing: border-box;
+.details-title {
+    font-family: "Playfair Display", Georgia, serif;
+    color: var(--india-green);
+    text-align: center;
+    margin-top: 0;
 }
 
-/* Adjustments for screens smaller than 768px */
-@media (max-width: 768px) {
-  .history-grid-row,
-  .nature-grid-row,
-  .culture-grid-row {
-    justify-content: flex-start;
-    gap: 15px;
-  }
-
-  .history-grid-item,
-  .nature-grid-item,
-  .culture-grid-item {
-    /* On small screens, items will fill 80% of the screen width to enable scrolling */
-    flex: 0 0 80%;
-    min-width: unset;
-  }
+.details-content-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
+    align-items: center;
+    width: 100%;
 }
-/* Styling for the related images grid on the details page */
-/* Styling for the related images grid on the details page */
+
+.details-main-img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--card-radius);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: block;
+    margin: 0 auto;
+}
+
+.details-text {
+    font-size: 1.1rem;
+}
+
+.details-sub-heading {
+    font-family: "Playfair Display", Georgia, serif;
+    color: var(--india-green);
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+    width: 100%;
+    max-width: var(--container-max);
+    padding: 0 var(--container-pad);
+}
+
+/* Related images grid */
 .related-images-grid {
-  display: grid;
-  /* This creates a responsive grid that automatically fits as many columns
-       as possible, with each item being at least 250px wide. */
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-  margin-top: 40px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-top: 20px;
+    width: 100%;
 }
 
 .related-item-link {
-  text-decoration: none;
-  color: #333;
-  text-align: center;
-  transition: transform 0.2s ease-in-out;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: #f9f9f9;
-  display: flex;
-  flex-direction: column;
-  height: 300px; /* Fixed height for consistent box sizes */
+    text-decoration: none;
+    color: #333;
+    text-align: center;
+    transition: transform 0.2s ease-in-out;
+    border-radius: var(--card-radius);
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+    height: 300px;
 }
 
-.related-item-link:hover {
-  transform: translateY(-5px);
+.related-item-link:hover,
+.related-item-link:focus-visible {
+    transform: translateY(-5px);
 }
 
 .related-item-link img {
-  width: 100%;
-  height: 200px; /* Fixed height for images */
-  object-fit: cover;
-  transition: opacity 0.3s ease-in-out;
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: opacity 0.3s ease-in-out;
 }
 
 .related-item-link p {
-  padding: 15px;
-  margin: 0;
-  font-weight: bold;
-  font-size: 1rem;
-  text-align: center;
+    padding: 15px;
+    margin: 0;
+    font-weight: bold;
+    font-size: 1rem;
+    text-align: center;
 }
 
-/* Responsive adjustments for smaller screens */
-@media (max-width: 768px) {
-  .related-images-grid {
-    grid-template-columns: 1fr; /* Display items in a single column */
-  }
+/* ========================================================================
+   HORIZONTAL SCROLLING SECTIONS (History, Nature)
+   ------------------------------------------------------------------------
+   - Kept original class for any horizontal scrollers you already use.
+   ======================================================================== */
+
+.scrolling-wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    gap: 20px;
+    padding-bottom: 15px;
+    scrollbar-width: none;
+}
+
+.scrolling-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+/* Keep a fixed width inside the dedicated scrolling wrapper */
+.scrolling-wrapper .card-item {
+    flex-shrink: 0;
+    width: 300px;
+}
+
+/* ========================================================================
+   BACK BUTTON
+   ======================================================================== */
+
+.back-link.cta-button {
+    display: inline-block;
+    background-color: #ff6f00;
+    color: #fff;
+    padding: 12px 24px;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.15s ease;
+    margin-top: 20px;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.back-link.cta-button:hover,
+.back-link.cta-button:focus-visible {
+    background-color: #e65c00;
+    transform: translateY(-1px);
+}
+
+/* ========================================================================
+   MEDIA QUERIES (RESPONSIVE)
+   ------------------------------------------------------------------------
+   - Sets up a responsive grid for each category page.
+   ======================================================================== */
+
+/* General Desktop Styles */
+@media (min-width: 768px) {
+    .details-content-grid {
+        grid-template-columns: 1fr 2fr;
+    }
+
+    /* History & Nature (4x1 on desktop) */
+    .history-grid,
+    .nature-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    /* Cuisine (3x2 on desktop) */
+    .cuisine-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    /* Culture (Auto-fit on desktop, a more flexible layout) */
+    .culture-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+
+    /* Home Page & Other Grids (3 columns by default) */
+    .card-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+}
+
+/* Small devices (phones, up to 767px) */
+@media (max-width: 767px) {
+    /* Hide the desktop nav menu and show the hamburger menu */
+    .main-nav {
+        display: none;
+    }
+    .hamburger-menu {
+        display: block;
+    }
+
+    /* When the hamburger menu is active, show the navigation */
+    .main-nav.active {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: var(--india-green);
+        padding: 1rem;
+        box-shadow: 0 2px 5px var(--shadow-medium);
+    }
+
+    .main-nav.active ul {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .main-nav.active ul li a {
+        display: block;
+    }
+
+    .site-title {
+        font-size: 2em;
+    }
+
+    /* Hamburger animation */
+    .hamburger-menu.active .bar:nth-child(1) {
+        transform: rotate(-45deg) translate(-5px, 6px);
+    }
+    .hamburger-menu.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+    .hamburger-menu.active .bar:nth-child(3) {
+        transform: rotate(45deg) translate(-5px, -6px);
+    }
+
+    /* Section spacing */
+    section {
+        padding: 50px 0;
+    }
+
+    section h2 {
+        font-size: 2em;
+    }
+
+    /* DETAILS PAGE on mobile */
+    .details-content-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .details-main-img {
+        width: 100%;
+    }
+
+    .back-link {
+        text-align: center;
+    }
+
+    /* ALL GRIDS on phones will use horizontal scrolling */
+    .card-grid {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        gap: 15px;
+        padding: 10px 6px 16px;
+        scrollbar-width: none;
+        scroll-snap-type: x mandatory;
+    }
+
+    .card-grid::-webkit-scrollbar {
+        display: none;
+    }
+
+    .card-item {
+        flex: 0 0 80%;
+        max-width: 320px;
+        min-width: 250px;
+        scroll-snap-align: start;
+    }
+    
+    .scrolling-wrapper .card-item {
+        flex-shrink: 0;
+        width: 300px;
+    }
+
+    /* Related grid → single column on phones for readability */
+    .related-images-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Hero section tighter on phones */
+    .hero-section {
+        padding: 60px 20px;
+    }
+
+    .hero-section h1 {
+        font-size: clamp(1.4rem, 6vw, 2rem);
+    }
+
+    .hero-section p {
+        font-size: clamp(0.95rem, 3.5vw, 1.05rem);
+    }
+}
+
+/* Extra small devices (e.g., small phones, up to 480px) */
+@media (max-width: 480px) {
+    .site-title {
+        font-size: 1.8em;
+    }
+
+    .hero-section h1 {
+        font-size: clamp(1.2rem, 6.5vw, 1.8rem);
+    }
+
+    .hero-section h2 {
+        font-size: clamp(1.5rem, 7.5vw, 2rem);
+    }
+
+    .cta-button {
+        padding: 10px 20px;
+        font-size: 1em;
+    }
+
+    .card-item {
+        flex-basis: 85%;
+        max-width: 320px;
+        min-width: 240px;
+    }
+}
+
+/* ========================================================================
+   REDUCED MOTION SUPPORT
+   ======================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+    }
 }

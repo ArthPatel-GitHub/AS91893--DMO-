@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", function () {
       nav.classList.toggle("active");
     });
   }
-
   // --- Image Carousel Logic (NEW) ---
   const carouselContainer = document.querySelector(".carousel-container");
   const slides = document.querySelector(".carousel-slides");

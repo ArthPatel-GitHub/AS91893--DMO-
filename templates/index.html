@@ -1,82 +1,70 @@
 {% extends 'base.html' %}
 
-{% block title %}Discover a World of Wonders{% endblock %}
+{% block title %}Discover India{% endblock %}
 
 {% block content %}
-<section class="hero-section">
-    <div class="container">
-        <h2>Why India Should Be Your Next Destination</h2>
-        <p>Immerse yourself in a land of vibrant traditions, breathtaking landscapes, and rich history.</p>
-        <a href="#plan" class="cta-button">Start Your Journey</a>
+<section class="hero-section" style="background-image: url('{{ hero_image.image_url }}');">
+    <div class="hero-overlay">
+        <h2>Uncover the Treasures of India</h2>
+        <p>A journey through diverse landscapes, ancient history, and rich culture.</p>
     </div>
 </section>
 
-<section id="culture" class="culture-highlights">
+<section id="culture-highlights" class="highlight-section">
     <div class="container">
-        <h2>Vibrant Culture & Traditions</h2>
-        <div class="grid-container">
-            {% for destination in destinations %}
-            {% if destination.category == 'Culture' %}
-            <div class="grid-item">
-                <img src="{{ destination.image_url }}" alt="{{ destination.title }}" class="grid-item-img">
-                <h3>{{ destination.title }}</h3>
-                <p>{{ destination.description }}</p>
-                <a href="#" class="read-more">Learn More</a>
+        <h2 class="section-heading">Discover the Vibrant Culture</h2>
+        <div class="card-grid">
+            {% for highlight in culture_highlights %}
+            <div class="card-item">
+                <img src="{{ highlight.image_url }}" alt="{{ highlight.title }}" class="card-item-img">
+                <h3>{{ highlight.title }}</h3>
+                <p>{{ highlight.description }}</p>
+                <a href="{{ url_for('details', title=highlight.title) }}" class="read-more">Learn More</a>
             </div>
-            {% endif %}
             {% endfor %}
         </div>
     </div>
 </section>
 
-<section id="history" class="history-section">
+<section id="featured-destinations" class="highlight-section">
     <div class="container">
-        <h2>Historical Wonders</h2>
-        <div class="history-grid-row">
-            {% for destination in destinations %}
-            {% if destination.category == 'History' %}
-            <div class="history-grid-item">
-                <img src="{{ destination.image_url }}" alt="{{ destination.title }}" class="grid-item-img">
-                <h3>{{ destination.title }}</h3>
-                <p>{{ destination.description }}</p>
-                <a href="#" class="read-more">Learn More</a>
+        <h2 class="section-heading">Featured Destinations</h2>
+        <div class="card-grid">
+            {% for highlight in featured_highlights %}
+            <div class="card-item">
+                <img src="{{ highlight.image_url }}" alt="{{ highlight.title }}" class="card-item-img">
+                <h3>{{ highlight.title }}</h3>
+                <p>{{ highlight.description }}</p>
+                <a href="{{ url_for('details', title=highlight.title) }}" class="read-more">Learn More</a>
             </div>
-            {% endif %}
             {% endfor %}
         </div>
     </div>
 </section>
 
-<section id="nature" class="nature-section">
+<section id="other-categories" class="highlight-section">
     <div class="container">
-        <h2>Breathtaking Nature</h2>
-        <div class="grid-container nature-grid-row">
-            {% for destination in destinations %}
-            {% if destination.category == 'Nature' %}
-            <div class="grid-item nature-grid-item">
-                <img src="{{ destination.image_url }}" alt="{{ destination.title }}" class="grid-item-img">
-                <h3>{{ destination.title }}</h3>
-                <p>{{ destination.description }}</p>
-                <a href="#" class="read-more">Learn More</a>
+        <h2 class="section-heading">Explore More</h2>
+        <div class="card-grid">
+            <div class="card-item">
+                <img src="{{ url_for('static', filename='images/history-hero.jpg') }}" alt="History" class="card-item-img">
+                <h3>India's Majestic Past</h3>
+                <p>Explore the majestic forts, palaces, and ancient ruins that tell India's story.</p>
+                <a href="{{ url_for('history') }}" class="read-more">Explore History</a>
             </div>
-            {% endif %}
-            {% endfor %}
+            <div class="card-item">
+                <img src="{{ url_for('static', filename='images/nature-hero.jpg') }}" alt="Nature" class="card-item-img">
+                <h3>Breathtaking Nature & Wildlife</h3>
+                <p>From the Himalayan peaks to tropical backwaters, discover India's natural beauty.</p>
+                <a href="{{ url_for('nature') }}" class="read-more">Explore Nature</a>
+            </div>
+            <div class="card-item">
+                <img src="{{ url_for('static', filename='images/cuisine-hero.jpg') }}" alt="Cuisine" class="card-item-img">
+                <h3>A Culinary Journey</h3>
+                <p>Explore the incredible diversity of India's regional cuisines.</p>
+                <a href="{{ url_for('cuisine') }}" class="read-more">Explore Cuisine</a>
+            </div>
         </div>
-    </div>
-</section>
-
-<section id="plan" class="plan-trip-section">
-    <div class="container">
-        <h2>Plan Your Unforgettable Trip</h2>
-        <p>Get all the essential information to make your journey to India smooth and memorable.</p>
-        <a href="{{ url_for('plan') }}" class="cta-button">Start Planning</a>
-    </div>
-</section>
-
-<section id="about" class="about-section">
-    <div class="container">
-        <h2>About Us</h2>
-        <p>Discover India is your ultimate guide to exploring the rich culture and diverse landscapes of this beautiful country.</p>
     </div>
 </section>
 {% endblock %}

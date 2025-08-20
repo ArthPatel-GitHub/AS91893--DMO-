@@ -1,18 +1,26 @@
-from flask import Flask, render_template, url_for
+# app.py
+from flask import Flask, render_template, url_for, g
 from flask_sqlalchemy import SQLAlchemy
 import os
 
+# Create the Flask application instance
 app = Flask(__name__)
 
+# Get the base directory of the application
 basedir = os.path.abspath(os.path.dirname(__file__))
+
+# Configure the SQLite database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'site.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+# Set the server name and a secret key
 app.config['SERVER_NAME'] = 'localhost:5000'
 app.config['SECRET_KEY'] = 'your-very-secret-key-that-you-should-change'
 
+# Initialize SQLAlchemy
 db = SQLAlchemy(app)
 
+# Define the database models
 class Destination(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
@@ -24,56 +32,98 @@ class Destination(db.Model):
     def __repr__(self):
         return f"Destination('{self.title}', '{self.category}')"
 
-class CarouselImage(db.Model):
+class CategoryHero(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    category = db.Column(db.String(50), nullable=False, unique=True)
+    title = db.Column(db.String(100), nullable=False)
+    subtitle = db.Column(db.String(200), nullable=True)
     image_url = db.Column(db.String(200), nullable=False)
-    caption = db.Column(db.String(100), nullable=True)
-    sub_category = db.Column(db.String(50), nullable=True)
 
     def __repr__(self):
-        return f"CarouselImage('{self.image_url}')"
+        return f"CategoryHero('{self.category}', '{self.title}')"
 
+# Get categories before each request
+@app.before_request
+def get_categories():
+    categories_data = Destination.query.with_entities(Destination.category).filter(Destination.category.in_(['Culture', 'Cuisine', 'History', 'Nature'])).distinct().all()
+    g.categories = [c[0] for c in categories_data]
+
+# The home page route
 @app.route('/')
 def home():
-    destinations = Destination.query.filter(Destination.category != 'Hero').all()
     hero_image = Destination.query.filter_by(category='Hero').first()
-    
-    culture_carousel_images = CarouselImage.query.filter_by(sub_category='Culture Carousel').all()
-    history_carousel_images = CarouselImage.query.filter_by(sub_category='History Carousel').all()
-    nature_carousel_images = CarouselImage.query.filter_by(sub_category='Nature Carousel').all()
-    
-    return render_template('index.html', destinations=destinations, hero_image=hero_image, 
-                           culture_carousel_images=culture_carousel_images,
-                           history_carousel_images=history_carousel_images,
-                           nature_carousel_images=nature_carousel_images)
+    culture_highlights = Destination.query.filter_by(category='Culture').all()
+    history_highlights = Destination.query.filter_by(category='History').limit(4).all()
+    nature_highlights = Destination.query.filter_by(category='Nature').limit(4).all()
+    featured_highlights = Destination.query.filter(Destination.sub_category.isnot(None)).limit(6).all()
+    return render_template('index.html', hero_image=hero_image, culture_highlights=culture_highlights, history_highlights=history_highlights, nature_highlights=nature_highlights, featured_highlights=featured_highlights)
 
+# Refactored routes for Culture, History, and Nature
 @app.route('/culture')
 def culture():
-    destinations = Destination.query.filter_by(category='Culture').all()
-    vibrant_festivals_images = CarouselImage.query.filter_by(sub_category='Vibrant Festivals').all()
-    rich_traditions_images = CarouselImage.query.filter_by(sub_category='Rich Traditions').all()
-    diverse_arts_images = CarouselImage.query.filter_by(sub_category='Diverse Arts').all()
-    return render_template('culture.html', 
-                           destinations=destinations, 
-                           vibrant_festivals_images=vibrant_festivals_images,
-                           rich_traditions_images=rich_traditions_images,
-                           diverse_arts_images=diverse_arts_images)
-
-@app.route('/cuisine')
-def cuisine():
-    carousel_images = CarouselImage.query.filter(CarouselImage.sub_category==None).all()
-    return render_template('cuisine.html', carousel_images=carousel_images)
+    items = Destination.query.filter_by(category='Culture').all()
+    hero = CategoryHero.query.filter_by(category='Culture').first()
+    return render_template('sub_category_page.html', items=items, hero=hero, category='culture')
 
 @app.route('/history')
 def history():
-    destinations = Destination.query.all()
-    return render_template('history.html', destinations=destinations)
+    items = Destination.query.filter_by(category='History').all()
+    hero = CategoryHero.query.filter_by(category='History').first()
+    return render_template('sub_category_page.html', items=items, hero=hero, category='history')
 
 @app.route('/nature')
 def nature():
-    destinations = Destination.query.all()
-    return render_template('nature.html', destinations=destinations)
+    items = Destination.query.filter_by(category='Nature').all()
+    hero = CategoryHero.query.filter_by(category='Nature').first()
+    return render_template('sub_category_page.html', items=items, hero=hero, category='nature')
 
+@app.route('/cuisine')
+def cuisine():
+    items = Destination.query.filter(Destination.category == 'Cuisine',
+                                                  Destination.sub_category.isnot(None)).group_by(Destination.sub_category).all()
+    hero = CategoryHero.query.filter_by(category='Cuisine').first()
+    return render_template('sub_category_page.html', items=items, hero=hero, category='cuisine')
+
+# The new, crucial route that creates a dynamic page for each item
+@app.route('/details/<string:title>')
+def details(title):
+    item = Destination.query.filter_by(title=title).first_or_404()
+    all_related_items = Destination.query.filter_by(category=item.category).all()
+    return render_template('details.html', item=item, all_related_items=all_related_items)
+
+
+# --- CUISINE SUBPAGE ROUTES ---
+@app.route('/cuisine/north-indian')
+def north_indian_page():
+    items = Destination.query.filter_by(sub_category='North Indian').all()
+    hero = CategoryHero.query.filter_by(category='Cuisine').first()
+    return render_template('cuisine_subpage.html', items=items, hero=hero, page_title='North Indian Cuisine')
+
+@app.route('/cuisine/south-indian')
+def south_indian_page():
+    items = Destination.query.filter_by(sub_category='South Indian').all()
+    hero = CategoryHero.query.filter_by(category='Cuisine').first()
+    return render_template('cuisine_subpage.html', items=items, hero=hero, page_title='South Indian Cuisine')
+
+@app.route('/cuisine/sweets')
+def indian_sweets_page():
+    items = Destination.query.filter_by(sub_category='Sweets').all()
+    hero = CategoryHero.query.filter_by(category='Cuisine').first()
+    return render_template('cuisine_subpage.html', items=items, hero=hero, page_title='Indian Sweets')
+
+@app.route('/cuisine/thali-meals')
+def thali_meals_page():
+    items = Destination.query.filter_by(sub_category='Thali Meals').all()
+    hero = CategoryHero.query.filter_by(category='Cuisine').first()
+    return render_template('cuisine_subpage.html', items=items, hero=hero, page_title='Thali Meals')
+
+@app.route('/cuisine/spices')
+def spices_page():
+    items = Destination.query.filter_by(sub_category='Spices').all()
+    hero = CategoryHero.query.filter_by(category='Cuisine').first()
+    return render_template('cuisine_subpage.html', items=items, hero=hero, page_title='Spices of India')
+
+# The plan and about routes
 @app.route('/plan')
 def plan():
     return render_template('plan.html')
@@ -81,20 +131,12 @@ def plan():
 @app.route('/about')
 def about():
     return render_template('about.html')
-@app.route('/details/<string:title>')
-def details(title):
-    item = Destination.query.filter_by(title=title).first_or_404()
-    
-    # Retrieve all other items from the same main category
-    # (e.g., all 'Culture' items, not just the sub_category)
-    all_related_items = Destination.query.filter_by(category=item.category).all()
-    
-    return render_template('details.html', item=item, all_related_items=all_related_items)
 
-
+# Main block to run the application
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
+        # Check if the database is empty before populating it
         if not Destination.query.first():
             print("Database is empty. Adding initial data...")
             
@@ -105,6 +147,33 @@ if __name__ == '__main__':
                 category='Hero'
             )
             
+            # --- New hero photos for each category page ---
+            culture_hero = CategoryHero(
+                category='Culture',
+                title='Vibrant Culture & Traditions',
+                subtitle='Explore the deep-rooted customs and diverse heritage that define India.',
+                image_url=url_for('static', filename='images/culture-hero.jpg')
+            )
+            cuisine_hero = CategoryHero(
+                category='Cuisine',
+                title='A Culinary Journey',
+                subtitle='Explore the incredible diversity of India\'s regional cuisines.',
+                image_url=url_for('static', filename='images/cuisine-hero.jpg')
+            )
+            history_hero = CategoryHero(
+                category='History',
+                title='India\'s Majestic Past',
+                subtitle='Explore the majestic forts, palaces, and ancient ruins that tell India\'s story.',
+                image_url=url_for('static', filename='images/history-hero.jpg')
+            )
+            nature_hero = CategoryHero(
+                category='Nature',
+                title='Breathtaking Nature & Wildlife',
+                subtitle='From the Himalayan peaks to tropical backwaters, discover India\'s natural beauty.',
+                image_url=url_for('static', filename='images/nature-hero.jpg')
+            )
+            
+            # --- Culture Destinations ---
             festival1 = Destination(
                 title='Holi',
                 description="The festival of colors, Holi, is a joyous celebration of spring, friendship, and the triumph of good over evil.",
@@ -192,6 +261,7 @@ if __name__ == '__main__':
                 sub_category='Diverse Arts'
             )
             
+            # --- History Destinations ---
             history_highlight1 = Destination(
                 title='Ancient Forts & Palaces',
                 description='Explore the majestic forts and opulent palaces that tell a tale of India\'s royal past.',
@@ -216,7 +286,8 @@ if __name__ == '__main__':
                 image_url=url_for('static', filename='images/ruins.jpg'),
                 category='History'
             )
-
+            
+            # --- Nature Destinations ---
             nature_highlight1 = Destination(
                 title='Himalayan Landscapes',
                 description='Discover the breathtaking beauty of the Himalayas, from snowy peaks to lush valleys.',
@@ -242,45 +313,55 @@ if __name__ == '__main__':
                 category='Nature'
             )
             
-            cuisine_photo1 = CarouselImage(
-                image_url=url_for('static', filename='images/cuisine1.jpg'),
-                caption='A taste of North Indian cuisine.'
+            # --- Cuisine Destinations ---
+            cuisine1 = Destination(
+                title='Indian Sweets',
+                description='Indulge in a variety of traditional Indian desserts and sweets from different regions.',
+                image_url=url_for('static', filename='images/sweets.jpg'),
+                category='Cuisine',
+                sub_category='Sweets'
             )
-            cuisine_photo2 = CarouselImage(
-                image_url=url_for('static', filename='images/cuisine2.jpg'),
-                caption='Spicy and flavorful South Indian dishes.'
+            cuisine2 = Destination(
+                title='North Indian Dishes',
+                description='Explore the rich and creamy curries, breads, and tandoori dishes of North India.',
+                image_url=url_for('static', filename='images/north-indian.jpg'),
+                category='Cuisine',
+                sub_category='North Indian'
             )
-            cuisine_photo3 = CarouselImage(
-                image_url=url_for('static', filename='images/cuisine3.jpg'),
-                caption='Delicious and traditional Indian sweets.'
+            cuisine3 = Destination(
+                title='South Indian Dishes',
+                description='Discover the flavorful and spicy dishes, dosas, and idlis from South India.',
+                image_url=url_for('static', filename='images/south-indian.jpg'),
+                category='Cuisine',
+                sub_category='South Indian'
             )
-            
-            festivals_img1 = CarouselImage(image_url=url_for('static', filename='images/festivals-carousel-1.jpg'), caption='Holi, the festival of colours.', sub_category='Vibrant Festivals')
-            festivals_img2 = CarouselImage(image_url=url_for('static', filename='images/festivals-carousel-2.jpg'), caption='Diwali, the festival of lights.', sub_category='Vibrant Festivals')
-            festivals_img3 = CarouselImage(image_url=url_for('static', filename='images/festivals-carousel-3.jpg'), caption='Pushkar Camel Fair.', sub_category='Vibrant Festivals')
-
-            traditions_img1 = CarouselImage(image_url=url_for('static', filename='images/traditions-carousel-1.jpg'), caption='Ayurvedic wellness practices.', sub_category='Rich Traditions')
-            traditions_img2 = CarouselImage(image_url=url_for('static', filename='images/traditions-carousel-2.jpg'), caption='Traditional Indian wedding.', sub_category='Rich Traditions')
-            traditions_img3 = CarouselImage(image_url=url_for('static', filename='images/traditions-carousel-3.jpg'), caption='Yoga & Meditation.', sub_category='Rich Traditions')
-
-            arts_img1 = CarouselImage(image_url=url_for('static', filename='images/arts-carousel-1.jpg'), caption='Classical Indian dance.', sub_category='Diverse Arts')
-            arts_img2 = CarouselImage(image_url=url_for('static', filename='images/arts-carousel-2.jpg'), caption='Textile craftsmanship.', sub_category='Diverse Arts')
-            arts_img3 = CarouselImage(image_url=url_for('static', filename='images/arts-carousel-3.jpg'), caption='Indian classical music.', sub_category='Diverse Arts')
-            
-            # --- New carousel images for homepage categories ---
-            culture_carousel_img1 = CarouselImage(image_url=url_for('static', filename='images/culture-hero.jpg'), caption='Celebrating the festival of colors.', sub_category='Culture Carousel')
-            culture_carousel_img2 = CarouselImage(image_url=url_for('static', filename='images/diwali.jpg'), caption='Lights and celebration.', sub_category='Culture Carousel')
-            culture_carousel_img3 = CarouselImage(image_url=url_for('static', filename='images/wedding.jpg'), caption='A traditional Indian wedding.', sub_category='Culture Carousel')
-            
-            history_carousel_img1 = CarouselImage(image_url=url_for('static', filename='images/history-hero.jpg'), caption='Majestic forts and palaces.', sub_category='History Carousel')
-            history_carousel_img2 = CarouselImage(image_url=url_for('static', filename='images/taj-mahal.jpg'), caption='The iconic Taj Mahal.', sub_category='History Carousel')
-            history_carousel_img3 = CarouselImage(image_url=url_for('static', filename='images/ruins.jpg'), caption='Ancient ruins and architecture.', sub_category='History Carousel')
-            
-            nature_carousel_img1 = CarouselImage(image_url=url_for('static', filename='images/nature-hero.jpg'), caption='The beauty of the Himalayas.', sub_category='Nature Carousel')
-            nature_carousel_img2 = CarouselImage(image_url=url_for('static', filename='images/backwaters.jpg'), caption='Serene tropical backwaters.', sub_category='Nature Carousel')
-            nature_carousel_img3 = CarouselImage(image_url=url_for('static', filename='images/wildlife.jpg'), caption='India\'s diverse wildlife.', sub_category='Nature Carousel')
+            cuisine4 = Destination(
+                title='Indian Street Food',
+                description='Savor the vibrant and diverse flavors of India\'s popular street food, from chaat to pakoras.',
+                image_url=url_for('static', filename='images/street-food.jpg'),
+                category='Cuisine',
+                sub_category='Street Food'
+            )
+            cuisine5 = Destination(
+                title='Thali Meals',
+                description='Experience a complete and balanced meal on a single plate, featuring a variety of regional dishes.',
+                image_url=url_for('static', filename='images/thali.jpg'),
+                category='Cuisine',
+                sub_category='Thali Meals'
+            )
+            cuisine6 = Destination(
+                title='Spices of India',
+                description='Learn about the aromatic spices that are the heart and soul of Indian cooking.',
+                image_url=url_for('static', filename='images/spices.jpg'),
+                category='Cuisine',
+                sub_category='Spices'
+            )
             
             db.session.add(hero_photo)
+            db.session.add(culture_hero)
+            db.session.add(cuisine_hero)
+            db.session.add(history_hero)
+            db.session.add(nature_hero)
             db.session.add(festival1)
             db.session.add(festival2)
             db.session.add(festival3)
@@ -301,30 +382,13 @@ if __name__ == '__main__':
             db.session.add(nature_highlight2)
             db.session.add(nature_highlight3)
             db.session.add(nature_highlight4)
-            db.session.add(cuisine_photo1)
-            db.session.add(cuisine_photo2)
-            db.session.add(cuisine_photo3)
+            db.session.add(cuisine1)
+            db.session.add(cuisine2)
+            db.session.add(cuisine3)
+            db.session.add(cuisine4)
+            db.session.add(cuisine5)
+            db.session.add(cuisine6)
             
-            db.session.add(festivals_img1)
-            db.session.add(festivals_img2)
-            db.session.add(festivals_img3)
-            db.session.add(traditions_img1)
-            db.session.add(traditions_img2)
-            db.session.add(traditions_img3)
-            db.session.add(arts_img1)
-            db.session.add(arts_img2)
-            db.session.add(arts_img3)
-
-            db.session.add(culture_carousel_img1)
-            db.session.add(culture_carousel_img2)
-            db.session.add(culture_carousel_img3)
-            db.session.add(history_carousel_img1)
-            db.session.add(history_carousel_img2)
-            db.session.add(history_carousel_img3)
-            db.session.add(nature_carousel_img1)
-            db.session.add(nature_carousel_img2)
-            db.session.add(nature_carousel_img3)
-
             db.session.commit()
             print("Initial data added.")
             
