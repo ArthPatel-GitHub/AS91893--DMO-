@@ -28,7 +28,7 @@ class Destination(db.Model):
     image_url = db.Column(db.String(200), nullable=True)
     category = db.Column(db.String(50), nullable=True)
     sub_category = db.Column(db.String(50), nullable=True)
-    long_description = db.Column(db.Text, nullable=True) # The new column for long text
+    long_description = db.Column(db.Text, nullable=True)
 
     def __repr__(self):
         return f"Destination('{self.title}', '{self.category}')"
@@ -60,6 +60,25 @@ def home():
     featured_highlights = Destination.query.filter(Destination.sub_category.isnot(None)).limit(6).all()
     return render_template('index.html', hero_image=hero_image, culture_highlights=culture_highlights, history_highlights=history_highlights, nature_highlights=nature_highlights, featured_highlights=featured_highlights)
 
+# Route for the About Us page
+@app.route('/about')
+def about():
+    """Renders the About Us page with a hero image from the database."""
+    about_hero = Destination.query.filter_by(category='About').first()
+    return render_template('about.html', about_hero=about_hero)
+
+# Route for the Privacy Policy page
+@app.route('/privacy')
+def privacy():
+    """Renders the Privacy Policy page."""
+    return render_template('privacy.html')
+
+# Route for the Terms of Use page
+@app.route('/terms')
+def terms():
+    """Renders the Terms of Use page."""
+    return render_template('terms.html')
+
 # Refactored routes for Culture, History, and Nature
 @app.route('/culture')
 def culture():
@@ -81,8 +100,7 @@ def nature():
 
 @app.route('/cuisine')
 def cuisine():
-    items = Destination.query.filter(Destination.category == 'Cuisine',
-                                             Destination.sub_category.isnot(None)).group_by(Destination.sub_category).all()
+    items = Destination.query.filter(Destination.category == 'Cuisine', Destination.sub_category.isnot(None)).group_by(Destination.sub_category).all()
     hero = CategoryHero.query.filter_by(category='Cuisine').first()
     return render_template('sub_category_page.html', items=items, hero=hero, category='cuisine')
 
@@ -125,9 +143,11 @@ def spices_page():
     hero = CategoryHero.query.filter_by(category='Cuisine').first()
     return render_template('cuisine_subpage.html', items=items, hero=hero, page_title='Spices of India')
 
-@app.route('/about')
-def about():
-    return render_template('about.html')
+@app.route('/cuisine/street-food')
+def street_food_page():
+    items = Destination.query.filter_by(sub_category='Street Food').all()
+    hero = CategoryHero.query.filter_by(category='Cuisine').first()
+    return render_template('cuisine_subpage.html', items=items, hero=hero, page_title='Street Food of India')
 
 # Main block to run the application
 if __name__ == '__main__':
@@ -143,6 +163,15 @@ if __name__ == '__main__':
                 image_url=url_for('static', filename='images/hero-image.jpg'),
                 category='Hero',
                 long_description="Explore the beauty of India. The country is well known for its majestic landscapes, captivating wildlife, and rich cultural heritage."
+            )
+
+            # A new entry for the About Us page hero photo
+            about_hero = Destination(
+                title='Our Story',
+                description='A photo for the About Us page.',
+                image_url=url_for('static', filename='images/about-us-hero.jpg'),
+                category='About',
+                long_description="A hero image for the About Us page."
             )
             
             # --- New hero photos for each category page ---
@@ -363,61 +392,41 @@ if __name__ == '__main__':
             cuisine4 = Destination(
                 title='Indian Street Food',
                 description='Savor the vibrant and diverse flavors of India\'s popular street food, from chaat to pakoras.',
-                long_description="Indian street food is a culinary adventure, offering a quick and flavorful glimpse into the country's diverse tastes. From the tangy and spicy `Chaat` (a savory snack) to crispy `Samosas` and fried `Pakoras`, every street corner offers a new and exciting dish. The street food culture is a vibrant part of daily life, where vendors prepare fresh, delicious snacks on the spot. It's an experience that is as much about the bustling atmosphere as it is about the incredible flavors.",
+                long_description="Indian street food is a culinary adventure, offering a quick and flavorful glimpse into the nation's diverse culinary landscape. From the tangy and spicy `chaat` to the crispy fried `pakoras` and the satisfying `samosas`, these dishes are a feast for the senses. Each city has its own specialty, from the `vada pav` in Mumbai to the `pani puri` found everywhere, making street food a beloved part of the daily life and cultural identity of India.",
                 image_url=url_for('static', filename='images/street-food.jpg'),
                 category='Cuisine',
                 sub_category='Street Food'
             )
             cuisine5 = Destination(
                 title='Thali Meals',
-                description='Experience a complete and balanced meal on a single plate, featuring a variety of regional dishes.',
-                long_description="A `Thali` is a traditional Indian meal composed of a variety of dishes served on a single platter. The concept is to offer a balanced meal with all six tastes—sweet, salty, bitter, sour, astringent, and spicy—on one plate. A typical Thali includes a selection of curries, lentils, vegetables, rice, and bread, often accompanied by yogurt, a sweet dish, and a pickle. It's a culinary tour of a region's flavors, providing a complete and wholesome dining experience.",
+                description='Experience a full-course Indian meal with a variety of dishes served on a single platter.',
+                long_description="A 'Thali' is a complete meal served on a single platter, offering a taste of multiple dishes from a specific region. It's a fantastic way to experience a variety of flavors, textures, and aromas in one sitting. A typical Thali includes a selection of curries, vegetables, bread, rice, yogurt, a sweet dish, and a pickle, all arranged in small bowls. This traditional style of serving food is not just a meal but a balanced, wholesome, and cultural experience.",
                 image_url=url_for('static', filename='images/thali.jpg'),
                 category='Cuisine',
                 sub_category='Thali Meals'
             )
             cuisine6 = Destination(
                 title='Spices of India',
-                description='Learn about the aromatic spices that are the heart and soul of Indian cooking.',
-                long_description="Spices are the heart and soul of Indian cooking, giving the cuisine its unique and complex flavors. India is known as the 'land of spices,' with a wide variety of spices like turmeric, cumin, cardamom, and cloves being cultivated and used for centuries. These spices not only enhance the taste of food but also have significant medicinal and health benefits. The art of blending and roasting these spices to create a perfect `masala` is a skill passed down through generations, making every dish a masterpiece of flavor.",
+                description='Discover the heart of Indian cooking with a look at its most essential spices.',
+                long_description="Indian cuisine is world-famous for its complex and aromatic use of spices. Spices are not just for flavor; they have a rich history and are often used for their medicinal properties. From the warm notes of cumin and coriander to the fiery kick of chili and the sweet aroma of cardamom, each spice plays a crucial role. The art of balancing these spices is the key to creating the distinct and layered flavors that define Indian food, making a culinary tour of India a truly aromatic experience.",
                 image_url=url_for('static', filename='images/spices.jpg'),
                 category='Cuisine',
                 sub_category='Spices'
             )
-            
-            db.session.add(hero_photo)
-            db.session.add(culture_hero)
-            db.session.add(cuisine_hero)
-            db.session.add(history_hero)
-            db.session.add(nature_hero)
-            db.session.add(festival1)
-            db.session.add(festival2)
-            db.session.add(festival3)
-            db.session.add(festival4)
-            db.session.add(tradition1)
-            db.session.add(tradition2)
-            db.session.add(tradition3)
-            db.session.add(tradition4)
-            db.session.add(art1)
-            db.session.add(art2)
-            db.session.add(art3)
-            db.session.add(art4)
-            db.session.add(history_highlight1)
-            db.session.add(history_highlight2)
-            db.session.add(history_highlight3)
-            db.session.add(history_highlight4)
-            db.session.add(nature_highlight1)
-            db.session.add(nature_highlight2)
-            db.session.add(nature_highlight3)
-            db.session.add(nature_highlight4)
-            db.session.add(cuisine1)
-            db.session.add(cuisine2)
-            db.session.add(cuisine3)
-            db.session.add(cuisine4)
-            db.session.add(cuisine5)
-            db.session.add(cuisine6)
-            
+
+            # Add all items to the database session
+            db.session.add_all([
+                hero_photo, about_hero,
+                culture_hero, cuisine_hero, history_hero, nature_hero,
+                festival1, festival2, festival3, festival4,
+                tradition1, tradition2, tradition3, tradition4,
+                art1, art2, art3, art4,
+                history_highlight1, history_highlight2, history_highlight3, history_highlight4,
+                nature_highlight1, nature_highlight2, nature_highlight3, nature_highlight4,
+                cuisine1, cuisine2, cuisine3, cuisine4, cuisine5, cuisine6
+            ])
+            # Commit the session to save the data
             db.session.commit()
-            print("Initial data added.")
-            
+            print("Initial data added to the database.")
+
     app.run(debug=True)

@@ -1,10 +1,31 @@
 {% extends 'base.html' %}
+
 {% block title %}About Us{% endblock %}
+
 {% block content %}
-<section class="page-content">
+<section class="about-us-page">
     <div class="container">
-        <h2>About Us</h2>
-        <p>This is the "About Us" page. Content will be added here later.</p>
+        <h1 class="page-title">Our Story</h1>
+        <p class="intro-paragraph">Welcome to Discover India! We are passionate about showcasing the incredible beauty, rich history, and vibrant culture of one of the world's most diverse countries. Our mission is to inspire travelers and enthusiasts to explore India's hidden gems and iconic landmarks.</p>
+
+        <div class="about-content-grid">
+            <div class="about-text">
+                <h2 class="section-sub-heading">Who We Are</h2>
+                <p>Founded in 2025, Discover India was born out of a love for travel and a deep respect for India's heritage. Our team is a small group of writers, photographers, and travel experts dedicated to curating authentic and insightful content. We believe that every corner of India tells a unique story, and we're here to share those stories with you.</p>
+                <p>From the snow-capped Himalayas to the sun-kissed beaches of Goa, and from ancient temples to bustling modern cities, our goal is to provide a comprehensive guide that goes beyond the typical tourist trails. We hope our content helps you plan your next adventure or simply learn something new about this magnificent country.</p>
+            </div>
+            <div class="about-image">
+                <img src="{{ url_for('static', filename='images/about-us.jpg') }}" alt="A team of people on a journey together" class="about-img">
+            </div>
+        </div>
+
+        <h2 class="section-sub-heading">Our Values</h2>
+        <ul class="values-list">
+            <li>**Authenticity:** We strive to provide genuine, firsthand information and experiences.</li>
+            <li>**Respect:** We promote respectful and responsible travel that honors local communities.</li>
+            <li>**Passion:** We are driven by a deep passion for India and its countless wonders.</li>
+            <li>**Education:** We aim to inform and educate our readers about India's diverse traditions and history.</li>
+        </ul>
     </div>
 </section>
 {% endblock %}
