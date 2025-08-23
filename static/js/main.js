@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
       nav.classList.toggle("active");
     });
   }
+
   // --- Image Carousel Logic (NEW) ---
   const carouselContainer = document.querySelector(".carousel-container");
   const slides = document.querySelector(".carousel-slides");
@@ -39,6 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
+
 // ========================================================================
 // CARD SLIDER SYSTEM JAVASCRIPT
 // ========================================================================
@@ -46,9 +48,16 @@ document.addEventListener("DOMContentLoaded", function () {
 class CardSlider {
     constructor(container) {
         this.container = container;
-        this.wrapper = container.querySelector('[data-wrapper]');
-        this.prevBtn = container.querySelector('[data-prev]');
-        this.nextBtn = container.querySelector('[data-next]');
+        this.wrapper = container.querySelector('[data-wrapper]') || container.querySelector('.slider-track') || container.querySelector('.card-grid');
+        this.prevBtn = container.querySelector('[data-prev]') || container.querySelector('.slider-nav.prev') || container.querySelector('.prev');
+        this.nextBtn = container.querySelector('[data-next]') || container.querySelector('.slider-nav.next') || container.querySelector('.next');
+        
+        // Check if required elements exist
+        if (!this.wrapper) {
+            console.warn('CardSlider: No wrapper element found');
+            return;
+        }
+        
         this.cards = this.wrapper.querySelectorAll('.card-item');
         
         this.scrollAmount = 300;
@@ -58,6 +67,11 @@ class CardSlider {
     }
     
     init() {
+        // Only initialize if we have required elements
+        if (!this.wrapper || !this.prevBtn || !this.nextBtn) {
+            return;
+        }
+        
         this.updateScrollAmount();
         this.updateArrowStates();
         this.bindEvents();
@@ -70,6 +84,10 @@ class CardSlider {
     }
     
     bindEvents() {
+        if (!this.prevBtn || !this.nextBtn || !this.wrapper) {
+            return;
+        }
+        
         this.prevBtn.addEventListener('click', () => this.scrollLeft());
         this.nextBtn.addEventListener('click', () => this.scrollRight());
         
@@ -140,6 +158,10 @@ class CardSlider {
     }
     
     updateArrowStates() {
+        if (!this.wrapper || !this.prevBtn || !this.nextBtn) {
+            return;
+        }
+        
         const { scrollLeft, scrollWidth, clientWidth } = this.wrapper;
         
         // Check if content is scrollable
@@ -175,19 +197,36 @@ class CardSlider {
 
 // Initialize all sliders when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-    const sliders = document.querySelectorAll('[data-slider]');
-    sliders.forEach(slider => new CardSlider(slider));
+    // Try multiple selectors to find sliders
+    const sliderSelectors = [
+        '[data-slider]',
+        '.card-slider', 
+        '.slider-container',
+        '.carousel-container'
+    ];
+    
+    let slidersFound = false;
+    
+    sliderSelectors.forEach(selector => {
+        const sliders = document.querySelectorAll(selector);
+        if (sliders.length > 0) {
+            sliders.forEach(slider => {
+                try {
+                    new CardSlider(slider);
+                    slidersFound = true;
+                } catch (error) {
+                    console.warn(`Failed to initialize slider for ${selector}:`, error);
+                }
+            });
+        }
+    });
+    
+    if (!slidersFound) {
+        console.log('No sliders found. Available selectors checked:', sliderSelectors);
+    }
 });
 
-// Optional: Keyboard navigation
-// Initialize all sliders when DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-    // Select all elements with the class 'card-slider'
-    const sliders = document.querySelectorAll('.card-slider');
-    
-    // Loop through each of them and create a new CardSlider instance
-    sliders.forEach(slider => new CardSlider(slider));
-});
+// Keyboard navigation
 document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
         const focusedSlider = document.querySelector('.slider-container:hover');
