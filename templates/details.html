@@ -13,21 +13,23 @@
                 <img src="{{ item.image_url }}" alt="{{ item.title }}" class="details-main-img">
             </div>
             <div class="details-text">
-                <p>{{ item.description }}</p>
-                <p>This is a custom paragraph of text to add more details about {{ item.title }}. You can edit this text directly in this HTML file or expand your database to include more detailed content. We will also have a couple more paragraphs of filler text here to add more content.</p>
-                <p>Here is another paragraph with more information. The system will now have multiple pages with dynamic content. You can explore the history, traditions, and significance of each of these unique destinations.</p>
+                <p>{{ item.long_description }}</p>
             </div>
-      <h2 class="details-sub-heading">Explore more from the Culture section</h2>
-<div class="related-images-grid">
-    {% for related in all_related_items %}
-        {% if related.title != item.title %}
-        <a href="{{ url_for('details', title=related.title) }}" class="related-item-link">
-            <img src="{{ related.image_url }}" alt="{{ related.title }}">
-            <p>{{ related.title }}</p>
-        </a>
-        {% endif %}
-    {% endfor %}
-</div>
-    </div>
+        </div>
+        <h2 class="details-sub-heading">Explore more from the {{ item.category }} section</h2>
+        <div class="card-grid">
+            {% for related in all_related_items %}
+                {% if related.title != item.title %}
+                <a href="{{ url_for('details', title=related.title) }}" class="card-item">
+                    <img src="{{ related.image_url }}" alt="{{ related.title }}">
+                    <div class="card-content">
+                        <h3>{{ related.title }}</h3>
+                        <p>{{ related.description }}</p>
+                        <span class="Learn-More cta-button">Learn More</span>
+                    </div>
+                </a>
+                {% endif %}
+            {% endfor %}
+        </div>
 </section>
 {% endblock %}
