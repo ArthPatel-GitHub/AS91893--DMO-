@@ -1,44 +1,71 @@
 // Wait until the DOM is fully loaded before running the script
 document.addEventListener("DOMContentLoaded", function () {
-  // --- Hamburger Menu Logic ---
-  const hamburger = document.getElementById("hamburger-menu");
-  const nav = document.querySelector(".main-nav");
+    // --- Hamburger Menu Logic ---
+    const hamburger = document.getElementById("hamburger-menu");
+    const nav = document.querySelector(".main-nav");
 
-  if (hamburger && nav) {
-    hamburger.addEventListener("click", function () {
-      hamburger.classList.toggle("active");
-      nav.classList.toggle("active");
-    });
-  }
-
-  // --- Image Carousel Logic (NEW) ---
-  const carouselContainer = document.querySelector(".carousel-container");
-  const slides = document.querySelector(".carousel-slides");
-  const prevButton = document.querySelector(".carousel-button.prev");
-  const nextButton = document.querySelector(".carousel-button.next");
-
-  // Check if carousel elements exist on the page
-  if (carouselContainer && slides && prevButton && nextButton) {
-    let currentSlide = 0;
-    const totalSlides = slides.children.length;
-
-    // Function to move to a specific slide
-    function showSlide(index) {
-      currentSlide = (index + totalSlides) % totalSlides;
-      const offset = -currentSlide * 100;
-      slides.style.transform = `translateX(${offset}%)`;
+    if (hamburger && nav) {
+        hamburger.addEventListener("click", function () {
+            hamburger.classList.toggle("active");
+            nav.classList.toggle("active");
+        });
     }
 
-    // Event listener for the "Next" button
-    nextButton.addEventListener("click", function () {
-      showSlide(currentSlide + 1);
-    });
+    // --- Theme Switcher Logic ---
+    const themeSwitcher = document.getElementById('theme-switcher');
+    const body = document.body;
 
-    // Event listener for the "Previous" button
-    prevButton.addEventListener("click", function () {
-      showSlide(currentSlide - 1);
-    });
-  }
+    // Load saved theme from localStorage or default to dark
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    body.classList.add(savedTheme + '-theme');
+
+    if (themeSwitcher) {
+        themeSwitcher.addEventListener('click', function (event) {
+            if (event.target.tagName === 'BUTTON') {
+                // Remove existing theme classes
+                body.classList.remove('dark-theme', 'light-theme');
+
+                // Get the new theme from the button's data-theme attribute
+                const newTheme = event.target.dataset.theme;
+
+                // Apply the new theme class
+                body.classList.add(newTheme + '-theme');
+
+                // Save the new theme to localStorage
+                localStorage.setItem('theme', newTheme);
+            }
+        });
+    }
+    // --- End Theme Switcher Logic ---
+
+    // --- Image Carousel Logic ---
+    const carouselContainer = document.querySelector(".carousel-container");
+    const slides = document.querySelector(".carousel-slides");
+    const prevButton = document.querySelector(".carousel-button.prev");
+    const nextButton = document.querySelector(".carousel-button.next");
+
+    // Check if carousel elements exist on the page
+    if (carouselContainer && slides && prevButton && nextButton) {
+        let currentSlide = 0;
+        const totalSlides = slides.children.length;
+
+        // Function to move to a specific slide
+        function showSlide(index) {
+            currentSlide = (index + totalSlides) % totalSlides;
+            const offset = -currentSlide * 100;
+            slides.style.transform = `translateX(${offset}%)`;
+        }
+
+        // Event listener for the "Next" button
+        nextButton.addEventListener("click", function () {
+            showSlide(currentSlide + 1);
+        });
+
+        // Event listener for the "Previous" button
+        prevButton.addEventListener("click", function () {
+            showSlide(currentSlide - 1);
+        });
+    }
 });
 
 // ========================================================================

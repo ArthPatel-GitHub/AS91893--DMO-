@@ -20,6 +20,12 @@
 </head>
 
 <body>
+    <aside id="theme-switcher" class="color-switcher">
+    <h2 class="theme-switcher-title">Select Your Theme</h2>
+    <button data-theme="dark" class="theme-button dark-btn">Dark</button>
+    <button data-theme="light" class="theme-button light-btn">Light</button>
+    </aside>
+
     <header class="site-header">
         <div class="container">
             <h1 class="site-title">Discover India</h1>
@@ -51,12 +57,13 @@
         <div class="container">
             <p>&copy; 2025 Discover India. All rights reserved.</p>
             <div class="footer-links">
-               <a href="{{ url_for('privacy') }}">Privacy Policy</a> |
+               <a href="{{ url_for('privacy') }}">Privacy Policy</a>
                 <a href="{{ url_for('terms') }}">Terms of Use</a>
             </div>
         </div>
     </footer>
     
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
