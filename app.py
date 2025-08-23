@@ -125,11 +125,6 @@ def spices_page():
     hero = CategoryHero.query.filter_by(category='Cuisine').first()
     return render_template('cuisine_subpage.html', items=items, hero=hero, page_title='Spices of India')
 
-# The plan and about routes
-@app.route('/plan')
-def plan():
-    return render_template('plan.html')
-
 @app.route('/about')
 def about():
     return render_template('about.html')
