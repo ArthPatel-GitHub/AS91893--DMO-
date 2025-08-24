@@ -118,10 +118,8 @@ body {
 /* ========================================================================
     SIDE MENU FOR COLOR SWITCHING
     ======================================================================== */
-
-/* The toggle button for the menu on mobile */
 .theme-toggle-btn {
-    display: none; /* Hidden by default, shown in media query below */
+    display: flex; /* Show the button on all screens */
     position: fixed;
     top: 50%;
     right: 15px;
@@ -152,12 +150,12 @@ body {
     height: 100%;
 }
 
-/* Desktop Styles: Menu is always visible and positioned */
+/* Base style for the menu: always positioned off-screen to the right */
 .color-switcher {
     position: fixed;
     top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
+    right: 0; /* Align it to the right edge */
+    transform: translateY(-50%) translateX(100%); /* Position off-screen */
     display: flex;
     flex-direction: column;
     padding: 10px;
@@ -166,8 +164,13 @@ body {
     backdrop-filter: blur(5px);
     border-radius: 8px 0 0 8px;
     z-index: 2000;
-    transition: transform 0.4s ease;
+    transition: transform 0.4s ease; /* Animate the transition */
     visibility: visible;
+}
+
+/* When the menu has the 'active' class, slide it into view */
+.color-switcher.active {
+    transform: translateY(-50%) translateX(0);
 }
 
 .theme-button {
@@ -906,19 +909,6 @@ body {
         min-width: 240px;
         scroll-snap-align: start;
     }
-    
-    /* NEW: Mobile-specific styles for the theme switcher */
-    .theme-toggle-btn {
-        display: flex; /* Show the button on small screens */
-    }
-    
-    .color-switcher {
-        transform: translateY(-50%) translateX(100%);
-    }
-
-    .color-switcher.active {
-        transform: translateY(-50%) translateX(0);
-    }
 }
 
 @media (min-width: 768px) {
@@ -948,15 +938,6 @@ body {
     .hero-section {
         padding: clamp(70px, 12vh, 90px) var(--container-pad);
     }
-    
-    /* NEW: Keep the desktop-style menu on tablets and desktops */
-    .theme-toggle-btn {
-        display: none;
-    }
-    
-    .color-switcher {
-        transform: translateY(-50%) translateX(0); /* Make sure it's always visible */
-    }
 }
 
 @media (min-width: 1024px) {
@@ -979,15 +960,6 @@ body {
     .card-slider .card-item {
         width: 320px;
         min-width: 300px;
-    }
-    
-    /* NEW: Keep the desktop-style menu on desktops */
-    .theme-toggle-btn {
-        display: none;
-    }
-    
-    .color-switcher {
-        right: 10px;
     }
 }
 
