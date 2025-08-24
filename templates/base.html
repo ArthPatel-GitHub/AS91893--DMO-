@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visit India - {% block title %}{% endblock %}</title>
+    
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,10 +21,20 @@
 </head>
 
 <body>
+    <button id="theme-toggle-btn" class="theme-toggle-btn" aria-label="Toggle theme and scroll instructions">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M10.5 18h9.75M10.5 18a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M4.5 12H12m-7.5 0a1.5 1.5 0 1 1 0-3m0 3a1.5 1.5 0 1 0 0-3" />
+        </svg>
+    </button>
+    
     <aside id="theme-switcher" class="color-switcher">
-    <h2 class="theme-switcher-title">Select Your Theme</h2>
-    <button data-theme="dark" class="theme-button dark-btn">Dark</button>
-    <button data-theme="light" class="theme-button light-btn">Light</button>
+        <h2 class="theme-switcher-title">Select Your Theme</h2>
+        <button data-theme="light" class="theme-button light-btn">Light (DEFAULT)</button>
+        <button data-theme="dark" class="theme-button dark-btn">Dark</button>
+        <p class="carousel-instructions">
+            To scroll the carousels, you can either use your scroll wheel and push it from left to right depending on where you want to scroll. 
+            Or, hover your cursor on the carousel and use your arrow keys (the left or right one) to scroll also.
+        </p>
     </aside>
 
     <header class="site-header">
@@ -51,19 +62,20 @@
 
     <main>
         {% block content %}{% endblock %}
+        
+        {% block card_slider %}{% endblock %}
     </main>
 
     <footer class="site-footer">
         <div class="container">
             <p>&copy; 2025 Discover India. All rights reserved.</p>
             <div class="footer-links">
-               <a href="{{ url_for('privacy') }}">Privacy Policy</a>
+                <a href="{{ url_for('privacy') }}">Privacy Policy</a>
                 <a href="{{ url_for('terms') }}">Terms of Use</a>
             </div>
         </div>
     </footer>
-    
+
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>

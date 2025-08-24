@@ -1,4 +1,10 @@
-// Wait until the DOM is fully loaded before running the script
+// Function to set the theme from localStorage immediately
+(function() {
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.classList.add(savedTheme + '-theme');
+})();
+
+// Wait until the DOM is fully loaded before running the rest of the script
 document.addEventListener("DOMContentLoaded", function () {
     // --- Hamburger Menu Logic ---
     const hamburger = document.getElementById("hamburger-menu");
@@ -13,57 +19,32 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // --- Theme Switcher Logic ---
     const themeSwitcher = document.getElementById('theme-switcher');
-    const body = document.body;
-
-    // Load saved theme from localStorage or default to dark
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    body.classList.add(savedTheme + '-theme');
 
     if (themeSwitcher) {
         themeSwitcher.addEventListener('click', function (event) {
             if (event.target.tagName === 'BUTTON') {
                 // Remove existing theme classes
-                body.classList.remove('dark-theme', 'light-theme');
+                document.documentElement.classList.remove('dark-theme', 'light-theme');
 
                 // Get the new theme from the button's data-theme attribute
                 const newTheme = event.target.dataset.theme;
 
                 // Apply the new theme class
-                body.classList.add(newTheme + '-theme');
+                document.documentElement.classList.add(newTheme + '-theme');
 
                 // Save the new theme to localStorage
                 localStorage.setItem('theme', newTheme);
             }
         });
     }
-    // --- End Theme Switcher Logic ---
+    
+    // --- Theme Switcher Toggle Logic for Mobile ---
+    const themeToggleBtn = document.getElementById('theme-toggle-btn');
+    const themePanel = document.getElementById('theme-switcher');
 
-    // --- Image Carousel Logic ---
-    const carouselContainer = document.querySelector(".carousel-container");
-    const slides = document.querySelector(".carousel-slides");
-    const prevButton = document.querySelector(".carousel-button.prev");
-    const nextButton = document.querySelector(".carousel-button.next");
-
-    // Check if carousel elements exist on the page
-    if (carouselContainer && slides && prevButton && nextButton) {
-        let currentSlide = 0;
-        const totalSlides = slides.children.length;
-
-        // Function to move to a specific slide
-        function showSlide(index) {
-            currentSlide = (index + totalSlides) % totalSlides;
-            const offset = -currentSlide * 100;
-            slides.style.transform = `translateX(${offset}%)`;
-        }
-
-        // Event listener for the "Next" button
-        nextButton.addEventListener("click", function () {
-            showSlide(currentSlide + 1);
-        });
-
-        // Event listener for the "Previous" button
-        prevButton.addEventListener("click", function () {
-            showSlide(currentSlide - 1);
+    if (themeToggleBtn && themePanel) {
+        themeToggleBtn.addEventListener('click', () => {
+            themePanel.classList.toggle('active');
         });
     }
 });
@@ -81,7 +62,7 @@ class CardSlider {
         
         // Check if required elements exist
         if (!this.wrapper) {
-            console.warn('CardSlider: No wrapper element found');
+            console.warn('CardSlider: No wrapper element found in container', this.container);
             return;
         }
         
@@ -256,16 +237,16 @@ document.addEventListener('DOMContentLoaded', () => {
 // Keyboard navigation
 document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
-        const focusedSlider = document.querySelector('.slider-container:hover');
+        const focusedSlider = document.querySelector('.slider-container:hover, .card-slider:hover');
         if (focusedSlider) {
             e.preventDefault();
             const prevBtn = focusedSlider.querySelector('[data-prev]');
             const nextBtn = focusedSlider.querySelector('[data-next]');
             
-            if (e.key === 'ArrowLeft' && !prevBtn.disabled) {
+            if (e.key === 'ArrowLeft' && prevBtn && !prevBtn.disabled) {
                 prevBtn.click();
             }
-            if (e.key === 'ArrowRight' && !nextBtn.disabled) {
+            if (e.key === 'ArrowRight' && nextBtn && !nextBtn.disabled) {
                 nextBtn.click();
             }
         }
