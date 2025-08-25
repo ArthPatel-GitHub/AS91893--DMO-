@@ -1,50 +1,92 @@
+<!-- Details page template for individual destinations -->
+<!-- Extends the base.html template to inherit the site structure -->
 {% extends 'base.html' %}
 
-
+<!-- Dynamic page title block -->
+<!-- Creates titles like "Explore Holi", "Explore Taj Mahal", etc. -->
+<!-- Note: Missing space between "Explore" and item title - should be "Explore {{ item.title }}" -->
 {% block title %}Explore{{ item.title }}{% endblock %}
 
-
+<!-- Main content block that replaces the content section from base.html -->
 {% block content %}
+<!-- Details page section with semantic HTML structure -->
 <section class="details-page">
- <div class="container">
- <h1 class="details-title">{{ item.title }}</h1>
-<div class="details-content-grid">
-    <div class="details-text">
-        <p>{{ item.long_description }}</p>
+    <!-- Container for consistent page width and alignment -->
+    <div class="container">
+        <!-- Main page heading displaying the destination/item title -->
+        <!-- Uses h1 for proper SEO and accessibility hierarchy -->
+        <h1 class="details-title">{{ item.title }}</h1>
+        
+        <!-- Two-column grid layout for content and main image -->
+        <!-- Provides responsive layout for text and visual content -->
+        <div class="details-content-grid">
+            <!-- Left column: Detailed text content -->
+            <div class="details-text">
+                <!-- Long description paragraph from the database -->
+                <!-- Contains the comprehensive information about the destination -->
+                <p>{{ item.long_description }}</p>
+            </div>
+
+            <!-- Right column: Main featured image -->
+            <div class="main-image">
+                <!-- Primary image for the destination -->
+                <!-- Uses item data from Flask route for dynamic content -->
+                <img src="{{ item.image_url }}" alt="{{ item.title }}" class="details-main-img">
+            </div>
+        </div>
+
+        <!-- Related content section heading -->
+        <!-- Secondary heading that dynamically shows the category name -->
+        <!-- Creates headings like "Explore more from the Culture section" -->
+        <h2 class="details-sub-heading">
+            Explore more from the {{ item.category }} section
+        </h2>
+
+        <!-- Interactive card slider/carousel for related items -->
+        <!-- Uses data attributes for JavaScript functionality -->
+        <div class="card-slider" data-slider>
+            <!-- Previous navigation button for the slider -->
+            <!-- Uses aria-label for screen reader accessibility -->
+            <button class="slider-nav prev" data-prev aria-label="Previous">‹</button>
+            
+            <!-- Slider track container that holds all the cards -->
+            <!-- JavaScript moves this container to show different cards -->
+            <div class="slider-track" data-wrapper>
+                <!-- Loop through all related items in the same category -->
+                <!-- Excludes current item to avoid showing duplicate -->
+                {% for related in all_related_items if related.title != item.title %}
+                    <!-- Individual card item as clickable link -->
+                    <!-- Links to the details page of the related item -->
+                    <a href="{{ url_for('details', title=related.title) }}" class="card-item">
+                        <!-- Card image -->
+                        <img src="{{ related.image_url }}" alt="{{ related.title }}">
+                        
+                        <!-- Card text content container -->
+                        <div class="card-content">
+                            <!-- Card title (h3 maintains proper heading hierarchy) -->
+                            <h3>{{ related.title }}</h3>
+                            
+                            <!-- Card description (short version for preview) -->
+                            <p>{{ related.description }}</p>
+                        </div>
+                        
+                        <!-- Call-to-action button/link -->
+                        <!-- Styled as button but functions as part of the card link -->
+                        <span class="read-more cta-button">Learn More</span>
+                    </a>
+                {% endfor %}
+            </div>
+            
+            <!-- Next navigation button for the slider -->
+            <!-- Uses aria-label for screen reader accessibility -->
+            <button class="slider-nav next" data-next aria-label="Next">›</button>
+        </div>
+
+        <!-- Back navigation link -->
+        <!-- Uses JavaScript history API to go to previous page -->
+        <!-- Provides user-friendly navigation without hardcoded URLs -->
+        <a href="javascript:history.back()" class="back-link cta-button">Back</a>
+
     </div>
-
-    <div class="main-image">
-        <img src="{{ item.image_url }}" alt="{{ item.title }}" class="details-main-img">
-    </div>
-</div>
-
-
- <h2 class="details-sub-heading">
- Explore more from the {{ item.category }} section
- </h2>
-
-
- <div class="card-slider" data-slider>
- <button class="slider-nav prev" data-prev aria-label="Previous">‹</button>
- <div class="slider-track" data-wrapper>
- {% for related in all_related_items if related.title != item.title %}
- <a href="{{ url_for('details', title=related.title) }}" class="card-item">
- <img src="{{ related.image_url }}" alt="{{ related.title }}">
- <div class="card-content">
- <h3>{{ related.title }}</h3>
- <p>{{ related.description }}</p>
- </div>
- <span class="read-more cta-button">Learn More</span>
- </a>
- {% endfor %}
- </div>
- <button class="slider-nav next" data-next aria-label="Next">›</button>
- </div>
-
-
- <a href="javascript:history.back()" class="back-link cta-button">Back</a>
-
-
- </div>
 </section>
 {% endblock %}

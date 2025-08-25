@@ -1,22 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- Document metadata and configuration -->
     <meta charset="UTF-8" />
+    <!-- Ensures proper rendering on mobile devices -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Dynamic page title using Jinja2 template inheritance -->
+    <!-- Child templates can set their own title using the title block -->
     <title>Visit India - {% block title %}{% endblock %}</title>
 
+    <!-- Main stylesheet link using Flask's url_for function for proper path generation -->
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='css/style.css') }}"
     />
 
+    <!-- Google Fonts preconnect for performance optimization -->
+    <!-- Preconnecting to font domains reduces loading time -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- Google Fonts import for typography -->
+    <!-- Playfair Display for elegant headings, Roboto for body text -->
     <link
       href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400&display=swap"
       rel="stylesheet"
     />
 
+    <!-- Conditional CSS custom property for hero background image -->
+    <!-- Only renders if hero_image variable is passed from the Flask route -->
+    <!-- This allows dynamic hero backgrounds on different pages -->
     {% if hero_image %}
     <style>
       :root {
@@ -27,32 +41,22 @@
   </head>
 
   <body>
-    <button
-      id="theme-toggle-btn"
-      class="theme-toggle-btn"
-      aria-label="Toggle theme and scroll instructions"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke-width="1.5"
-        stroke="currentColor"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M10.5 18h9.75M10.5 18a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M4.5 12H12m-7.5 0a1.5 1.5 0 1 1 0-3m0 3a1.5 1.5 0 1 0 0-3"
-        />
-      </svg>
-    </button>
-
+    <!-- Theme switcher sidebar -->
+    <!-- Positioned as an aside element for accessibility -->
     <aside id="theme-switcher" class="color-switcher">
+      <!-- Theme switcher title -->
       <h2 class="theme-switcher-title">Select Your Theme</h2>
+      
+      <!-- Light theme button - marked as default -->
       <button data-theme="light" class="theme-button light-btn">
         Light (DEFAULT)
       </button>
+      
+      <!-- Dark theme button -->
       <button data-theme="dark" class="theme-button dark-btn">Dark</button>
+      
+      <!-- User instructions for carousel navigation -->
+      <!-- Provides multiple ways to interact with image carousels -->
       <p class="carousel-instructions">
         To scroll the carousels, you can either use your scroll wheel or
         touchpad and push it from left to right depending on where you want to
@@ -61,66 +65,173 @@
       </p>
     </aside>
 
+    <!-- Main site header containing navigation and branding -->
     <header class="site-header">
       <div class="container">
+        <!-- Main site title/logo -->
         <h1 class="site-title">Discover India</h1>
-        
+
+        <!-- Container for mobile menu toggle and theme button -->
         <div class="hamburger-and-theme-container">
-            <div class="hamburger-menu" id="hamburger-menu">
-                <div class="bar"></div>
-                <div class="bar"></div>
-                <div class="bar"></div>
-            </div>
-            <button
-                id="theme-toggle-btn"
-                class="theme-toggle-btn"
-                aria-label="Toggle theme and scroll instructions">
-                <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                >
-                <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M10.5 18h9.75M10.5 18a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M4.5 12H12m-7.5 0a1.5 1.5 0 1 1 0-3m0 3a1.5 1.5 0 1 0 0-3"
-                />
-                </svg>
-            </button>
+          <!-- Hamburger menu for mobile navigation -->
+          <!-- Three bars create the classic hamburger icon -->
+          <div class="hamburger-menu" id="hamburger-menu">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+          </div>
+          
+          <!-- Theme toggle button with accessibility label -->
+          <!-- Contains SVG icon for settings/preferences -->
+          <button
+            id="theme-toggle-btn"
+            class="theme-toggle-btn"
+            aria-label="Toggle theme and scroll instructions"
+          >
+            <!-- SVG icon for theme settings - represents adjustment/settings -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M10.5 18h9.75M10.5 18a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M4.5 12H12m-7.5 0a1.5 1.5 0 1 1 0-3m0 3a1.5 1.5 0 1 0 0-3"
+              />
+            </svg>
+          </button>
         </div>
 
+        <!-- Main navigation menu -->
+        <!-- Uses semantic nav element with role for accessibility -->
         <nav class="main-nav" role="navigation">
           <ul>
-            <li><a href="{{ url_for('home') }}" class="{% if request.path == url_for('home') %}active{% endif %}">Home</a></li>
-            <li><a href="{{ url_for('culture') }}" class="{% if request.path == url_for('culture') %}active{% endif %}">Culture</a></li>
-            <li><a href="{{ url_for('cuisine') }}" class="{% if request.path == url_for('cuisine') %}active{% endif %}">Cuisine</a></li>
-            <li><a href="{{ url_for('history') }}" class="{% if request.path == url_for('history') %}active{% endif %}">History</a></li>
-            <li><a href="{{ url_for('nature') }}" class="{% if request.path == url_for('nature') %}active{% endif %}">Nature</a></li>
-            <li><a href="{{ url_for('about') }}" class="{% if request.path == url_for('about') %}active{% endif %}">About</a></li>
-            <li><a href="{{ url_for('privacy') }}" class="{% if request.path == url_for('privacy') %}active{% endif %}">Privacy</a></li>
-            <li><a href="{{ url_for('terms') }}" class="{% if request.path == url_for('terms') %}active{% endif %}">Terms</a></li>
+            <!-- Home navigation link -->
+            <!-- Uses Flask's url_for function and conditional active class -->
+            <li>
+              <a
+                href="{{ url_for('home') }}"
+                class="{% if request.path == url_for('home') %}active{% endif %}"
+                >Home</a
+              >
+            </li>
+            
+            <!-- Culture section navigation -->
+            <!-- Links to cultural destinations like festivals, traditions, arts -->
+            <li>
+              <a
+                href="{{ url_for('culture') }}"
+                class="{% if request.path == url_for('culture') %}active{% endif %}"
+                >Culture</a
+              >
+            </li>
+            
+            <!-- Cuisine section navigation -->
+            <!-- Links to food and culinary content -->
+            <li>
+              <a
+                href="{{ url_for('cuisine') }}"
+                class="{% if request.path == url_for('cuisine') %}active{% endif %}"
+                >Cuisine</a
+              >
+            </li>
+            
+            <!-- History section navigation -->
+            <!-- Links to historical sites and heritage content -->
+            <li>
+              <a
+                href="{{ url_for('history') }}"
+                class="{% if request.path == url_for('history') %}active{% endif %}"
+                >History</a
+              >
+            </li>
+            
+            <!-- Nature section navigation -->
+            <!-- Links to natural attractions and wildlife content -->
+            <li>
+              <a
+                href="{{ url_for('nature') }}"
+                class="{% if request.path == url_for('nature') %}active{% endif %}"
+                >Nature</a
+              >
+            </li>
+            
+            <!-- About page navigation -->
+            <!-- Links to information about the site/organization -->
+            <li>
+              <a
+                href="{{ url_for('about') }}"
+                class="{% if request.path == url_for('about') %}active{% endif %}"
+                >About</a
+              >
+            </li>
+            
+            <!-- Privacy policy navigation -->
+            <!-- Links to privacy policy page -->
+            <li>
+              <a
+                href="{{ url_for('privacy') }}"
+                class="{% if request.path == url_for('privacy') %}active{% endif %}"
+                >Privacy</a
+              >
+            </li>
+            
+            <!-- Terms of use navigation -->
+            <!-- Links to terms and conditions page -->
+            <li>
+              <a
+                href="{{ url_for('terms') }}"
+                class="{% if request.path == url_for('terms') %}active{% endif %}"
+                >Terms</a
+              >
+            </li>
           </ul>
         </nav>
       </div>
     </header>
 
+    <!-- Main content area -->
+    <!-- Uses semantic main element for accessibility -->
     <main>
+      <!-- Primary content block for child templates -->
+      <!-- Child templates inject their main content here -->
       {% block content %}{% endblock %} 
+      
+      <!-- Additional block for card sliders/carousels -->
+      <!-- Separate block allows for specialized carousel content -->
       {% block card_slider %}{% endblock %}
     </main>
 
+    <!-- Site footer containing copyright and legal links -->
     <footer class="site-footer">
       <div class="container">
+        <!-- Copyright notice -->
         <p>&copy; 2025 Discover India. All rights reserved.</p>
+        
+        <!-- Footer navigation for legal pages -->
         <div class="footer-links">
-          <a href="{{ url_for('privacy') }}" class="{% if request.path == url_for('privacy') %}active{% endif %}">Privacy Policy</a>
-          <a href="{{ url_for('terms') }}" class="{% if request.path == url_for('terms') %}active{% endif %}">Terms of Use</a>
+          <!-- Privacy policy link with active state detection -->
+          <a
+            href="{{ url_for('privacy') }}"
+            class="{% if request.path == url_for('privacy') %}active{% endif %}"
+            >Privacy Policy</a
+          >
+          
+          <!-- Terms of use link with active state detection -->
+          <a
+            href="{{ url_for('terms') }}"
+            class="{% if request.path == url_for('terms') %}active{% endif %}"
+            >Terms of Use</a
+          >
         </div>
       </div>
     </footer>
 
+    <!-- Main JavaScript file -->
+    <!-- Handles theme switching, mobile menu, carousel functionality, etc. -->
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
   </body>
 </html>

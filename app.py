@@ -1,162 +1,444 @@
 # app.py
+# Flask web application for exploring Indian culture, cuisine, history, and nature
+# This application uses Flask-SQLAlchemy for database operations and serves as a travel/cultural guide
+
+# Import necessary Flask modules and extensions
 from flask import Flask, render_template, url_for, g
 from flask_sqlalchemy import SQLAlchemy
 import os
 
 # Create the Flask application instance
+# This is the core of our web application
 app = Flask(__name__)
 
+# Configuration Section
+# ===================
+
 # Get the base directory of the application
+# This ensures the database path is relative to the app location
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 # Configure the SQLite database
+# SQLite is a lightweight database perfect for small to medium applications
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'site.db')
+# Disable modification tracking to save resources (not needed for this app)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Set the server name and a secret key
+# SERVER_NAME is used for URL generation when not in a request context
 app.config['SERVER_NAME'] = 'localhost:5000'
+# SECRET_KEY is used for session encryption and CSRF protection
+# Note: In production, this should be a secure, randomly generated key
 app.config['SECRET_KEY'] = 'your-very-secret-key-that-you-should-change'
 
-# Initialize SQLAlchemy
+# Initialize SQLAlchemy with our Flask app
+# This creates the database connection and ORM functionality
 db = SQLAlchemy(app)
 
-# Define the database models
+# Database Models
+# ===============
+
 class Destination(db.Model):
+    """
+    Main model for storing destination/content information.
+    This model is flexible and stores various types of content:
+    - Cultural destinations (festivals, traditions, arts)
+    - Historical sites and information
+    - Natural attractions
+    - Cuisine information
+    - Hero images for pages
+    """
+    
+    # Primary key - unique identifier for each destination
     id = db.Column(db.Integer, primary_key=True)
+    
+    # Title of the destination/content (required field)
     title = db.Column(db.String(100), nullable=False)
+    
+    # Short description for cards and previews (required field)
     description = db.Column(db.Text, nullable=False)
+    
+    # URL path to the associated image (optional)
     image_url = db.Column(db.String(200), nullable=True)
+    
+    # Main category: Culture, History, Nature, Cuisine, Hero, About
     category = db.Column(db.String(50), nullable=True)
+    
+    # Subcategory for more specific grouping (e.g., 'North Indian' under Cuisine)
     sub_category = db.Column(db.String(50), nullable=True)
+    
+    # Detailed description for individual destination pages (optional)
     long_description = db.Column(db.Text, nullable=True)
 
     def __repr__(self):
+        """String representation of the Destination object for debugging"""
         return f"Destination('{self.title}', '{self.category}')"
 
+
 class CategoryHero(db.Model):
+    """
+    Model for storing hero images and content for category pages.
+    Each category (Culture, History, Nature, Cuisine) has its own hero section.
+    """
+    
+    # Primary key
     id = db.Column(db.Integer, primary_key=True)
+    
+    # Category name - must be unique (each category has one hero)
     category = db.Column(db.String(50), nullable=False, unique=True)
+    
+    # Main title for the hero section
     title = db.Column(db.String(100), nullable=False)
+    
+    # Subtitle/tagline for additional context (optional)
     subtitle = db.Column(db.String(200), nullable=True)
+    
+    # Hero image URL (required for visual impact)
     image_url = db.Column(db.String(200), nullable=False)
+    
+    # Detailed description for the category (optional)
     long_description = db.Column(db.Text, nullable=True)
 
     def __repr__(self):
+        """String representation of the CategoryHero object for debugging"""
         return f"CategoryHero('{self.category}', '{self.title}')"
 
-# Get categories before each request
+
+# Request Context Processors
+# ==========================
+
 @app.before_request
 def get_categories():
-    categories_data = Destination.query.with_entities(Destination.category).filter(Destination.category.in_(['Culture', 'Cuisine', 'History', 'Nature'])).distinct().all()
+    """
+    Function that runs before each request to populate global categories.
+    This makes categories available in all templates via the 'g' object.
+    Only includes main navigation categories: Culture, Cuisine, History, Nature
+    """
+    # Query distinct categories from the database
+    categories_data = Destination.query.with_entities(Destination.category).filter(
+        Destination.category.in_(['Culture', 'Cuisine', 'History', 'Nature'])
+    ).distinct().all()
+    
+    # Extract category names from tuples and store in Flask's 'g' object
+    # 'g' is available throughout the request lifecycle and in templates
     g.categories = [c[0] for c in categories_data]
 
-# The home page route
+
+# Route Handlers
+# ==============
+
 @app.route('/')
 def home():
+    """
+    Home page route handler.
+    Displays hero image and highlights from different categories.
+    This is the main landing page that showcases the best content.
+    """
+    # Get the main hero image for the homepage banner
     hero_image = Destination.query.filter_by(category='Hero').first()
+    
+    # Get all culture highlights (festivals, traditions, arts)
     culture_highlights = Destination.query.filter_by(category='Culture').all()
+    
+    # Get limited number of history highlights for the homepage preview
     history_highlights = Destination.query.filter_by(category='History').limit(4).all()
+    
+    # Get limited number of nature highlights for the homepage preview
     nature_highlights = Destination.query.filter_by(category='Nature').limit(4).all()
+    
+    # Get featured highlights - items with subcategories (6 items max)
     featured_highlights = Destination.query.filter(Destination.sub_category.isnot(None)).limit(6).all()
-    return render_template('index.html', hero_image=hero_image, culture_highlights=culture_highlights, history_highlights=history_highlights, nature_highlights=nature_highlights, featured_highlights=featured_highlights)
+    
+    # Render the homepage template with all the gathered data
+    return render_template('index.html', 
+                         hero_image=hero_image, 
+                         culture_highlights=culture_highlights, 
+                         history_highlights=history_highlights, 
+                         nature_highlights=nature_highlights, 
+                         featured_highlights=featured_highlights)
 
-# Route for the About Us page
+
 @app.route('/about')
 def about():
-    """Renders the About Us page with a hero image from the database."""
+    """
+    About Us page route handler.
+    Renders the About Us page with a hero image from the database.
+    """
+    # Get the hero image specifically for the About page
     about_hero = Destination.query.filter_by(category='About').first()
+    
+    # Render the about template with the hero image
     return render_template('about.html', about_hero=about_hero)
 
-# Route for the Privacy Policy page
+
 @app.route('/privacy')
 def privacy():
-    """Renders the Privacy Policy page."""
+    """
+    Privacy Policy page route handler.
+    Renders a static privacy policy page.
+    """
     return render_template('privacy.html')
 
-# Route for the Terms of Use page
+
 @app.route('/terms')
 def terms():
-    """Renders the Terms of Use page."""
+    """
+    Terms of Use page route handler.
+    Renders a static terms of use page.
+    """
     return render_template('terms.html')
 
-# Refactored routes for Culture, History, and Nature
+
+# Category Page Routes
+# ===================
+# These routes handle the main category pages using a shared template
+
 @app.route('/culture')
 def culture():
+    """
+    Culture category page route handler.
+    Displays all cultural destinations (festivals, traditions, arts).
+    """
+    # Get all destinations in the Culture category
     items = Destination.query.filter_by(category='Culture').all()
+    
+    # Get the hero content for the Culture category page
     hero = CategoryHero.query.filter_by(category='Culture').first()
-    return render_template('sub_category_page.html', items=items, hero=hero, category='culture')
+    
+    # Use the shared sub_category_page.html template
+    return render_template('sub_category_page.html', 
+                         items=items, 
+                         hero=hero, 
+                         category='culture')
+
 
 @app.route('/history')
 def history():
+    """
+    History category page route handler.
+    Displays all historical destinations and information.
+    """
+    # Get all destinations in the History category
     items = Destination.query.filter_by(category='History').all()
+    
+    # Get the hero content for the History category page
     hero = CategoryHero.query.filter_by(category='History').first()
-    return render_template('sub_category_page.html', items=items, hero=hero, category='history')
+    
+    # Use the shared sub_category_page.html template
+    return render_template('sub_category_page.html', 
+                         items=items, 
+                         hero=hero, 
+                         category='history')
+
 
 @app.route('/nature')
 def nature():
+    """
+    Nature category page route handler.
+    Displays all nature and wildlife destinations.
+    """
+    # Get all destinations in the Nature category
     items = Destination.query.filter_by(category='Nature').all()
+    
+    # Get the hero content for the Nature category page
     hero = CategoryHero.query.filter_by(category='Nature').first()
-    return render_template('sub_category_page.html', items=items, hero=hero, category='nature')
+    
+    # Use the shared sub_category_page.html template
+    return render_template('sub_category_page.html', 
+                         items=items, 
+                         hero=hero, 
+                         category='nature')
+
 
 @app.route('/cuisine')
 def cuisine():
-    items = Destination.query.filter(Destination.category == 'Cuisine', Destination.sub_category.isnot(None)).group_by(Destination.sub_category).all()
+    """
+    Cuisine category page route handler.
+    Displays cuisine subcategories (grouped by sub_category).
+    Note: This shows one item per subcategory, not all cuisine items.
+    """
+    # Get one representative item from each cuisine subcategory
+    # This creates a "menu" of cuisine types rather than showing all items
+    items = Destination.query.filter(
+        Destination.category == 'Cuisine', 
+        Destination.sub_category.isnot(None)
+    ).group_by(Destination.sub_category).all()
+    
+    # Get the hero content for the Cuisine category page
     hero = CategoryHero.query.filter_by(category='Cuisine').first()
-    return render_template('sub_category_page.html', items=items, hero=hero, category='cuisine')
+    
+    # Use the shared sub_category_page.html template
+    return render_template('sub_category_page.html', 
+                         items=items, 
+                         hero=hero, 
+                         category='cuisine')
 
-# The new, crucial route that creates a dynamic page for each item
+
+# Dynamic Detail Page Route
+# =========================
+
 @app.route('/details/<string:title>')
 def details(title):
+    """
+    Dynamic details page route handler.
+    Creates individual pages for each destination based on title.
+    This is the crucial route that allows each item to have its own page.
+    
+    Args:
+        title (str): The title of the destination (from URL path)
+    
+    Returns:
+        Rendered details.html template or 404 if not found
+    """
+    # Find the specific item by title, return 404 if not found
     item = Destination.query.filter_by(title=title).first_or_404()
+    
+    # Get all related items in the same category for "Related Content" section
     all_related_items = Destination.query.filter_by(category=item.category).all()
-    return render_template('details.html', item=item, all_related_items=all_related_items)
+    
+    # Render the details page with the item and related items
+    return render_template('details.html', 
+                         item=item, 
+                         all_related_items=all_related_items)
 
 
-# --- CUISINE SUBPAGE ROUTES ---
+# Cuisine Subcategory Routes
+# ==========================
+# These routes handle specific cuisine subcategories
+
 @app.route('/cuisine/north-indian')
 def north_indian_page():
+    """
+    North Indian cuisine subcategory page.
+    Displays all North Indian dishes and information.
+    """
+    # Get all items in the North Indian subcategory
     items = Destination.query.filter_by(sub_category='North Indian').all()
+    
+    # Use the main cuisine hero for consistency
     hero = CategoryHero.query.filter_by(category='Cuisine').first()
-    return render_template('cuisine_subpage.html', items=items, hero=hero, page_title='North Indian Cuisine')
+    
+    # Use the cuisine-specific template
+    return render_template('cuisine_subpage.html', 
+                         items=items, 
+                         hero=hero, 
+                         page_title='North Indian Cuisine')
+
 
 @app.route('/cuisine/south-indian')
 def south_indian_page():
+    """
+    South Indian cuisine subcategory page.
+    Displays all South Indian dishes and information.
+    """
+    # Get all items in the South Indian subcategory
     items = Destination.query.filter_by(sub_category='South Indian').all()
+    
+    # Use the main cuisine hero for consistency
     hero = CategoryHero.query.filter_by(category='Cuisine').first()
-    return render_template('cuisine_subpage.html', items=items, hero=hero, page_title='South Indian Cuisine')
+    
+    # Use the cuisine-specific template
+    return render_template('cuisine_subpage.html', 
+                         items=items, 
+                         hero=hero, 
+                         page_title='South Indian Cuisine')
+
 
 @app.route('/cuisine/sweets')
 def indian_sweets_page():
+    """
+    Indian sweets subcategory page.
+    Displays all traditional Indian desserts and sweets.
+    """
+    # Get all items in the Sweets subcategory
     items = Destination.query.filter_by(sub_category='Sweets').all()
+    
+    # Use the main cuisine hero for consistency
     hero = CategoryHero.query.filter_by(category='Cuisine').first()
-    return render_template('cuisine_subpage.html', items=items, hero=hero, page_title='Indian Sweets')
+    
+    # Use the cuisine-specific template
+    return render_template('cuisine_subpage.html', 
+                         items=items, 
+                         hero=hero, 
+                         page_title='Indian Sweets')
+
 
 @app.route('/cuisine/thali-meals')
 def thali_meals_page():
+    """
+    Thali meals subcategory page.
+    Displays information about traditional Indian thali meals.
+    """
+    # Get all items in the Thali Meals subcategory
     items = Destination.query.filter_by(sub_category='Thali Meals').all()
+    
+    # Use the main cuisine hero for consistency
     hero = CategoryHero.query.filter_by(category='Cuisine').first()
-    return render_template('cuisine_subpage.html', items=items, hero=hero, page_title='Thali Meals')
+    
+    # Use the cuisine-specific template
+    return render_template('cuisine_subpage.html', 
+                         items=items, 
+                         hero=hero, 
+                         page_title='Thali Meals')
+
 
 @app.route('/cuisine/spices')
 def spices_page():
+    """
+    Spices subcategory page.
+    Displays information about Indian spices and their uses.
+    """
+    # Get all items in the Spices subcategory
     items = Destination.query.filter_by(sub_category='Spices').all()
+    
+    # Use the main cuisine hero for consistency
     hero = CategoryHero.query.filter_by(category='Cuisine').first()
-    return render_template('cuisine_subpage.html', items=items, hero=hero, page_title='Spices of India')
+    
+    # Use the cuisine-specific template
+    return render_template('cuisine_subpage.html', 
+                         items=items, 
+                         hero=hero, 
+                         page_title='Spices of India')
+
 
 @app.route('/cuisine/street-food')
 def street_food_page():
+    """
+    Street food subcategory page.
+    Displays information about Indian street food varieties.
+    """
+    # Get all items in the Street Food subcategory
     items = Destination.query.filter_by(sub_category='Street Food').all()
+    
+    # Use the main cuisine hero for consistency
     hero = CategoryHero.query.filter_by(category='Cuisine').first()
-    return render_template('cuisine_subpage.html', items=items, hero=hero, page_title='Street Food of India')
+    
+    # Use the cuisine-specific template
+    return render_template('cuisine_subpage.html', 
+                         items=items, 
+                         hero=hero, 
+                         page_title='Street Food of India')
+
+
+# Application Initialization and Data Seeding
+# ===========================================
 
 # Main block to run the application
 if __name__ == '__main__':
+    # Create application context for database operations
     with app.app_context():
+        # Create all database tables based on our models
         db.create_all()
+        
         # Check if the database is empty before populating it
+        # This prevents duplicate data on subsequent runs
         if not Destination.query.first():
             print("Database is empty. Adding initial data...")
             
+            # HERO IMAGES
+            # ===========
+            
+            # Main homepage hero image
             hero_photo = Destination(
                 title='Discover India',
                 description='High-resolution photo for the main banner.',
@@ -165,7 +447,7 @@ if __name__ == '__main__':
                 long_description="Explore the beauty of India. The country is well known for its majestic landscapes, captivating wildlife, and rich cultural heritage."
             )
 
-            # A new entry for the About Us page hero photo
+            # About page hero image
             about_hero = Destination(
                 title='Our Story',
                 description='A photo for the About Us page.',
@@ -174,7 +456,11 @@ if __name__ == '__main__':
                 long_description="A hero image for the About Us page."
             )
             
-            # --- New hero photos for each category page ---
+            # CATEGORY HERO IMAGES
+            # ===================
+            # These provide hero sections for each main category page
+            
+            # Culture category hero
             culture_hero = CategoryHero(
                 category='Culture',
                 title='Vibrant Culture & Traditions',
@@ -182,6 +468,8 @@ if __name__ == '__main__':
                 image_url=url_for('static', filename='images/culture-hero.jpg'),
                 long_description="India is a mosaic of rich cultural traditions, a land where every festival tells a story and every art form carries centuries of history. From the vibrant festivals of Holi and Diwali to the ancient practices of Yoga and Ayurveda, the country's heritage is a living, breathing testament to its diverse people. This cultural vibrancy is celebrated in everything from its classical dance forms to its colorful folk arts, creating an experience that is both spiritual and profoundly human."
             )
+            
+            # Cuisine category hero
             cuisine_hero = CategoryHero(
                 category='Cuisine',
                 title='A Culinary Journey',
@@ -189,6 +477,8 @@ if __name__ == '__main__':
                 image_url=url_for('static', filename='images/cuisine-hero.jpg'),
                 long_description="Indian cuisine is a vibrant and complex tapestry of flavors, reflecting the country's vast geography and diverse cultures. Each region boasts its own unique culinary identity, from the rich, creamy curries of the north to the fiery, spice-laden dishes of the south. Indian food is a celebration of spices, fresh ingredients, and age-old cooking techniques, offering a sensory experience that delights and surprises with every bite."
             )
+            
+            # History category hero
             history_hero = CategoryHero(
                 category='History',
                 title='India\'s Majestic Past',
@@ -196,15 +486,23 @@ if __name__ == '__main__':
                 image_url=url_for('static', filename='images/history-hero.jpg'),
                 long_description="India's history is a grand saga of empires, invasions, and cultural renaissances. From the ancient Indus Valley Civilization to the sprawling Mughal Empire and the British colonial era, the country's past is etched in its magnificent forts, temples, and monuments. It is a history of innovation, resilience, and a continuous quest for knowledge, leaving behind a legacy that continues to inspire and shape the modern world."
             )
+            
+            # Nature category hero
             nature_hero = CategoryHero(
                 category='Nature',
                 title='Breathtaking Nature & Wildlife',
                 subtitle='From the Himalayan peaks to tropical backwaters, discover India\'s natural beauty.',
                 image_url=url_for('static', filename='images/nature-hero.jpg'),
-                long_description="India’s landscape is as diverse as its people, offering a breathtaking range of natural wonders. The towering peaks of the Himalayas, the lush, misty forests of the Western Ghats, and the serene backwaters of Kerala provide a stunning backdrop for unique wildlife. This is a land where you can encounter majestic tigers, playful elephants, and vibrant bird species in their natural habitats, making it a paradise for nature lovers and adventurers."
+                long_description="India's landscape is as diverse as its people, offering a breathtaking range of natural wonders. The towering peaks of the Himalayas, the lush, misty forests of the Western Ghats, and the serene backwaters of Kerala provide a stunning backdrop for unique wildlife. This is a land where you can encounter majestic tigers, playful elephants, and vibrant bird species in their natural habitats, making it a paradise for nature lovers and adventurers."
             )
             
-            # --- Culture Destinations ---
+            # CULTURE DESTINATIONS
+            # ===================
+            # Cultural content is organized into subcategories: Festivals, Traditions, and Arts
+            
+            # --- FESTIVALS SUBCATEGORY ---
+            
+            # Holi festival information
             festival1 = Destination(
                 title='Holi',
                 description="The festival of colors, Holi, is a joyous celebration of spring, friendship, and the triumph of good over evil.",
@@ -213,6 +511,8 @@ if __name__ == '__main__':
                 category='Culture',
                 sub_category='Vibrant Festivals'
             )
+            
+            # Diwali festival information
             festival2 = Destination(
                 title='Diwali',
                 description="Known as the festival of lights, Diwali symbolizes the spiritual victory of light over darkness and good over evil.",
@@ -221,6 +521,8 @@ if __name__ == '__main__':
                 category='Culture',
                 sub_category='Vibrant Festivals'
             )
+            
+            # Durga Puja festival information
             festival3 = Destination(
                 title='Durga Puja',
                 description="A grand festival celebrating the goddess Durga, marking her victory over the buffalo demon Mahishasura.",
@@ -229,6 +531,8 @@ if __name__ == '__main__':
                 category='Culture',
                 sub_category='Vibrant Festivals'
             )
+            
+            # Pushkar Camel Fair information
             festival4 = Destination(
                 title='Pushkar Camel Fair',
                 description="A mesmerizing cultural spectacle in Rajasthan, bringing together thousands of camels, traders, and tourists.",
@@ -238,6 +542,9 @@ if __name__ == '__main__':
                 sub_category='Vibrant Festivals'
             )
             
+            # --- TRADITIONS SUBCATEGORY ---
+            
+            # Yoga and meditation information
             tradition1 = Destination(
                 title='Yoga & Meditation',
                 description="The ancient science of Yoga and meditation is a cornerstone of Indian philosophy, promoting physical and mental well-being.",
@@ -246,6 +553,8 @@ if __name__ == '__main__':
                 category='Culture',
                 sub_category='Rich Traditions'
             )
+            
+            # Ayurveda information
             tradition2 = Destination(
                 title='Ayurveda',
                 description="An ancient system of medicine and life philosophy that emphasizes holistic healing through diet, herbs, and lifestyle.",
@@ -254,6 +563,8 @@ if __name__ == '__main__':
                 category='Culture',
                 sub_category='Rich Traditions'
             )
+            
+            # Indian wedding traditions information
             tradition3 = Destination(
                 title='Indian Wedding',
                 description="Indian weddings are elaborate, multi-day celebrations filled with rich rituals, vibrant colors, and immense joy.",
@@ -262,6 +573,8 @@ if __name__ == '__main__':
                 category='Culture',
                 sub_category='Rich Traditions'
             )
+            
+            # Cuisine traditions information
             tradition4 = Destination(
                 title='Cuisine Traditions',
                 description="From family recipes to regional specialities, Indian cuisine is a cherished tradition passed down through generations.",
@@ -271,6 +584,9 @@ if __name__ == '__main__':
                 sub_category='Rich Traditions'
             )
 
+            # --- ARTS SUBCATEGORY ---
+            
+            # Classical dance information
             art1 = Destination(
                 title='Classical Dances',
                 description='Experience the beauty and grace of classical Indian dance forms like Bharatanatyam and Kathak.',
@@ -279,6 +595,8 @@ if __name__ == '__main__':
                 category='Culture',
                 sub_category='Diverse Arts'
             )
+            
+            # Textile craftsmanship information
             art2 = Destination(
                 title='Textile Craftsmanship',
                 description='Discover the intricate art of Indian textiles, from silk weaving to vibrant block prints.',
@@ -287,6 +605,8 @@ if __name__ == '__main__':
                 category='Culture',
                 sub_category='Diverse Arts'
             )
+            
+            # Indian music information
             art3 = Destination(
                 title='Indian Music',
                 description='Get lost in the soulful melodies of classical Indian music, from the sitar to tabla.',
@@ -295,16 +615,22 @@ if __name__ == '__main__':
                 category='Culture',
                 sub_category='Diverse Arts'
             )
+            
+            # Art and architecture information
             art4 = Destination(
                 title='Art & Architecture',
-                description='Marvel at the stunning blend of art and architecture in India’s ancient temples and monuments.',
+                description='Marvel at the stunning blend of art and architecture in India\'s ancient temples and monuments.',
                 long_description="India's art and architecture are a grand reflection of its layered history and diverse cultures. From the ancient rock-cut temples of Ajanta and Ellora to the magnificent Mughal forts and palaces and the intricate carvings of Hindu temples, each architectural style tells a unique story. The buildings are not merely structures but works of art, adorned with detailed sculptures, frescoes, and paintings that bring myths and legends to life. They stand as a testament to the country's profound artistic and engineering legacy.",
                 image_url=url_for('static', filename='images/architecture.jpg'),
                 category='Culture',
                 sub_category='Diverse Arts'
             )
             
-            # --- History Destinations ---
+            # HISTORY DESTINATIONS
+            # ===================
+            # Historical content focuses on India's rich past and heritage sites
+            
+            # Ancient forts and palaces information
             history_highlight1 = Destination(
                 title='Ancient Forts & Palaces',
                 description='Explore the majestic forts and opulent palaces that tell a tale of India\'s royal past.',
@@ -312,6 +638,8 @@ if __name__ == '__main__':
                 image_url=url_for('static', filename='images/history.jpg'),
                 category='History'
             )
+            
+            # Taj Mahal information
             history_highlight2 = Destination(
                 title='The Taj Mahal',
                 description='The iconic monument of love, a masterpiece of Mughal architecture and one of the new wonders of the world.',
@@ -319,6 +647,8 @@ if __name__ == '__main__':
                 image_url=url_for('static', filename='images/taj-mahal.jpg'),
                 category='History'
             )
+            
+            # Historical city tours information
             history_highlight3 = Destination(
                 title='Historical City Tours',
                 description='Walk through the vibrant lanes of ancient cities like Delhi and Jaipur, each narrating a unique historical saga.',
@@ -326,6 +656,8 @@ if __name__ == '__main__':
                 image_url=url_for('static', filename='images/city-tour.jpg'),
                 category='History'
             )
+            
+            # Architectural ruins information
             history_highlight4 = Destination(
                 title='Architectural Ruins',
                 description='Uncover the secrets of a bygone era by visiting the impressive and intricate ruins of ancient empires.',
@@ -334,7 +666,11 @@ if __name__ == '__main__':
                 category='History'
             )
             
-            # --- Nature Destinations ---
+            # NATURE DESTINATIONS
+            # ==================
+            # Nature content showcases India's diverse landscapes and wildlife
+            
+            # Himalayan landscapes information
             nature_highlight1 = Destination(
                 title='Himalayan Landscapes',
                 description='Discover the breathtaking beauty of the Himalayas, from snowy peaks to lush valleys.',
@@ -342,6 +678,8 @@ if __name__ == '__main__':
                 image_url=url_for('static', filename='images/nature.jpg'),
                 category='Nature'
             )
+            
+            # Tropical backwaters information
             nature_highlight2 = Destination(
                 title='Tropical Backwaters',
                 description='Experience the serene beauty of Kerala\'s backwaters on a traditional houseboat journey.',
@@ -349,6 +687,8 @@ if __name__ == '__main__':
                 image_url=url_for('static', filename='images/backwaters.jpg'),
                 category='Nature'
             )
+            
+            # Wildlife sanctuaries information
             nature_highlight3 = Destination(
                 title='Wildlife Sanctuaries',
                 description='Get up close with India\'s diverse wildlife, including tigers, elephants, and rare bird species.',
@@ -356,6 +696,8 @@ if __name__ == '__main__':
                 image_url=url_for('static', filename='images/wildlife.jpg'),
                 category='Nature'
             )
+            
+            # Desert wonders information
             nature_highlight4 = Destination(
                 title='Desert Wonders',
                 description='Explore the vast and stunning Thar Desert on a camel safari, witnessing golden sand dunes and vibrant culture.',
@@ -364,7 +706,11 @@ if __name__ == '__main__':
                 category='Nature'
             )
             
-            # --- Cuisine Destinations ---
+            # CUISINE DESTINATIONS
+            # ===================
+            # Cuisine content is organized by subcategories representing different types of food
+            
+            # Indian sweets information
             cuisine1 = Destination(
                 title='Indian Sweets',
                 description='Indulge in a variety of traditional Indian desserts and sweets from different regions.',
@@ -373,6 +719,8 @@ if __name__ == '__main__':
                 category='Cuisine',
                 sub_category='Sweets'
             )
+            
+            # North Indian dishes information
             cuisine2 = Destination(
                 title='North Indian Dishes',
                 description='Explore the rich and creamy curries, breads, and tandoori dishes of North India.',
@@ -381,6 +729,8 @@ if __name__ == '__main__':
                 category='Cuisine',
                 sub_category='North Indian'
             )
+            
+            # South Indian dishes information
             cuisine3 = Destination(
                 title='South Indian Dishes',
                 description='Discover the flavorful and spicy dishes, dosas, and idlis from South India.',
@@ -389,6 +739,8 @@ if __name__ == '__main__':
                 category='Cuisine',
                 sub_category='South Indian'
             )
+            
+            # Indian street food information
             cuisine4 = Destination(
                 title='Indian Street Food',
                 description='Savor the vibrant and diverse flavors of India\'s popular street food, from chaat to pakoras.',
@@ -397,6 +749,8 @@ if __name__ == '__main__':
                 category='Cuisine',
                 sub_category='Street Food'
             )
+            
+            # Thali meals information
             cuisine5 = Destination(
                 title='Thali Meals',
                 description='Experience a full-course Indian meal with a variety of dishes served on a single platter.',
@@ -405,6 +759,8 @@ if __name__ == '__main__':
                 category='Cuisine',
                 sub_category='Thali Meals'
             )
+            
+            # Spices of India information
             cuisine6 = Destination(
                 title='Spices of India',
                 description='Discover the heart of Indian cooking with a look at its most essential spices.',
@@ -414,19 +770,37 @@ if __name__ == '__main__':
                 sub_category='Spices'
             )
 
-            # Add all items to the database session
+            # DATABASE OPERATIONS
+            # ==================
+            # Add all the destination objects to the database session
             db.session.add_all([
+                # Hero images for main pages
                 hero_photo, about_hero,
+                
+                # Category hero objects for category pages
                 culture_hero, cuisine_hero, history_hero, nature_hero,
+                
+                # Culture category destinations (festivals, traditions, arts)
                 festival1, festival2, festival3, festival4,
                 tradition1, tradition2, tradition3, tradition4,
                 art1, art2, art3, art4,
+                
+                # History category destinations
                 history_highlight1, history_highlight2, history_highlight3, history_highlight4,
+                
+                # Nature category destinations
                 nature_highlight1, nature_highlight2, nature_highlight3, nature_highlight4,
+                
+                # Cuisine category destinations (different subcategories of food)
                 cuisine1, cuisine2, cuisine3, cuisine4, cuisine5, cuisine6
             ])
-            # Commit the session to save the data
+            
+            # Commit the session to save all data to the database
+            # This makes all the changes permanent
             db.session.commit()
             print("Initial data added to the database.")
 
+    # Run the Flask development server
+    # debug=True enables automatic reloading and detailed error messages
+    # This should be set to False in production environments
     app.run(debug=True)

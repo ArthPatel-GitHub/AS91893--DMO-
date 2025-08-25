@@ -1,41 +1,74 @@
+{# Extends the base template to inherit common site structure and styling #}
 {% extends 'base.html' %}
 
+{# Sets the browser tab title and potentially meta title for SEO #}
 {% block title %}Terms of Use{% endblock %}
 
+{# Main content block that will replace the content area in the base template #}
 {% block content %}
+
+<!-- Main content wrapper using semantic section element -->
 <section class="content-section">
+    <!-- Container for consistent page width and responsive design -->
     <div class="container">
+        <!-- Main page heading using h1 for proper SEO hierarchy and accessibility -->
         <h1 class="page-title">Terms of Use</h1>
+        
+        <!-- Effective date in italics - important legal document timestamp -->
         <p><em>Effective Date: August 23, 2025</em></p>
 
+        <!-- Educational disclaimer section with prominent heading -->
+        <!-- Note: Class name has space but should work with CSS - consider "educational-purposes" -->
         <h2 class="Educational-purposes">NOTE: Education Purposes</h2>
+        <!-- Clear disclaimer that this is demo content, not legally binding -->
         <p>This website is intended for educational purposes only. All information is for demonstration purposes and is not real. We do not collect or store any user data.</p>
         
+        <!-- Company introduction section -->
+        <!-- Note: Class name has space - consider "discover-india" for CSS compatibility -->
         <h2 class="Discover India">Discover India</h2>
+        <!-- Welcome statement and agreement clause - establishes legal binding nature -->
         <p>Welcome to Discover India. By accessing and using our website, you agree to comply with and be bound by the following terms and conditions. If you do not agree with these terms, you should not use this website.</p>
 
+        <!-- Intellectual property section - protects company's creative assets -->
         <h2 class="section-sub-heading">Intellectual Property Rights</h2>
+        <!-- Comprehensive list of protected content types and usage restrictions -->
         <p>All content on this website, including text, graphics, logos, images, and the overall design, is the property of Discover India and is protected by copyright and other intellectual property laws. You may not reproduce, distribute, or create derivative works from any content without our express written permission.</p>
 
+        <!-- Legal protection section - limits company liability -->
         <h2 class="section-sub-heading">Limitation of Liability</h2>
+        <!-- Standard "as is" disclaimer and damage limitation clause -->
         <p>The information on this website is provided "as is" without any warranties. In no event shall Discover India be liable for any damages arising out of your use or inability to use the website.</p>
 
+        <!-- User behavior guidelines section -->
         <h2 class="section-sub-heading">User Conduct</h2>
+        <!-- Introduction to prohibited activities -->
         <p>When using our website, you agree not to:</p>
+        <!-- Unordered list for clear presentation of prohibited behaviors -->
         <ul>
+            <!-- Legal compliance requirement -->
             <li>Use the website for any unlawful purpose.</li>
+            <!-- Security and technical integrity protection -->
             <li>Interfere with the security or integrity of the website.</li>
+            <!-- Content quality and safety standards -->
             <li>Post or transmit any material that is offensive, harmful, or illegal.</li>
         </ul>
 
+        <!-- Third-party links disclaimer section -->
         <h2 class="section-sub-heading">Links to Third-Party Websites</h2>
+        <!-- Liability limitation for external content not under company control -->
         <p>Our website may contain links to third-party websites that are not owned or controlled by us. We are not responsible for the content, privacy policies, or practices of any third-party sites.</p>
 
+        <!-- Legal jurisdiction section - establishes applicable law -->
         <h2 class="section-sub-heading">Governing Law</h2>
+        <!-- Placeholder for jurisdiction specification - needs customization for actual use -->
         <p>These Terms of Use are governed by and construed in accordance with the laws of [Your Country/State].</p>
 
+        <!-- Terms modification section - allows for future updates -->
         <h2 class="section-sub-heading">Changes to the Terms</h2>
+        <!-- Standard clause allowing unilateral terms changes with continued use as acceptance -->
         <p>We reserve the right to modify these terms at any time. Your continued use of the website after any changes signifies your acceptance of the new terms.</p>
-    </div>
-</section>
-{% endblock %}
+        
+    </div> <!-- End container -->
+</section> <!-- End content-section -->
+
+{% endblock %} <!-- End content block -->

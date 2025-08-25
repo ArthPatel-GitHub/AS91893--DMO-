@@ -1,33 +1,80 @@
+<!-- About Us page template -->
+<!-- Extends the base.html template to inherit header, footer, and overall structure -->
 {% extends 'base.html' %}
 
+<!-- Set the page title that appears in the browser tab -->
+<!-- This replaces the title block in base.html -->
 {% block title %}About Us{% endblock %}
 
+<!-- Main content block that replaces the content block in base.html -->
 {% block content %}
+<!-- About Us page section with semantic HTML -->
+<!-- Uses BEM-style CSS class naming convention for maintainable styling -->
 <section class="about-us-page">
+    <!-- Container div for consistent page width and centering -->
     <div class="container">
+        <!-- Main page heading -->
+        <!-- Uses h1 for SEO and accessibility - primary heading on the page -->
         <h1 class="page-title">Our Story</h1>
+        
+        <!-- Introductory paragraph -->
+        <!-- Sets the tone and gives overview of the organization's mission -->
         <p class="intro-paragraph">Welcome to Discover India! We are passionate about showcasing the incredible beauty, rich history, and vibrant culture of one of the world's most diverse countries. Our mission is to inspire travelers and enthusiasts to explore India's hidden gems and iconic landmarks.</p>
 
+        <!-- Two-column grid layout for content and image -->
+        <!-- Allows for responsive design with text and visual elements -->
         <div class="about-content-grid">
+            <!-- Left column: Main about text content -->
             <div class="about-text">
+                <!-- Secondary heading for "Who We Are" section -->
                 <h2 class="section-sub-heading">Who We Are</h2>
+                
+                <!-- First paragraph: Company founding and team description -->
+                <!-- Establishes credibility and personal connection -->
                 <p>Founded in 2025, Discover India was born out of a love for travel and a deep respect for India's heritage. Our team is a small group of writers, photographers, and travel experts dedicated to curating authentic and insightful content. We believe that every corner of India tells a unique story, and we're here to share those stories with you.</p>
+                
+                <!-- Second paragraph: Scope and goals -->
+                <!-- Describes geographic coverage and company objectives -->
                 <p>From the snow-capped Himalayas to the sun-kissed beaches of Goa, and from ancient temples to bustling modern cities, our goal is to provide a comprehensive guide that goes beyond the typical tourist trails. We hope our content helps you plan your next adventure or simply learn something new about this magnificent country.</p>
             </div>
+            
+            <!-- Right column: Hero image for the about page -->
             <div class="about-image">
+                <!-- Conditional image rendering using Jinja2 template logic -->
+                <!-- First checks if about_hero object exists and has an image_url -->
                 {% if about_hero and about_hero.image_url %}
+                    <!-- Dynamic image from database -->
+                    <!-- Uses hero image data passed from Flask route -->
                     <img src="{{ about_hero.image_url }}" alt="{{ about_hero.title }}" class="about-img">
                 {% else %}
+                    <!-- Fallback static image if no database image is available -->
+                    <!-- Ensures page always has visual content -->
                     <img src="{{ url_for('static', filename='images/about-us.jpg') }}" alt="A team of people on a journey together" class="about-img">
                 {% endif %}
             </div>
         </div>
 
+        <!-- Company values section -->
+        <!-- Secondary heading for organizational principles -->
         <h2 class="section-sub-heading">Our Values</h2>
+        
+        <!-- Unordered list of core company values -->
+        <!-- Uses list format for easy scanning and readability -->
         <ul class="values-list">
+            <!-- Authenticity value -->
+            <!-- Emphasizes genuine, firsthand information -->
             <li>**Authenticity:** We strive to provide genuine, firsthand information and experiences.</li>
+            
+            <!-- Respect value -->
+            <!-- Promotes responsible and culturally sensitive travel -->
             <li>**Respect:** We promote respectful and responsible travel that honors local communities.</li>
+            
+            <!-- Passion value -->
+            <!-- Highlights emotional connection to subject matter -->
             <li>**Passion:** We are driven by a deep passion for India and its countless wonders.</li>
+            
+            <!-- Education value -->
+            <!-- Emphasizes informational and learning objectives -->
             <li>**Education:** We aim to inform and educate our readers about India's diverse traditions and history.</li>
         </ul>
     </div>

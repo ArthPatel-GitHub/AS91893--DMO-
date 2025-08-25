@@ -1,38 +1,73 @@
+{# Extends the base template to inherit site-wide layout elements #}
 {% extends 'base.html' %}
 
+{# Dynamic page title using the hero object's title property - improves SEO and user experience #}
 {% block title %}{{ hero.title }}{% endblock %}
 
+{# Main content block that replaces the content section in base template #}
 {% block content %}
+
+<!-- Hero section with full-width background image for visual impact -->
+<!-- Inline style for dynamic background image from hero object - allows per-category customization -->
 <section class="hero-section" style="background-image: url('{{ hero.image_url }}');">
+    <!-- Overlay div to ensure text readability over background image -->
     <div class="hero-overlay">
+        <!-- Container for consistent content width and centering -->
         <div class="container">
+            <!-- Main heading using hero title - important for SEO hierarchy -->
             <h1>{{ hero.title }}</h1>
+            <!-- Subtitle for additional context/tagline -->
             <p>{{ hero.subtitle }}</p>
+            <!-- Extended description for more detailed category introduction -->
             <p>{{ hero.long_description }}</p>
         </div>
     </div>
 </section>
 
+<!-- Content section showcasing items within this category -->
 <section class="highlight-section">
+    <!-- Container for consistent page layout -->
     <div class="container">
+        <!-- Section heading with dynamic category name capitalized for proper formatting -->
         <h2 class="section-heading">Explore the {{ category|capitalize }}</h2>
         
+        <!-- Interactive card slider component for browsing category items -->
+        <!-- data-slider attribute for JavaScript initialization -->
         <div class="card-slider" data-slider>
+            <!-- Previous navigation button with accessibility attributes -->
+            <!-- data-prev attribute for JavaScript event binding -->
+            <!-- aria-label for screen reader accessibility -->
             <button class="slider-nav prev" data-prev aria-label="Previous">‹</button>
+            
+            <!-- Main slider container that holds all cards -->
+            <!-- data-wrapper attribute for JavaScript manipulation of sliding behavior -->
             <div class="slider-track" data-wrapper>
+                <!-- Loop through all items in the category to create cards -->
                 {% for item in items %}
+                <!-- Each card is a clickable link to the detail page -->
+                <!-- Uses Flask's url_for to generate proper route with item title as parameter -->
                 <a href="{{ url_for('details', title=item.title) }}" class="card-item">
+                    <!-- Item image with alt text for accessibility -->
                     <img src="{{ item.image_url }}" alt="{{ item.title }}">
+                    <!-- Card content section containing text information -->
                     <div class="card-content">
+                        <!-- Item title as h3 for proper heading hierarchy -->
                         <h3>{{ item.title }}</h3>
+                        <!-- Item description for preview/teaser content -->
                         <p>{{ item.description }}</p>
                     </div>
+                    <!-- Call-to-action button encouraging user interaction -->
+                    <!-- Styled as both read-more and cta-button classes for flexible styling -->
                     <span class="read-more cta-button">Learn More</span>
                 </a>
-                {% endfor %}
+                {% endfor %} <!-- End items loop -->
             </div>
+            
+            <!-- Next navigation button with accessibility attributes -->
+            <!-- data-next attribute for JavaScript event binding -->
             <button class="slider-nav next" data-next aria-label="Next">›</button>
-        </div>
-    </div>
-</section>
-{% endblock %}
+        </div> <!-- End card-slider -->
+    </div> <!-- End container -->
+</section> <!-- End highlight-section -->
+
+{% endblock %} <!-- End content block -->

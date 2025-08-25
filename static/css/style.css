@@ -2,72 +2,73 @@
     GLOBAL STYLES & COLOR VARIABLES
     ======================================================================== */
 :root {
-    /* Define base colors */
-    --india-green: #138808;
-    --saffron-orange: #ff9333;
-    --dark-gray: #333333;
-    --light-gray: #f8f8f8;
-    --white: #ffffff;
-    --black: #000000;
+    /* Base color palette - keeping these separate for easy theming */
+    --india-green: #138808; /* Primary green color */
+    --saffron-orange: #ff9333; /* Accent orange color */
+    --dark-gray: #333333; /* Main dark gray for text */
+    --light-gray: #f8f8f8; /* Light background gray */
+    --white: #ffffff; /* Pure white */
+    --black: #000000; /* Pure black */
 
-    /* Semantic color variables, will be overridden by theme classes */
-    --primary-color: var(--india-green);
-    --secondary-color: var(--saffron-orange);
-    --background-color: var(--light-gray);
-    --text-color: var(--dark-gray);
-    --card-bg-color: var(--white);
-    --card-text-color: #666;
-    --footer-bg-color: var(--dark-gray);
-    --header-bg-color: var(--india-green);
-    --shadow-color: rgba(0, 0, 0, 0.1);
-    --card-hover-shadow: rgba(0, 0, 0, 0.15);
+    /* Semantic color variables - override these for different themes */
+    --primary-color: var(--india-green); /* Main brand color */
+    --secondary-color: var(--saffron-orange); /* Secondary brand color */
+    --background-color: var(--light-gray); /* Page background */
+    --text-color: var(--dark-gray); /* Main text color */
+    --card-bg-color: var(--white); /* Card background color */
+    --card-text-color: #666; /* Card text color */
+    --footer-bg-color: var(--dark-gray); /* Footer background */
+    --header-bg-color: var(--india-green); /* Header background */
+    --shadow-color: rgba(0, 0, 0, 0.1); /* Default shadow color */
+    --card-hover-shadow: rgba(0, 0, 0, 0.15); /* Card hover shadow */
 
-    /* Spacing and layout variables */
-    --container-max: 1200px;
-    --container-pad: 16px;
-    --container-pad-lg: 20px;
-    --card-img-h: 160px;
-    --card-img-h-lg: 180px;
-    --card-radius: 8px;
-    --card-gap: 16px;
-    --card-gap-lg: 20px;
-    --fz-base: 16px;
-    --fz-sm: 0.875rem;
-    --fz-md: 1rem;
-    --fz-lg: 1.125rem;
-    --fz-xl: 1.75rem;
-    --fz-xxl: 2rem;
-    --touch-target: 44px;
-    --nav-height: 60px;
-    --hamburger-size: 48px;
+    /* Layout variables - centralizing spacing and sizing for consistency */
+    --container-max: 1200px; /* Maximum container width */
+    --container-pad: 16px; /* Container padding */
+    --container-pad-lg: 20px; /* Large screen container padding */
+    --card-img-h: 160px; /* Card image height */
+    --card-img-h-lg: 180px; /* Large screen card image height */
+    --card-radius: 8px; /* Card border radius */
+    --card-gap: 16px; /* Gap between cards */
+    --card-gap-lg: 20px; /* Large screen gap between cards */
+    --fz-base: 16px; /* Base font size */
+    --fz-sm: 0.875rem; /* Small font size */
+    --fz-md: 1rem; /* Medium font size */
+    --fz-lg: 1.125rem; /* Large font size */
+    --fz-xl: 1.75rem; /* Extra large font size */
+    --fz-xxl: 2rem; /* Extra extra large font size */
+    --touch-target: 44px; /* Minimum touch target for accessibility */
+    --nav-height: 60px; /* Navigation bar height */
+    --hamburger-size: 48px; /* Hamburger menu button size */
 }
 
 /* ========================================================================
     THEME CLASSES
     ======================================================================== */
 .dark-theme {
-    /* Inherits from :root, with specific overrides */
-    --background-color: var(--dark-gray);
-    --card-bg-color: #444; /* Slightly lighter card for contrast */
-    --text-color: var(--white);
-    --footer-bg-color: var(--black);
-    --header-bg-color: var(--india-green);
-    --card-text-color: #eee;
-    --shadow-color: rgba(255, 255, 255, 0.1);
-    --card-hover-shadow: rgba(255, 255, 255, 0.2);
+    /* Dark theme color overrides */
+    --background-color: var(--dark-gray); /* Dark background */
+    --card-bg-color: #444; /* Slightly lighter card background for contrast */
+    --text-color: var(--white); /* White text for dark theme */
+    --footer-bg-color: var(--black); /* Black footer */
+    --header-bg-color: var(--india-green); /* Keep header green */
+    --card-text-color: #eee; /* Light card text */
+    --shadow-color: rgba(255, 255, 255, 0.1); /* White shadows for dark theme */
+    --card-hover-shadow: rgba(255, 255, 255, 0.2); /* White hover shadows */
 }
 
 .light-theme {
-    --primary-color: var(--saffron-orange);
-    --secondary-color: var(--india-green);
-    --background-color: var(--white);
-    --card-bg-color: var(--light-gray);
-    --text-color: var(--dark-gray);
-    --footer-bg-color: var(--saffron-orange);
-    --header-bg-color: var(--india-green);
-    --card-text-color: #666;
-    --shadow-color: rgba(0, 0, 0, 0.1);
-    --card-hover-shadow: rgba(0, 0, 0, 0.15);
+    /* Light theme with swapped primary/secondary colors */
+    --primary-color: var(--saffron-orange); /* Orange as primary */
+    --secondary-color: var(--india-green); /* Green as secondary */
+    --background-color: var(--white); /* White background */
+    --card-bg-color: var(--light-gray); /* Light gray cards */
+    --text-color: var(--dark-gray); /* Dark text */
+    --footer-bg-color: var(--saffron-orange); /* Orange footer */
+    --header-bg-color: var(--india-green); /* Keep header green */
+    --card-text-color: #666; /* Gray card text */
+    --shadow-color: rgba(0, 0, 0, 0.1); /* Black shadows */
+    --card-hover-shadow: rgba(0, 0, 0, 0.15); /* Black hover shadows */
 }
 
 /* ========================================================================
@@ -76,216 +77,213 @@
 *,
 *::before,
 *::after {
-    box-sizing: border-box;
+    box-sizing: border-box; /* Border-box makes layout calculations much easier */
 }
 
 .main-nav ul li a.active {
-    font-weight: 700;  /* Bold */
-    text-decoration: underline; /* Underline */
-    color: var(--saffron-orange); /* Highlight color */
+    font-weight: 700;  /* Make active navigation link bold */
+    text-decoration: underline; /* Underline active link */
+    color: var(--saffron-orange); /* Use orange for active state */
 }
 
 
 html {
-    scroll-behavior: smooth;
-    font-size: var(--fz-base);
-    -webkit-text-size-adjust: 100%;
-    -ms-text-size-adjust: 100%;
+    scroll-behavior: smooth; /* Smooth scrolling for anchor links */
+    font-size: var(--fz-base); /* Set base font size */
+    -webkit-text-size-adjust: 100%; /* Prevent text size adjustment on iOS */
+    -ms-text-size-adjust: 100%; /* Prevent text size adjustment on IE/Edge */
 }
 
 body {
-    font-family: "Roboto", system-ui, -apple-system, Segoe UI, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-    line-height: 1.6;
-    margin: 0;
-    padding: 0;
-    background-color: var(--background-color);
-    padding-top: var(--nav-height);
-    transition: padding-top 0.4s ease;
-    color: var(--text-color);
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    overflow-x: hidden;
-    transition: background-color 0.4s ease, color 0.4s ease;
+    font-family: "Roboto", system-ui, -apple-system, Segoe UI, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"; /* Font stack with fallbacks */
+    line-height: 1.6; /* Readable line height */
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+    background-color: var(--background-color); /* Set background color */
+    padding-top: var(--nav-height); /* Account for fixed header */
+    transition: padding-top 0.4s ease; /* Smooth padding transition */
+    color: var(--text-color); /* Set text color */
+    text-rendering: optimizeLegibility; /* Optimize text rendering */
+    -webkit-font-smoothing: antialiased; /* Smooth fonts on webkit */
+    -moz-osx-font-smoothing: grayscale; /* Smooth fonts on Firefox */
+    display: flex; /* Flexbox for sticky footer */
+    flex-direction: column; /* Vertical flex direction */
+    min-height: 100vh; /* Full viewport height */
+    overflow-x: hidden; /* Prevent horizontal scroll */
+    transition: background-color 0.4s ease, color 0.4s ease; /* Smooth color transitions */
 }
 
 :focus-visible {
-    outline: 3px solid var(--saffron-orange);
-    outline-offset: 3px;
+    outline: 3px solid var(--saffron-orange); /* Orange focus outline */
+    outline-offset: 3px; /* Space between element and outline */
 }
 
 .container {
-    max-width: var(--container-max);
-    margin: 0 auto;
-    padding: 0 var(--container-pad);
-    width: 100%;
+    max-width: var(--container-max); /* Set maximum width */
+    margin: 0 auto; /* Center horizontally */
+    padding: 0 var(--container-pad); /* Add horizontal padding */
+    width: 100%; /* Full width up to max */
 }
 
 /* ========================================================================
     SIDE MENU FOR COLOR SWITCHING - IMPROVED POSITIONING
     ======================================================================== */
 .theme-toggle-btn {
-    display: flex; /* Show the button on all screens */
-    position: fixed;
-    top: 50%;
-    right: 15px;
-    transform: translateY(-50%);
-    z-index: 2001;
-    background-color: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(5px);
-    border: none;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    color: var(--white);
-    cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s ease, transform 0.3s ease, right 0.4s ease;
-    padding: 12px;
+    display: flex; /* Flexbox for centering icon */
+    position: fixed; /* Fixed positioning */
+    top: calc(var(--nav-height) + 15px); /* Position below fixed header */
+    right: 15px; /* 15px from right edge */
+    transform: none; /* No transform by default */
+    z-index: 2001; /* Above everything else */
+    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black background */
+    backdrop-filter: blur(5px); /* Blur background */
+    border: none; /* Remove border */
+    border-radius: 50%; /* Circular button */
+    width: 50px; /* Button width */
+    height: 50px; /* Button height */
+    color: var(--white); /* White icon color */
+    cursor: pointer; /* Pointer cursor */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Drop shadow */
+    transition: background-color 0.3s ease, transform 0.3s ease, right 0.4s ease; /* Smooth transitions */
+    padding: 12px; /* Internal padding */
 }
 
-/* Move the toggle button to the left when menu is active - DESKTOP ONLY */
+/* Move button when menu is open on desktop only */
 @media (min-width: 768px) {
     .theme-toggle-btn.menu-active {
-        right: 280px; /* Move left by approximately the width of the menu */
+        right: 280px; /* Move right when menu is active */
     }
 }
 
 .theme-toggle-btn:hover,
 .theme-toggle-btn:focus-visible {
-    background-color: rgba(0, 0, 0, 0.8);
-    transform: translateY(-50%) scale(1.1);
+    background-color: rgba(0, 0, 0, 0.8); /* Darker background on hover */
+    transform: scale(1.1); /* Slightly scale up */
 }
 
 .theme-toggle-btn.menu-active:hover,
 .theme-toggle-btn.menu-active:focus-visible {
-    transform: translateY(-50%) scale(1.1);
+    transform: scale(1.1); /* Scale when menu active and hovering */
 }
 
 .theme-toggle-btn svg {
-    display: block;
-    width: 100%;
-    height: 100%;
+    display: block; /* Block display for SVG */
+    width: 100%; /* Full width of container */
+    height: 100%; /* Full height of container */
 }
 
-/* Base style for the menu: always positioned off-screen to the right */
+/* Menu positioned off-screen by default */
 .color-switcher {
-    position: fixed;
-    top: 50%;
-    right: 0; /* Align it to the right edge */
-    transform: translateY(-50%) translateX(100%); /* Position off-screen */
-    display: flex;
-    flex-direction: column;
-    padding: 15px;
-    gap: 8px;
-    background-color: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(5px);
-    border-radius: 8px 0 0 8px;
-    z-index: 2000;
-    transition: transform 0.4s ease; /* Animate the transition */
-    visibility: visible;
-    min-width: 200px;
-    box-shadow: -4px 0 10px rgba(0, 0, 0, 0.2);
+    position: fixed; /* Fixed positioning */
+    top: var(--nav-height); /* Align with header bottom */
+    right: 0; /* Align to right edge */
+    transform: translateX(100%); /* Hide off-screen to the right */
+    display: flex; /* Flexbox layout */
+    flex-direction: column; /* Vertical flex direction */
+    padding: 15px; /* Internal padding */
+    gap: 8px; /* Gap between items */
+    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black background */
+    backdrop-filter: blur(5px); /* Blur background */
+    border-radius: 8px 0 0 8px; /* Rounded left corners only */
+    z-index: 2000; /* High z-index */
+    transition: transform 0.4s ease; /* Smooth slide transition */
+    visibility: visible; /* Always visible */
+    min-width: 200px; /* Minimum width */
+    box-shadow: -4px 0 10px rgba(0, 0, 0, 0.2); /* Left side shadow */
 }
 
-/* When the menu has the 'active' class, slide it into view */
+/* Slide menu into view when active */
 .color-switcher.active {
-    transform: translateY(-50%) translateX(0);
+    transform: translateX(0); /* Reset transform to show menu */
 }
 
 .theme-button {
-    border: none;
-    padding: 10px 15px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    border-radius: 6px;
-    min-width: 100px;
-    transition: background-color 0.3s, color 0.3s, transform 0.2s;
+    border: none; /* Remove border */
+    padding: 10px 15px; /* Internal padding */
+    font-size: 14px; /* Font size */
+    font-weight: 600; /* Semi-bold font weight */
+    cursor: pointer; /* Pointer cursor */
+    border-radius: 6px; /* Rounded corners */
+    min-width: 100px; /* Minimum width */
+    transition: background-color 0.3s, color 0.3s, transform 0.2s; /* Smooth transitions */
 }
 
 .theme-button:hover,
 .theme-button:focus-visible {
-    transform: scale(1.02);
+    transform: scale(1.02); /* Slight scale on hover */
 }
 
 .theme-switcher-title {
-    color: var(--white);
-    font-size: 12px;
-    font-weight: 500;
-    text-align: center;
-    margin: 0 0 8px 0;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    color: var(--white); /* White text color */
+    font-size: 12px; /* Small font size */
+    font-weight: 500; /* Medium font weight */
+    text-align: center; /* Center align text */
+    margin: 0 0 8px 0; /* Bottom margin only */
+    text-transform: uppercase; /* Uppercase text */
+    letter-spacing: 1px; /* Increase letter spacing */
 }
 
 .dark-btn {
-    background-color: var(--black);
-    color: var(--white);
-    border: 2px solid var(--white);
+    background-color: var(--black); /* Black background */
+    color: var(--white); /* White text */
+    border: 2px solid var(--white); /* White border */
 }
 
 .light-btn {
-    background-color: var(--white);
-    color: var(--black);
-    border: 2px solid var(--black);
+    background-color: var(--white); /* White background */
+    color: var(--black); /* Black text */
+    border: 2px solid var(--black); /* Black border */
 }
 
-/* Style for the carousel instructions inside theme switcher */
-/* Base styling */
+/* Instructions box styling */
 .carousel-instructions {
-    max-width: 250px;
-    margin: 12px auto;
-    padding: 10px 14px;
-    font-size: 0.9rem;
-    line-height: 1.4;
-    border-left: 4px solid #666;
-    border-radius: 6px;
-    transition: background 0.3s, color 0.3s;
+    max-width: 250px; /* Maximum width */
+    margin: 12px auto; /* Center with vertical margin */
+    padding: 10px 14px; /* Internal padding */
+    font-size: 0.9rem; /* Slightly smaller font */
+    line-height: 1.4; /* Tighter line height */
+    border-left: 4px solid #666; /* Left border accent */
+    border-radius: 6px; /* Rounded corners */
+    transition: background 0.3s, color 0.3s; /* Smooth color transitions */
 }
 
-/* Light theme box (white background + black text) */
+/* Light theme instructions */
 .light-theme .carousel-instructions {
-    background: #ffffff;
-    color: #000000;
+    background: #ffffff; /* White background */
+    color: #000000; /* Black text */
 }
 
-/* Dark theme box (same as before) */
+/* Dark theme instructions */
 .dark-theme .carousel-instructions {
-    background: rgba(0,0,0,0.05);
-    color: #f1f1f1;
+    background: rgba(0,0,0,0.05); /* Semi-transparent black background */
+    color: #f1f1f1; /* Light gray text */
 }
 
-/* Responsive adjustments for smaller screens */
+/* Mobile adjustments for theme switcher */
 @media (max-width: 767px) {
-    /* On mobile, keep toggle button in original position even when menu is active */
     .theme-toggle-btn.menu-active {
-        right: 15px; /* Keep in original position */
+        right: 15px; /* Stay in place on mobile */
     }
     
     .color-switcher {
-        min-width: 180px;
-        padding: 12px;
+        min-width: 180px; /* Smaller width on mobile */
+        padding: 12px; /* Less padding */
     }
     
     .theme-button {
-        min-width: 80px;
-        padding: 8px 12px;
+        min-width: 80px; /* Smaller minimum width */
+        padding: 8px 12px; /* Less padding */
     }
 }
 
 @media (max-width: 480px) {
-    /* On very small screens, keep toggle button in original position */
     .theme-toggle-btn.menu-active {
-        right: 15px; /* Keep in original position */
+        right: 15px; /* Stay in place on small mobile */
     }
     
     .color-switcher {
-        min-width: 160px;
-        padding: 10px;
+        min-width: 160px; /* Even smaller width */
+        padding: 10px; /* Even less padding */
     }
 }
 
@@ -294,34 +292,34 @@ body {
     ======================================================================== */
 
 .site-header {
-    background-color: var(--header-bg-color);
-    color: var(--white);
-    padding: 1rem 0;
-    position: fixed; /* Changed from 'relative' to 'fixed' */
-    top: 0;          /* Added to fix to the top */
-    left: 0;         /* Added to fix to the left */
-    width: 100%;     /* Added to span the full width */
-    z-index: 1000;
-    min-height: var(--nav-height);
-    transition: background-color 1.0s ease; /* Optional: for smooth theme changes */
+    background-color: var(--header-bg-color); /* Header background color */
+    color: var(--white); /* White text */
+    padding: 1rem 0; /* Vertical padding */
+    position: fixed; /* Fixed position at top */
+    top: 0; /* Stick to top */
+    left: 0; /* Align to left */
+    width: 100%; /* Full width */
+    z-index: 1000; /* High z-index */
+    min-height: var(--nav-height); /* Minimum height */
+    transition: background-color 1.0s ease; /* Smooth background transition */
 }
 
 .site-header .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    min-height: var(--nav-height);
+    display: flex; /* Flexbox layout */
+    justify-content: space-between; /* Space between items */
+    align-items: center; /* Center align items */
+    min-height: var(--nav-height); /* Minimum height */
 }
 
 
 .site-title {
-    font-family: "Playfair Display", Georgia, serif;
-    font-weight: 700;
-    font-size: clamp(1.5rem, 4vw, 2.8rem);
-    margin: 0;
-    color: var(--saffron-orange);
-    letter-spacing: 0.5px;
-    line-height: 1.2;
+    font-family: "Playfair Display", Georgia, serif; /* Serif font with fallbacks */
+    font-weight: 700; /* Bold font weight */
+    font-size: clamp(1.5rem, 4vw, 2.8rem); /* Responsive font size */
+    margin: 0; /* Remove margin */
+    color: var(--saffron-orange); /* Orange color */
+    letter-spacing: 0.5px; /* Slight letter spacing */
+    line-height: 1.2; /* Tight line height */
 }
 
 /* ========================================================================
@@ -329,167 +327,162 @@ body {
     ======================================================================== */
 
 .main-nav ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    gap: 20px;
+    list-style: none; /* Remove list bullets */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margin */
+    display: flex; /* Flexbox layout */
+    justify-content: center; /* Center align items */
+    gap: 20px; /* Gap between items */
 }
 
 .main-nav ul li a {
-    color: var(--white);
-    text-decoration: none;
-    font-weight: 400;
-    font-size: clamp(1rem, 2.5vw, 1.1rem);
-    padding: 0.75rem 1rem;
-    border-radius: 6px;
-    transition: color 0.25s ease, background-color 0.25s ease;
-    min-height: var(--touch-target);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    color: var(--white); /* White text color */
+    text-decoration: none; /* Remove underline */
+    font-weight: 400; /* Normal font weight */
+    font-size: clamp(1rem, 2.5vw, 1.1rem); /* Responsive font size */
+    padding: 0.75rem 1rem; /* Internal padding */
+    border-radius: 6px; /* Rounded corners */
+    transition: color 0.25s ease, background-color 0.25s ease; /* Smooth transitions */
+    min-height: var(--touch-target); /* Minimum touch target */
+    display: flex; /* Flexbox for centering */
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
 }
 
 .main-nav ul li a:hover,
 .main-nav ul li a:focus-visible {
-    color: var(--saffron-orange);
-    background-color: rgba(255,255,255,0.08);
+    color: var(--saffron-orange); /* Orange color on hover */
+    background-color: rgba(255,255,255,0.08); /* Semi-transparent white background */
 }
 
 .hamburger-menu {
-    display: none;
-    cursor: pointer;
-    position: absolute;
-    right: var(--container-pad);
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 1001;
-    -webkit-tap-highlight-color: transparent;
-    width: var(--hamburger-size);
-    height: var(--hamburger-size);
-    padding: 12px;
-    border-radius: 4px;
-    background: transparent;
-    border: none;
-    touch-action: manipulation;
+    display: none; /* Hidden by default */
+    cursor: pointer; /* Pointer cursor */
+    position: absolute; /* Absolute positioning */
+    right: var(--container-pad); /* Right padding distance */
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%); /* Center with transform */
+    z-index: 1001; /* Above header */
+    -webkit-tap-highlight-color: transparent; /* Remove tap highlight */
+    width: var(--hamburger-size); /* Set width */
+    height: var(--hamburger-size); /* Set height */
+    padding: 12px; /* Internal padding */
+    border-radius: 4px; /* Slight border radius */
+    background: transparent; /* Transparent background */
+    border: none; /* No border */
+    touch-action: manipulation; /* Optimize for touch */
 }
 
 .hamburger-menu .bar {
-    width: 24px;
-    height: 3px;
-    background-color: var(--white);
-    margin: 4px auto;
-    transition: transform 0.4s, opacity 0.4s, background-color 0.3s;
-    border-radius: 999px;
-    display: block;
+    width: 24px; /* Bar width */
+    height: 3px; /* Bar height */
+    background-color: var(--white); /* White color */
+    margin: 4px auto; /* Vertical margin, horizontal auto */
+    transition: transform 0.4s, opacity 0.4s, background-color 0.3s; /* Smooth transitions */
+    border-radius: 999px; /* Fully rounded */
+    display: block; /* Block display */
 }
 
-/* Style for the carousel instructions inside theme switcher */
-/* Base styling */
+/* Duplicate carousel instructions - cleanup needed */
 .carousel-instructions {
-    max-width: 250px;
-    margin: 12px auto;
-    padding: 10px 14px;
-    font-size: 0.9rem;
-    line-height: 1.4;
-    border-left: 4px solid #666;
-    border-radius: 6px;
-    transition: background 0.3s, color 0.3s;
+    max-width: 250px; /* Maximum width */
+    margin: 12px auto; /* Center with vertical margin */
+    padding: 10px 14px; /* Internal padding */
+    font-size: 0.9rem; /* Smaller font size */
+    line-height: 1.4; /* Tighter line height */
+    border-left: 4px solid #666; /* Left border accent */
+    border-radius: 6px; /* Rounded corners */
+    transition: background 0.3s, color 0.3s; /* Smooth transitions */
 }
 
-/* Light theme box (white background + black text) */
 .light-theme .carousel-instructions {
-    background: #ffffff;
-    color: #000000;
+    background: #ffffff; /* White background */
+    color: #000000; /* Black text */
 }
 
-/* Dark theme box (same as before) */
 .dark-theme .carousel-instructions {
-    background: rgba(0,0,0,0.05);
-    color: #f1f1f1;
+    background: rgba(0,0,0,0.05); /* Semi-transparent background */
+    color: #f1f1f1; /* Light text */
 }
-
-
 
 /* ========================================================================
     HERO SECTION - Mobile-Optimized
     ======================================================================== */
 .hero-section {
-    background-image: url('{{ hero_image.image_url }}');
-    background-size: cover;
-    background-position: center;
-    color: var(--white);
-    text-align: center;
-    padding: clamp(60px, 15vh, 100px) var(--container-pad);
-    position: relative;
-    background-color: rgba(0, 0, 0, 0.4);
-    background-blend-mode: overlay;
-    min-height: 50vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    background-image: url('{{ hero_image.image_url }}'); /* Hero background image */
+    background-size: cover; /* Cover entire area */
+    background-position: center; /* Center image */
+    color: var(--white); /* White text */
+    text-align: center; /* Center align text */
+    padding: clamp(60px, 15vh, 100px) var(--container-pad); /* Responsive padding */
+    position: relative; /* Relative positioning */
+    background-color: rgba(0, 0, 0, 0.4); /* Semi-transparent overlay */
+    background-blend-mode: overlay; /* Blend overlay with image */
+    min-height: 50vh; /* Minimum height */
+    display: flex; /* Flexbox layout */
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
 }
 
 .hero-overlay {
-    position: relative;
-    z-index: 2;
-    width: 100%;
-    max-width: var(--container-max);
+    position: relative; /* Relative positioning */
+    z-index: 2; /* Above background */
+    width: 100%; /* Full width */
+    max-width: var(--container-max); /* Maximum width */
 }
 
 .hero-section h1 {
-    font-family: "Playfair Display", Georgia, serif;
-    font-size: clamp(1.25rem, 4vw, 3rem);
-    margin: 0;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    line-height: 1.2;
+    font-family: "Playfair Display", Georgia, serif; /* Serif font */
+    font-size: clamp(1.25rem, 4vw, 3rem); /* Responsive font size */
+    margin: 0; /* Remove margin */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Text shadow */
+    line-height: 1.2; /* Tight line height */
 }
 
 .hero-section h2 {
-    font-family: "Playfair Display", Georgia, serif;
-    font-weight: 700;
-    font-size: clamp(1.75rem, 5.5vw, 3.8rem);
-    margin-bottom: clamp(16px, 4vw, 20px);
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    color: var(--white);
-    line-height: 1.2;
+    font-family: "Playfair Display", Georgia, serif; /* Serif font */
+    font-weight: 700; /* Bold weight */
+    font-size: clamp(1.75rem, 5.5vw, 3.8rem); /* Responsive font size */
+    margin-bottom: clamp(16px, 4vw, 20px); /* Responsive bottom margin */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Text shadow */
+    color: var(--white); /* White color */
+    line-height: 1.2; /* Tight line height */
 }
 
 .hero-section p {
-    font-size: clamp(0.95rem, 2.5vw, 1.2rem);
-    margin: clamp(8px, 2vw, 10px) 0 clamp(20px, 5vw, 30px);
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-    line-height: 1.5;
+    font-size: clamp(0.95rem, 2.5vw, 1.2rem); /* Responsive font size */
+    margin: clamp(8px, 2vw, 10px) 0 clamp(20px, 5vw, 30px); /* Responsive margins */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Text shadow */
+    line-height: 1.5; /* Readable line height */
 }
 
 .cta-button {
-    display: inline-block;
-    background-color: var(--saffron-orange);
-    color: var(--white);
-    padding: clamp(10px, 3vw, 12px) clamp(20px, 5vw, 25px);
-    text-decoration: none;
-    border-radius: 5px;
-    font-weight: 700;
-    font-size: clamp(0.95rem, 2.5vw, 1rem);
-    transition: background-color 0.3s ease, transform 0.15s ease;
-    width: auto;
-    max-width: 90%;
-    text-align: center;
-    box-shadow: 0 2px 6px var(--shadow-light);
-    will-change: transform;
-    min-height: var(--touch-target);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    touch-action: manipulation;
-    cursor: pointer;
+    display: inline-block; /* Inline block display */
+    background-color: var(--saffron-orange); /* Orange background */
+    color: var(--white); /* White text */
+    padding: clamp(10px, 3vw, 12px) clamp(20px, 5vw, 25px); /* Responsive padding */
+    text-decoration: none; /* Remove underline */
+    border-radius: 5px; /* Rounded corners */
+    font-weight: 700; /* Bold weight */
+    font-size: clamp(0.95rem, 2.5vw, 1rem); /* Responsive font size */
+    transition: background-color 0.3s ease, transform 0.15s ease; /* Smooth transitions */
+    width: auto; /* Auto width */
+    max-width: 90%; /* Maximum width */
+    text-align: center; /* Center text */
+    box-shadow: 0 2px 6px var(--shadow-light); /* Drop shadow */
+    will-change: transform; /* Optimize for transforms */
+    min-height: var(--touch-target); /* Minimum touch target */
+    display: inline-flex; /* Inline flexbox */
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+    touch-action: manipulation; /* Optimize for touch */
+    cursor: pointer; /* Pointer cursor */
 }
 
 .cta-button:hover,
 .cta-button:focus-visible {
-    background-color: #e68a00;
-    transform: translateY(-1px);
+    background-color: #e68a00; /* Darker orange on hover */
+    transform: translateY(-1px); /* Slight upward movement */
 }
 
 /* ========================================================================
@@ -497,110 +490,110 @@ body {
     ======================================================================== */
 
 .explore-more-section-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--card-gap);
-    width: 100%;
+    display: flex; /* Flexbox layout */
+    flex-direction: column; /* Vertical direction */
+    align-items: center; /* Center align items */
+    gap: var(--card-gap); /* Gap between items */
+    width: 100%; /* Full width */
 }
 
 .section-heading {
-    font-family: "Playfair Display", Georgia, serif;
-    font-size: clamp(1.75rem, 5vw, 2.5rem);
-    text-align: center;
-    margin: clamp(30px, 8vw, 40px) 0 clamp(16px, 4vw, 20px);
-    color: var(--primary-color);
-    line-height: 1.3;
-    padding: 0 var(--container-pad);
+    font-family: "Playfair Display", Georgia, serif; /* Serif font */
+    font-size: clamp(1.75rem, 5vw, 2.5rem); /* Responsive font size */
+    text-align: center; /* Center align text */
+    margin: clamp(30px, 8vw, 40px) 0 clamp(16px, 4vw, 20px); /* Responsive margins */
+    color: var(--primary-color); /* Primary color */
+    line-height: 1.3; /* Tight line height */
+    padding: 0 var(--container-pad); /* Horizontal padding */
 }
 
 .highlight-section {
-    padding: clamp(30px, 8vw, 40px) 0;
+    padding: clamp(30px, 8vw, 40px) 0; /* Responsive vertical padding */
 }
 
 .card-grid {
-    display: grid;
-    gap: var(--card-gap);
-    align-items: stretch;
-    width: 100%;
-    padding: 0 var(--container-pad);
+    display: grid; /* CSS Grid layout */
+    gap: var(--card-gap); /* Gap between grid items */
+    align-items: stretch; /* Stretch items to equal height */
+    width: 100%; /* Full width */
+    padding: 0 var(--container-pad); /* Horizontal padding */
 }
 
 .card-item {
-    background-color: var(--card-bg-color);
-    border-radius: var(--card-radius);
-    box-shadow: 0 4px 8px var(--shadow-color);
-    overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
-    min-height: 420px;
-    isolation: isolate;
-    text-decoration: none !important;
-    touch-action: manipulation;
-    cursor: pointer;
-    text-align: center;
+    background-color: var(--card-bg-color); /* Card background color */
+    border-radius: var(--card-radius); /* Rounded corners */
+    box-shadow: 0 4px 8px var(--shadow-color); /* Drop shadow */
+    overflow: hidden; /* Hide overflow */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+    display: flex; /* Flexbox layout */
+    flex-direction: column; /* Vertical direction */
+    justify-content: space-between; /* Space content */
+    height: 100%; /* Full height */
+    min-height: 420px; /* Minimum height */
+    isolation: isolate; /* Isolate stacking context */
+    text-decoration: none !important; /* Force remove text decoration */
+    touch-action: manipulation; /* Optimize for touch */
+    cursor: pointer; /* Pointer cursor */
+    text-align: center; /* Center align text */
 }
 
 .card-item:hover,
 .card-item:focus-visible {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 12px var(--card-hover-shadow);
+    transform: translateY(-3px); /* Float effect on hover */
+    box-shadow: 0 6px 12px var(--card-hover-shadow); /* Enhanced shadow */
 }
 
 .card-item img {
-    width: 100%;
-    height: var(--card-img-h);
-    object-fit: cover;
-    display: block;
-    aspect-ratio: 16 / 9;
+    width: 100%; /* Full width */
+    height: var(--card-img-h); /* Set height */
+    object-fit: cover; /* Cover without distortion */
+    display: block; /* Block display */
+    aspect-ratio: 16 / 9; /* 16:9 aspect ratio */
 }
 
 .card-content {
-    padding: 15px;
+    padding: 15px; /* Internal padding */
 }
 
 .card-item h3 {
-    font-size: var(--fz-lg);
-    color: var(--primary-color);
-    margin-top: 0;
-    margin-bottom: 8px;
-    font-weight: bold;
-    line-height: 1.2;
+    font-size: var(--fz-lg); /* Large font size */
+    color: var(--primary-color); /* Primary color */
+    margin-top: 0; /* Remove top margin */
+    margin-bottom: 8px; /* Bottom margin */
+    font-weight: bold; /* Bold weight */
+    line-height: 1.2; /* Tight line height */
 }
 
 .card-item p {
-    font-size: var(--fz-md);
-    color: var(--card-text-color);
-    margin-top: 0;
-    margin-bottom: 15px;
-    line-height: 1.5;
+    font-size: var(--fz-md); /* Medium font size */
+    color: var(--card-text-color); /* Card text color */
+    margin-top: 0; /* Remove top margin */
+    margin-bottom: 15px; /* Bottom margin */
+    line-height: 1.5; /* Readable line height */
 }
 
 .read-more {
-    display: block;
-    margin: 15px;
-    padding: clamp(8px, 2vw, 10px) clamp(14px, 3vw, 16px);
-    background-color: var(--saffron-orange);
-    color: var(--white);
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.25s ease, transform 0.15s ease;
-    font-weight: 700;
-    font-size: clamp(0.9rem, 2vw, 1rem);
-    box-shadow: 0 2px 6px var(--shadow-light);
-    min-height: var(--touch-target);
-    touch-action: manipulation;
-    cursor: pointer;
-    text-align: center;
+    display: block; /* Block display */
+    margin: 15px; /* All-around margin */
+    padding: clamp(8px, 2vw, 10px) clamp(14px, 3vw, 16px); /* Responsive padding */
+    background-color: var(--saffron-orange); /* Orange background */
+    color: var(--white); /* White text */
+    text-decoration: none; /* Remove underline */
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.25s ease, transform 0.15s ease; /* Smooth transitions */
+    font-weight: 700; /* Bold weight */
+    font-size: clamp(0.9rem, 2vw, 1rem); /* Responsive font size */
+    box-shadow: 0 2px 6px var(--shadow-light); /* Drop shadow */
+    min-height: var(--touch-target); /* Minimum touch target */
+    touch-action: manipulation; /* Optimize for touch */
+    cursor: pointer; /* Pointer cursor */
+    text-align: center; /* Center text */
 }
 
 .read-more:hover,
 .read-more:focus-visible {
-    background-color: #e65c00;
-    transform: translateY(-1px);
+    background-color: #e65c00; /* Darker orange on hover */
+    transform: translateY(-1px); /* Slight upward movement */
 }
 
 /* ========================================================================
@@ -608,37 +601,37 @@ body {
     ======================================================================== */
 
 .site-footer {
-    background-color: var(--footer-bg-color);
-    color: var(--white);
-    padding: clamp(16px, 4vw, 20px) 0;
-    text-align: center;
-    font-size: clamp(0.85rem, 2vw, 0.9rem);
-    margin-top: auto;
-    transition: background-color 0.4s ease, color 0.4s ease;
+    background-color: var(--footer-bg-color); /* Footer background color */
+    color: var(--white); /* White text */
+    padding: clamp(16px, 4vw, 20px) 0; /* Responsive vertical padding */
+    text-align: center; /* Center align text */
+    font-size: clamp(0.85rem, 2vw, 0.9rem); /* Responsive font size */
+    margin-top: auto; /* Push to bottom */
+    transition: background-color 0.4s ease, color 0.4s ease; /* Smooth transitions */
 }
 
 .footer-links {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 10px;
+    display: flex; /* Flexbox layout */
+    flex-wrap: wrap; /* Allow wrapping */
+    justify-content: center; /* Center align */
+    gap: 10px; /* Gap between links */
+    margin-bottom: 10px; /* Bottom margin */
 }
 
 .footer-links a {
-    color: var(--white);
-    text-decoration: none;
-    padding: 8px 12px;
-    transition: color 0.3s;
-    min-height: var(--touch-target);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    color: var(--white); /* White text */
+    text-decoration: none; /* Remove underline */
+    padding: 8px 12px; /* Internal padding */
+    transition: color 0.3s; /* Smooth color transition */
+    min-height: var(--touch-target); /* Minimum touch target */
+    display: inline-flex; /* Inline flexbox */
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
 }
 
 .footer-links a:hover,
 .footer-links a:focus-visible {
-    color: var(--saffron-orange);
+    color: var(--saffron-orange); /* Orange color on hover */
 }
 
 /* ========================================================================
@@ -646,171 +639,184 @@ body {
     ======================================================================== */
 
 .details-page {
-    padding: clamp(30px, 8vw, 40px) 0;
+    padding: clamp(30px, 8vw, 40px) 0; /* Responsive vertical padding */
 }
 
 .details-page .container {
-    display: flex;
-    flex-direction: column;
-    gap: var(--card-gap);
-    align-items: center;
+    display: flex; /* Flexbox layout */
+    flex-direction: column; /* Vertical direction */
+    gap: var(--card-gap); /* Gap between items */
+    align-items: center; /* Center align items */
 }
 
 .details-title {
-    font-family: "Playfair Display", Georgia, serif;
-    color: var(--primary-color);
-    text-align: center;
-    margin-top: 0;
-    font-size: clamp(1.5rem, 4vw, 2.5rem);
-    line-height: 1.3;
-    padding: 0 var(--container-pad);
+    font-family: "Playfair Display", Georgia, serif; /* Serif font */
+    color: var(--primary-color); /* Primary color */
+    text-align: center; /* Center align text */
+    margin-top: 0; /* Remove top margin */
+    font-size: clamp(1.5rem, 4vw, 2.5rem); /* Responsive font size */
+    line-height: 1.3; /* Tight line height */
+    padding: 0 var(--container-pad); /* Horizontal padding */
 }
 
 .details-content-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--card-gap);
-    align-items: start;
-    width: 100%;
-    padding: 0 var(--container-pad);
+    display: grid; /* CSS Grid layout */
+    grid-template-columns: 1fr; /* Single column by default */
+    gap: var(--card-gap); /* Gap between grid items */
+    align-items: start; /* Align to start */
+    width: 100%; /* Full width */
+    padding: 0 var(--container-pad); /* Horizontal padding */
 }
 
 .details-main-img {
-    max-width: 100%;
-    height: auto;
-    border-radius: var(--card-radius);
-    box-shadow: 0 4px 8px var(--shadow-color);
-    display: block;
-    margin: 0 auto;
+    width: 100%; /* Full width */
+    height: auto; /* Auto height to maintain aspect ratio */
+    max-width: 650px; /* Maximum width */
+    max-height: 400px; /* Maximum height */
+    aspect-ratio: 5 / 4; /* 5:4 aspect ratio */
+    object-fit: cover; /* Cover without distortion */
+    border-radius: var(--card-radius); /* Rounded corners */
+    box-shadow: 0 4px 8px var(--shadow-color); /* Drop shadow */
+    display: block; /* Block display */
+    margin: 0 auto; /* Center horizontally */
+}
+
+@media (max-width: 767px) {
+    .details-main-img {
+        max-width: 100%; /* Full width on mobile */
+        max-height: 300px; /* Smaller max height on mobile */
+        aspect-ratio: 4 / 3; /* 4:3 aspect ratio for mobile */
+    }
 }
 
 .details-text {
-    font-size: clamp(1rem, 2.5vw, 1.1rem);
-    line-height: 1.6;
-    color: var(--text-color);
+    font-size: clamp(1rem, 2.5vw, 1.1rem); /* Responsive font size */
+    line-height: 1.6; /* Readable line height */
+    color: var(--text-color); /* Text color */
 }
 
 .details-sub-heading {
-    font-family: "Playfair Display", Georgia, serif;
-    color: var(--primary-color);
-    text-align: center;
-    margin-top: clamp(24px, 6vw, 30px);
-    margin-bottom: var(--card-gap);
-    font-size: clamp(1.25rem, 4vw, 1.8rem);
-    width: 100%;
-    padding: 0 var(--container-pad);
-    line-height: 1.3;
+    font-family: "Playfair Display", Georgia, serif; /* Serif font */
+    color: var(--primary-color); /* Primary color */
+    text-align: center; /* Center align text */
+    margin-top: clamp(24px, 6vw, 30px); /* Responsive top margin */
+    margin-bottom: var(--card-gap); /* Bottom margin */
+    font-size: clamp(1.75rem, 5vw, 2.5rem); /* Responsive font size */
+    width: 100%; /* Full width */
+    padding: 0 var(--container-pad); /* Horizontal padding */
+    line-height: 1.3; /* Tight line height */
 }
 
 /* ========================================================================
     ENHANCED SLIDER WITH BETTER MOBILE SUPPORT
     ======================================================================== */
 .card-slider-with-nav {
-    position: relative;
-    width: 100%;
+    position: relative; /* Relative positioning for nav buttons */
+    width: 100%; /* Full width */
 }
 
 .card-slider {
-    overflow: hidden;
-    margin: 0 auto;
-    width: 100%;
+    overflow: hidden; /* Hide overflow */
+    margin: 0 auto; /* Center horizontally */
+    width: 100%; /* Full width */
 }
 
 .slider-track {
-    display: flex;
-    gap: var(--card-gap);
-    overflow-x: auto;
-    overflow-y: hidden;
-    scroll-behavior: smooth;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE/Edge */
-    padding: 10px 0;
-    width: 100%;
+    display: flex; /* Flexbox layout */
+    gap: var(--card-gap); /* Gap between cards */
+    overflow-x: auto; /* Horizontal scroll */
+    overflow-y: hidden; /* Hide vertical overflow */
+    scroll-behavior: smooth; /* Smooth scrolling */
+    scroll-snap-type: x mandatory; /* Snap to cards */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    scrollbar-width: none; /* Hide scrollbar on Firefox */
+    -ms-overflow-style: none; /* Hide scrollbar on IE/Edge */
+    padding: 10px 0; /* Vertical padding */
+    width: 100%; /* Full width */
 }
 
-/* Hide scrollbar for Chrome, Safari and Opera */
+/* Hide scrollbar on webkit browsers */
 .slider-track::-webkit-scrollbar {
-    display: none;
+    display: none; /* Hide scrollbar */
 }
 
 .card-slider .card-item {
-    flex: 0 0 auto;
-    width: 280px;
-    min-width: 240px;
-    scroll-snap-align: start;
+    flex: 0 0 auto; /* Don't grow or shrink */
+    width: 280px; /* Fixed width */
+    min-width: 240px; /* Minimum width */
+    scroll-snap-align: start; /* Snap to start of card */
 }
 
 .slider-nav {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.3);
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: clamp(50px, 12vw, 60px); 
-    height: clamp(50px, 12vw, 60px);
-    font-size: clamp(18px, 5vw, 24px);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0.7;
-    transition: all 0.3s ease;
-    z-index: 10;
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    touch-action: manipulation;
-    -webkit-tap-highlight-color: transparent;
+    position: absolute; /* Absolute positioning */
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%); /* Center with transform */
+    background: rgba(0, 0, 0, 0.3); /* Semi-transparent background */
+    color: white; /* White text */
+    border: none; /* No border */
+    border-radius: 50%; /* Circular button */
+    width: clamp(50px, 12vw, 60px); /* Responsive width */
+    height: clamp(50px, 12vw, 60px); /* Responsive height */
+    font-size: clamp(18px, 5vw, 24px); /* Responsive font size */
+    cursor: pointer; /* Pointer cursor */
+    display: flex; /* Flexbox layout */
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+    opacity: 0.7; /* Semi-transparent */
+    transition: all 0.3s ease; /* Smooth transitions */
+    z-index: 10; /* Above slider content */
+    backdrop-filter: blur(5px); /* Blur background */
+    -webkit-backdrop-filter: blur(5px); /* Webkit blur */
+    touch-action: manipulation; /* Optimize for touch */
+    -webkit-tap-highlight-color: transparent; /* Remove tap highlight */
 }
 
 .slider-nav:hover,
 .slider-nav:focus-visible {
-    opacity: 1;
-    background: rgba(0, 0, 0, 0.5);
-    transform: translateY(-50%) scale(1.05);
+    opacity: 1; /* Full opacity on hover */
+    background: rgba(0, 0, 0, 0.5); /* Darker background */
+    transform: translateY(-50%) scale(1.05); /* Scale up slightly */
 }
 
 .slider-nav:active {
-    transform: translateY(-50%) scale(0.95);
+    transform: translateY(-50%) scale(0.95); /* Scale down when clicked */
 }
 
 .slider-nav.prev {
-    left: clamp(-50px, -5vw, -30px);
+    left: clamp(-50px, -5vw, -30px); /* Position left button */
 }
 
 .slider-nav.next {
-    right: clamp(-50px, -5vw, -30px);
+    right: clamp(-50px, -5vw, -30px); /* Position right button */
 }
 
+/* Dark theme slider navigation styles */
 .dark-theme .slider-nav {
-    background: rgba(255, 255, 255, 0.3);
-    color: var(--black);
+    background: rgba(255, 255, 255, 0.3); /* Light background for dark theme */
+    color: var(--black); /* Dark text */
 }
 
 .dark-theme .slider-nav:hover,
 .dark-theme .slider-nav:focus-visible {
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.5); /* Lighter background on hover */
 }
 
 .slider-nav:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-    pointer-events: none;
+    opacity: 0.3; /* Low opacity when disabled */
+    cursor: not-allowed; /* Not-allowed cursor */
+    pointer-events: none; /* Disable pointer events */
 }
 
 .slider-nav.hidden {
-    display: none;
+    display: none; /* Hide when needed */
 }
 
 
-/* Add media query to adjust for smaller screens */
+/* Hide navigation arrows on mobile */
 @media (max-width: 767px) {
     .slider-nav.prev,
     .slider-nav.next {
-        display: none;
+        display: none; /* Hide nav buttons on mobile */
     }
 }
 
@@ -819,219 +825,229 @@ body {
     COMPREHENSIVE MOBILE-FIRST MEDIA QUERIES
     ======================================================================== */
 
+/* Extra-small screens */
 @media (max-width: 479px) {
     :root {
-        --container-pad: 12px;
-        --card-gap: 12px;
-        --card-img-h: 140px;
-        --fz-sm: 0.8rem;
-        --fz-md: 0.9rem;
-        --fz-lg: 1rem;
+        --container-pad: 12px; /* Smaller container padding */
+        --card-gap: 12px; /* Smaller card gap */
+        --card-img-h: 140px; /* Smaller card image height */
+        --fz-sm: 0.8rem; /* Smaller small font size */
+        --fz-md: 0.9rem; /* Smaller medium font size */
+        --fz-lg: 1rem; /* Smaller large font size */
     }
 
     .site-title {
-        font-size: clamp(1.3rem, 6vw, 1.8rem);
+        font-size: clamp(1.3rem, 6vw, 1.8rem); /* Smaller title on tiny screens */
     }
 
     .hero-section {
-        padding: clamp(40px, 12vh, 60px) var(--container-pad);
-        min-height: 40vh;
+        padding: clamp(40px, 12vh, 60px) var(--container-pad); /* Less padding */
+        min-height: 40vh; /* Smaller minimum height */
     }
 
     .card-item {
-        min-height: 340px;
+        min-height: 340px; /* Smaller minimum card height */
     }
 
     .card-slider .card-item {
-        width: clamp(200px, 75vw, 240px);
-        min-width: 200px;
+        width: clamp(200px, 75vw, 240px); /* Responsive card width */
+        min-width: 200px; /* Smaller minimum width */
     }
 
     .slider-container {
-        padding: 0 clamp(30px, 8vw, 35px);
+        padding: 0 clamp(30px, 8vw, 35px); /* Container padding */
     }
 
     .main-nav.active ul {
-        gap: 8px;
+        gap: 8px; /* Smaller gap in mobile nav */
     }
 
     .main-nav.active ul li a {
-        padding: 0.5rem;
-        font-size: 1rem;
+        padding: 0.5rem; /* Less padding in nav links */
+        font-size: 1rem; /* Standard font size */
     }
 }
 
+/* Small mobile screens */
 @media (min-width: 480px) and (max-width: 599px) {
     :root {
-        --container-pad: 14px;
-        --card-gap: 14px;
-        --card-img-h: 150px;
+        --container-pad: 14px; /* Medium container padding */
+        --card-gap: 14px; /* Medium card gap */
+        --card-img-h: 150px; /* Medium card image height */
     }
 
     .card-grid {
-        grid-template-columns: 1fr;
-        gap: var(--card-gap);
+        grid-template-columns: 1fr; /* Single column grid */
+        gap: var(--card-gap); /* Use card gap variable */
     }
 }
 
+/* Tablet portrait */
 @media (min-width: 600px) and (max-width: 767px) {
     :root {
-        --container-pad: 16px;
-        --card-gap: 16px;
-        --card-img-h: 160px;
+        --container-pad: 16px; /* Standard container padding */
+        --card-gap: 16px; /* Standard card gap */
+        --card-img-h: 160px; /* Standard card image height */
     }
 
     .card-grid {
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        max-width: 600px;
-        margin: 0 auto;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive grid */
+        max-width: 600px; /* Maximum grid width */
+        margin: 0 auto; /* Center grid */
     }
 
     .card-slider .card-item {
-        width: clamp(240px, 55vw, 280px);
-        min-width: 240px;
+        width: clamp(240px, 55vw, 280px); /* Responsive slider card width */
+        min-width: 240px; /* Minimum slider card width */
     }
 
     .details-content-grid {
-        grid-template-columns: 1fr;
-        gap: clamp(16px, 4vw, 20px);
+        grid-template-columns: 1fr; /* Single column for details */
+        gap: clamp(16px, 4vw, 20px); /* Responsive gap */
     }
 }
 
+/* Mobile-specific styles */
 @media (max-width: 767px) {
     .main-nav {
-        display: none;
+        display: none; /* Hide main nav on mobile */
     }
     
     .hamburger-menu {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        display: flex; /* Show hamburger menu on mobile */
+        align-items: center; /* Center vertically */
+        justify-content: center; /* Center horizontally */
     }
 
     .main-nav.active {
-        display: flex;
-        flex-direction: column;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        background-color: var(--header-bg-color);
-        padding: 1rem;
-        box-shadow: 0 4px 8px var(--shadow-medium);
+        display: flex; /* Show nav when active */
+        flex-direction: column; /* Vertical layout */
+        position: absolute; /* Absolute positioning */
+        top: 100%; /* Below header */
+        left: 0; /* Align to left */
+        width: 100%; /* Full width */
+        background-color: var(--header-bg-color); /* Same background as header */
+        padding: 1rem; /* Internal padding */
+        box-shadow: 0 4px 8px var(--shadow-medium); /* Drop shadow */
     }
 
     .main-nav.active ul {
-        flex-direction: column;
-        gap: 8px;
-        text-align: center;
-        width: 100%;
+        flex-direction: column; /* Vertical flex direction */
+        gap: 8px; /* Gap between items */
+        text-align: center; /* Center align text */
+        width: 100%; /* Full width */
     }
 
     .main-nav.active ul li {
-        width: 100%;
+        width: 100%; /* Full width list items */
     }
 
     .main-nav.active ul li a {
-        display: block;
-        width: 100%;
-        padding: 0.75rem;
-        min-height: var(--touch-target);
+        display: block; /* Block display */
+        width: 100%; /* Full width links */
+        padding: 0.75rem; /* Internal padding */
+        min-height: var(--touch-target); /* Minimum touch target */
     }
 
+    /* Hamburger animation transforms */
     .hamburger-menu.active .bar:nth-child(1) {
-        transform: rotate(-45deg) translate(-5px, 6px);
+        transform: rotate(-45deg) translate(-5px, 6px); /* First bar transform */
     }
     .hamburger-menu.active .bar:nth-child(2) {
-        opacity: 0;
+        opacity: 0; /* Hide middle bar */
     }
     .hamburger-menu.active .bar:nth-child(3) {
-        transform: rotate(45deg) translate(-5px, -6px);
+        transform: rotate(45deg) translate(-5px, -6px); /* Third bar transform */
     }
 
+    /* Horizontal scrolling grid on mobile */
     .card-grid {
-        display: flex;
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        gap: var(--card-gap);
-        padding: 10px var(--container-pad) 16px;
-        scrollbar-width: none;
-        scroll-snap-type: x mandatory;
+        display: flex; /* Flexbox layout */
+        flex-wrap: nowrap; /* No wrapping */
+        overflow-x: auto; /* Horizontal scroll */
+        -webkit-overflow-scrolling: touch; /* Smooth iOS scrolling */
+        gap: var(--card-gap); /* Gap between cards */
+        padding: 10px var(--container-pad) 16px; /* Padding with extra bottom */
+        scrollbar-width: none; /* Hide scrollbar Firefox */
+        scroll-snap-type: x mandatory; /* Snap scrolling */
     }
 
+    /* Hide scrollbar webkit */
     .card-grid::-webkit-scrollbar {
-        display: none;
+        display: none; /* Hide scrollbar */
     }
 
     .card-item {
-        flex: 0 0 clamp(240px, 70vw, 320px);
-        max-width: 320px;
-        min-width: 240px;
-        scroll-snap-align: start;
+        flex: 0 0 clamp(240px, 70vw, 320px); /* Responsive flex basis */
+        max-width: 320px; /* Maximum width */
+        min-width: 240px; /* Minimum width */
+        scroll-snap-align: start; /* Snap to start */
     }
 }
 
+/* Desktop styles */
 @media (min-width: 768px) {
     .main-nav {
-        display: block;
+        display: block; /* Show main nav on desktop */
     }
 
     .hamburger-menu {
-        display: none;
+        display: none; /* Hide hamburger on desktop */
     }
 
     .card-grid {
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        padding: 0;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
+        padding: 0; /* No padding */
     }
 
     .details-content-grid {
-        grid-template-columns: 1fr 1.5fr;
-        gap: 20px;
+        grid-template-columns: 1fr 1.5fr; /* Two-column layout for details */
+        gap: 20px; /* Standard gap */
     }
 
     .card-slider .card-item {
-        width: clamp(280px, 40vw, 320px);
-        min-width: 280px;
+        width: clamp(280px, 40vw, 320px); /* Responsive slider card width */
+        min-width: 280px; /* Minimum slider card width */
     }
 
     .hero-section {
-        padding: clamp(70px, 12vh, 90px) var(--container-pad);
+        padding: clamp(70px, 12vh, 90px) var(--container-pad); /* More padding on desktop */
     }
 }
 
+/* Large desktop screens */
 @media (min-width: 1024px) {
     :root {
-        --container-pad: var(--container-pad-lg);
-        --card-gap: var(--card-gap-lg);
-        --card-img-h: var(--card-img-h-lg);
+        --container-pad: var(--container-pad-lg); /* Large screen padding */
+        --card-gap: var(--card-gap-lg); /* Large screen card gap */
+        --card-img-h: var(--card-img-h-lg); /* Large screen card image height */
     }
 
     .card-grid {
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        padding: 0;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
+        padding: 0; /* No padding */
     }
 
     .details-content-grid {
-        grid-template-columns: 1fr 2fr;
-        gap: 30px;
+        grid-template-columns: 1fr 2fr; /* More space for content */
+        gap: 30px; /* Larger gap */
     }
 
     .card-slider .card-item {
-        width: 320px;
-        min-width: 300px;
+        width: 320px; /* Fixed width */
+        min-width: 300px; /* Minimum width */
     }
 }
 
+/* Extra large screens */
 @media (min-width: 1200px) {
     .card-grid {
-        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* Larger minimum column width */
     }
     
     .card-slider .card-item {
-        width: 350px;
-        min-width: 320px;
+        width: 350px; /* Larger card width */
+        min-width: 320px; /* Larger minimum width */
     }
 }
 
@@ -1039,23 +1055,25 @@ body {
     ACCESSIBILITY & PERFORMANCE OPTIMIZATIONS
     ======================================================================== */
 
+/* Disable animations for users who prefer reduced motion */
 @media (prefers-reduced-motion: reduce) {
     * {
-        animation-duration: 0.001ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.001ms !important;
-        scroll-behavior: auto !important;
+        animation-duration: 0.001ms !important; /* Minimal animation duration */
+        animation-iteration-count: 1 !important; /* Single iteration */
+        transition-duration: 0.001ms !important; /* Minimal transition duration */
+        scroll-behavior: auto !important; /* Auto scroll behavior */
     }
 }
 
+/* High contrast mode adjustments */
 @media (prefers-contrast: high) {
     .card-item {
-        border: 2px solid var(--dark-gray);
+        border: 2px solid var(--dark-gray); /* High contrast border for cards */
     }
     
     .cta-button,
     .read-more {
-        border: 2px solid var(--dark-gray);
+        border: 2px solid var(--dark-gray); /* High contrast border for buttons */
     }
 }
 
@@ -1063,6 +1081,7 @@ body {
     FINAL COMPREHENSIVE LINK FIXES
     ======================================================================== */
 
+/* Force consistent link styling for card items */
 a.card-item,
 a.card-item:link,
 a.card-item:visited,
@@ -1070,16 +1089,16 @@ a.card-item:hover,
 a.card-item:active,
 a.card-item:focus,
 a.card-item:focus-visible {
-    text-decoration: none !important;
-    color: inherit !important;
+    text-decoration: none !important; /* Remove text decoration */
+    color: inherit !important; /* Inherit color */
 }
 
 a.card-item *,
 a.card-item h3,
 a.card-item p,
 a.card-item .card-content {
-    text-decoration: none !important;
-    color: inherit !important;
+    text-decoration: none !important; /* Remove text decoration from children */
+    color: inherit !important; /* Inherit color from parent */
 }
 
 .read-more,
@@ -1087,25 +1106,24 @@ a.card-item .card-content {
 .card-item .read-more,
 .cta-button,
 .back-link.cta-button {
-    text-decoration: none !important;
-    background-color: var(--saffron-orange) !important;
-    color: var(--white) !important;
+    text-decoration: none !important; /* Remove text decoration */
+    background-color: var(--saffron-orange) !important; /* Force orange background */
+    color: var(--white) !important; /* Force white text */
 }
 /* ========================================================================
     NAVIGATION HEIGHT REDUCTION ON LARGE SCREENS
     ======================================================================== */
 @media (min-width: 1024px) {
     :root {
-        --nav-height: 40px; /* Reduced nav height for bigger screens */
+        --nav-height: 40px; /* Reduced navigation height for large screens */
     }
 
     .site-header {
-        min-height: var(--nav-height);
-        padding: 0.25rem 0; /* Slimmer padding to match new height */
+        min-height: var(--nav-height); /* Set minimum header height */
+        padding: 0.25rem 0; /* Reduced padding to match height */
     }
 
     .site-header .container {
-        min-height: var(--nav-height);
+        min-height: var(--nav-height); /* Set minimum container height */
     }
 }
-

@@ -1,46 +1,72 @@
+{# Extends the base template to inherit common layout elements like header, footer, navigation #}
 {% extends 'base.html' %}
 
+{# Sets the page title that will appear in the browser tab and potentially in the base template's <title> tag #}
 {% block title %}Privacy Policy{% endblock %}
 
+{# Main content block that will be inserted into the base template's content area #}
 {% block content %}
+<!-- Main content section wrapper with semantic HTML5 section element -->
 <section class="content-section">
+    <!-- Container div for consistent page width and centering across the site -->
     <div class="container">
+        <!-- Main page heading using h1 for SEO and accessibility -->
         <h1 class="page-title">Privacy Policy</h1>
 
+        <!-- Educational disclaimer section with prominent styling -->
         <h2 class="Educational-purposes">NOTE: Education Purposes</h2>
+        <!-- Clear disclaimer stating this is for demo/educational use only -->
         <p>This website is intended for educational purposes only. All information is for demonstration purposes and is not real. We do not collect or store any user data.</p>
-       
+        
+        <!-- Last updated date in italics for legal document freshness indicator -->        
         <p><em>Last Updated: August 23, 2025</em></p>
         
+        <!-- Introduction paragraph establishing the company identity and commitment to privacy -->        
         <p>Discover India ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, and disclose your personal information when you use our website, located at discoverindia.co.nz.</p>
 
+        <!-- Section covering what types of information are collected -->
         <h2 class="section-sub-heading">Information We Collect</h2>
         <p>We may collect personal information that you voluntarily provide to us when you use the website, such as:</p>
+        <!-- Unordered list for easy scanning of collected data types -->
         <ul>
+            <!-- Usage data description with technical details for transparency -->
             <li>**Usage Data:** Information about how you access and use the website, including IP address, browser type, and pages visited.</li>
         </ul>
 
+        <!-- Section explaining the purposes for data usage -->
         <h2 class="section-sub-heading">How We Use Your Information</h2>
         <p>We use the information we collect for various purposes, including to:</p>
+        <!-- List format makes it easy for users to understand different use cases -->
         <ul>
+            <!-- Core functionality - website operation -->
             <li>Provide and maintain our website.</li>
+            <!-- Enhancement purposes - user experience improvement -->
             <li>Improve, personalize, and expand our website.</li>
+            <!-- Analytics purposes - understanding user behavior -->
             <li>Understand and analyze how you use our website.</li>
+            <!-- Communication purposes - user engagement -->
             <li>Communicate with you directly or through one of our partners.</li>
         </ul>
 
+        <!-- Important section about tracking technologies for GDPR/privacy compliance -->
         <h2 class="section-sub-heading">Cookies and Tracking Technologies</h2>
+        <!-- Clear explanation of cookies in layman's terms -->
         <p>We use cookies and similar tracking technologies to track activity on our website and hold certain information. Cookies are files with a small amount of data that are stored on your device.</p>
         
+        <!-- User rights section - important for GDPR/CCPA compliance -->        
         <h2 class="section-sub-heading">Your Rights</h2>
+        <!-- Explains user control over their data with location-based rights variation -->
         <p>Depending on your location, you may have the right to access, update, or delete the personal information we hold about you. Please contact us to exercise these rights.</p>
         
+        <!-- Policy update notification section - shows document is living/maintained -->        
         <h2 class="section-sub-heading">Changes to This Privacy Policy</h2>
+        <!-- Standard clause about policy updates and user notification method -->
         <p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page.</p>
 
+        <!-- Contact information section for privacy-related inquiries -->
         <h2 class="section-sub-heading">Contact Us</h2>
+        <!-- Provides direct contact method with clickable email link -->
         <p>If you have any questions about this Privacy Policy, please contact us at: <a href="mailto:contact@discoverindia.com">contact@discoverindia.com </a></p>
-
-    </div>
-</section>
-{% endblock %}
+    </div> <!-- End container -->
+</section> <!-- End content-section -->
+{% endblock %} <!-- End content block -->

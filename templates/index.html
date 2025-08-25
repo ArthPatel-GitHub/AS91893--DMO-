@@ -1,100 +1,207 @@
+<!-- Homepage template - Main landing page for Discover India website -->
+<!-- Extends the base.html template to inherit site structure and navigation -->
 {% extends 'base.html' %}
 
+<!-- Page title that appears in browser tab -->
+<!-- Uses the main site name as this is the homepage -->
 {% block title %}Discover India{% endblock %}
 
+<!-- Main content block containing all homepage sections -->
 {% block content %}
+<!-- Hero section - Large banner at top of homepage -->
+<!-- Uses inline CSS for dynamic background image from database -->
+<!-- The hero_image variable is passed from Flask's home() route -->
 <section class="hero-section" style="background-image: url('{{ hero_image.image_url }}');">
+    <!-- Overlay div for text readability over background image -->
+    <!-- Provides dark/transparent overlay to ensure text contrast -->
     <div class="hero-overlay">
+        <!-- Container for consistent width and centering -->
         <div class="container">
+            <!-- Main hero heading - primary call to action -->
+            <!-- Uses dynamic title from hero_image database object -->
             <h1>{{ hero_image.title }}</h1>
+            
+            <!-- Hero description paragraph -->
+            <!-- Uses detailed description from hero_image database object -->
             <p>{{ hero_image.long_description }}</p>
         </div>
     </div>
 </section>
 
+<!-- Featured Highlights section -->
+<!-- Shows curated content with subcategories (limited to 6 items) -->
 <section class="highlight-section">
     <div class="container">
+        <!-- Section heading for featured content -->
         <h2 class="section-heading">Featured Highlights</h2>
+        
+        <!-- Card slider/carousel component -->
+        <!-- Uses data-slider attribute for JavaScript initialization -->
         <div class="card-slider" data-slider>
+            <!-- Previous navigation button -->
+            <!-- Uses data-prev attribute for JavaScript event handling -->
             <button class="slider-nav prev" data-prev aria-label="Previous">‹</button>
+            
+            <!-- Slider track - container that moves to show different cards -->
+            <!-- JavaScript manipulates this element's transform property -->
             <div class="slider-track" data-wrapper>
+                <!-- Loop through featured highlights from Flask route -->
+                <!-- featured_highlights contains items with subcategories -->
                 {% for highlight in featured_highlights %}
-                <a href="{{ url_for('details', title=highlight.title) }}" class="card-item">
-                    <img src="{{ highlight.image_url }}" alt="{{ highlight.title }}">
-                    <div class="card-content">
-                        <h3>{{ highlight.title }}</h3>
-                        <p>{{ highlight.description }}</p>
-                    </div>
-                    <span class="read-more cta-button">Learn More</span>
-                </a>
+                    <!-- Individual card item as clickable link -->
+                    <!-- Links to dynamic details page using highlight title -->
+                    <a href="{{ url_for('details', title=highlight.title) }}" class="card-item">
+                        <!-- Card image with alt text for accessibility -->
+                        <img src="{{ highlight.image_url }}" alt="{{ highlight.title }}">
+                        
+                        <!-- Card text content container -->
+                        <div class="card-content">
+                            <!-- Card title using h3 for proper heading hierarchy -->
+                            <h3>{{ highlight.title }}</h3>
+                            
+                            <!-- Card description - brief preview text -->
+                            <p>{{ highlight.description }}</p>
+                        </div>
+                        
+                        <!-- Call-to-action button -->
+                        <!-- Styled as button but part of the card link -->
+                        <span class="read-more cta-button">Learn More</span>
+                    </a>
                 {% endfor %}
             </div>
+            
+            <!-- Next navigation button -->
+            <!-- Uses data-next attribute for JavaScript event handling -->
             <button class="slider-nav next" data-next aria-label="Next">›</button>
         </div>
     </div>
 </section>
 
+<!-- Culture section -->
+<!-- Showcases cultural destinations like festivals, traditions, and arts -->
 <section class="highlight-section">
     <div class="container">
+        <!-- Culture section heading -->
         <h2 class="section-heading">Culture</h2>
+        
+        <!-- Culture-specific card slider -->
+        <!-- Identical structure to featured highlights for consistency -->
         <div class="card-slider" data-slider>
+            <!-- Previous button for culture slider -->
             <button class="slider-nav prev" data-prev aria-label="Previous">‹</button>
+            
+            <!-- Culture slider track -->
             <div class="slider-track" data-wrapper>
+                <!-- Loop through all culture highlights from Flask route -->
+                <!-- culture_highlights contains all items in Culture category -->
                 {% for highlight in culture_highlights %}
-                <a href="{{ url_for('details', title=highlight.title) }}" class="card-item">
-                    <img src="{{ highlight.image_url }}" alt="{{ highlight.title }}">
-                    <div class="card-content">
-                        <h3>{{ highlight.title }}</h3>
-                        <p>{{ highlight.description }}</p>
-                    </div>
-                    <span class="read-more cta-button">Learn More</span>
-                </a>
+                    <!-- Culture card item -->
+                    <a href="{{ url_for('details', title=highlight.title) }}" class="card-item">
+                        <!-- Culture item image -->
+                        <img src="{{ highlight.image_url }}" alt="{{ highlight.title }}">
+                        
+                        <!-- Culture card content -->
+                        <div class="card-content">
+                            <!-- Culture item title -->
+                            <h3>{{ highlight.title }}</h3>
+                            
+                            <!-- Culture item description -->
+                            <p>{{ highlight.description }}</p>
+                        </div>
+                        
+                        <!-- Culture item CTA -->
+                        <span class="read-more cta-button">Learn More</span>
+                    </a>
                 {% endfor %}
             </div>
+            
+            <!-- Next button for culture slider -->
             <button class="slider-nav next" data-next aria-label="Next">›</button>
         </div>
     </div>
 </section>
 
+<!-- History section -->
+<!-- Showcases historical sites, monuments, and heritage content -->
 <section class="highlight-section">
     <div class="container">
+        <!-- History section heading -->
         <h2 class="section-heading">History</h2>
+        
+        <!-- History-specific card slider -->
         <div class="card-slider" data-slider>
+            <!-- Previous button for history slider -->
             <button class="slider-nav prev" data-prev aria-label="Previous">‹</button>
+            
+            <!-- History slider track -->
             <div class="slider-track" data-wrapper>
+                <!-- Loop through history highlights from Flask route -->
+                <!-- history_highlights is limited to 4 items for homepage preview -->
                 {% for highlight in history_highlights %}
-                <a href="{{ url_for('details', title=highlight.title) }}" class="card-item">
-                    <img src="{{ highlight.image_url }}" alt="{{ highlight.title }}">
-                    <div class="card-content">
-                        <h3>{{ highlight.title }}</h3>
-                        <p>{{ highlight.description }}</p>
-                    </div>
-                    <span class="read-more cta-button">Learn More</span>
-                </a>
+                    <!-- History card item -->
+                    <a href="{{ url_for('details', title=highlight.title) }}" class="card-item">
+                        <!-- History item image -->
+                        <img src="{{ highlight.image_url }}" alt="{{ highlight.title }}">
+                        
+                        <!-- History card content -->
+                        <div class="card-content">
+                            <!-- History item title -->
+                            <h3>{{ highlight.title }}</h3>
+                            
+                            <!-- History item description -->
+                            <p>{{ highlight.description }}</p>
+                        </div>
+                        
+                        <!-- History item CTA -->
+                        <span class="read-more cta-button">Learn More</span>
+                    </a>
                 {% endfor %}
             </div>
+            
+            <!-- Next button for history slider -->
             <button class="slider-nav next" data-next aria-label="Next">›</button>
         </div>
     </div>
 </section>
 
+<!-- Nature section -->
+<!-- Showcases natural attractions, wildlife, and landscapes -->
 <section class="highlight-section">
     <div class="container">
+        <!-- Nature section heading -->
         <h2 class="section-heading">Nature</h2>
+        
+        <!-- Nature-specific card slider -->
         <div class="card-slider" data-slider>
+            <!-- Previous button for nature slider -->
             <button class="slider-nav prev" data-prev aria-label="Previous">‹</button>
+            
+            <!-- Nature slider track -->
             <div class="slider-track" data-wrapper>
+                <!-- Loop through nature highlights from Flask route -->
+                <!-- nature_highlights is limited to 4 items for homepage preview -->
                 {% for highlight in nature_highlights %}
-                <a href="{{ url_for('details', title=highlight.title) }}" class="card-item">
-                    <img src="{{ highlight.image_url }}" alt="{{ highlight.title }}">
-                    <div class="card-content">
-                        <h3>{{ highlight.title }}</h3>
-                        <p>{{ highlight.description }}</p>
-                    </div>
-                    <span class="read-more cta-button">Learn More</span>
-                </a>
+                    <!-- Nature card item -->
+                    <a href="{{ url_for('details', title=highlight.title) }}" class="card-item">
+                        <!-- Nature item image -->
+                        <img src="{{ highlight.image_url }}" alt="{{ highlight.title }}">
+                        
+                        <!-- Nature card content -->
+                        <div class="card-content">
+                            <!-- Nature item title -->
+                            <h3>{{ highlight.title }}</h3>
+                            
+                            <!-- Nature item description -->
+                            <p>{{ highlight.description }}</p>
+                        </div>
+                        
+                        <!-- Nature item CTA -->
+                        <span class="read-more cta-button">Learn More</span>
+                    </a>
                 {% endfor %}
             </div>
+            
+            <!-- Next button for nature slider -->
             <button class="slider-nav next" data-next aria-label="Next">›</button>
         </div>
     </div>
