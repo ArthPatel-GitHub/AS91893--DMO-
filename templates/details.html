@@ -1,43 +1,50 @@
 {% extends 'base.html' %}
 
-{% block title %}Explore {{ item.title }}{% endblock %}
+
+{% block title %}Explore{{ item.title }}{% endblock %}
+
 
 {% block content %}
 <section class="details-page">
-    <div class="container">
-        <a href="javascript:history.back()" class="back-link cta-button">Back</a>
-
-        <h1 class="details-title">{{ item.title }}</h1>
-
-        <div class="details-content-grid">
-            <div class="main-image">
-                <img src="{{ item.image_url }}" alt="{{ item.title }}" class="details-main-img">
-            </div>
-            <div class="details-text">
-                <p>{{ item.long_description }}</p>
-            </div>
-        </div>
-
-        <h2 class="details-sub-heading">
-            Explore more from the {{ item.category }} section
-        </h2>
-
-        <div class="card-slider" data-slider>
-            <button class="slider-nav prev" data-prev aria-label="Previous">‹</button>
-            <div class="slider-track" data-wrapper>
-                {% for related in all_related_items if related.title != item.title %}
-                <a href="{{ url_for('details', title=related.title) }}" class="card-item">
-                    <img src="{{ related.image_url }}" alt="{{ related.title }}">
-                    <div class="card-content">
-                        <h3>{{ related.title }}</h3>
-                        <p>{{ related.description }}</p>
-                    </div>
-                    <span class="read-more cta-button">Learn More</span>
-                </a>
-                {% endfor %}
-            </div>
-            <button class="slider-nav next" data-next aria-label="Next">›</button>
-        </div>
+ <div class="container">
+ <h1 class="details-title">{{ item.title }}</h1>
+<div class="details-content-grid">
+    <div class="details-text">
+        <p>{{ item.long_description }}</p>
     </div>
+
+    <div class="main-image">
+        <img src="{{ item.image_url }}" alt="{{ item.title }}" class="details-main-img">
+    </div>
+</div>
+
+
+ <h2 class="details-sub-heading">
+ Explore more from the {{ item.category }} section
+ </h2>
+
+
+ <div class="card-slider" data-slider>
+ <button class="slider-nav prev" data-prev aria-label="Previous">‹</button>
+ <div class="slider-track" data-wrapper>
+ {% for related in all_related_items if related.title != item.title %}
+ <a href="{{ url_for('details', title=related.title) }}" class="card-item">
+ <img src="{{ related.image_url }}" alt="{{ related.title }}">
+ <div class="card-content">
+ <h3>{{ related.title }}</h3>
+ <p>{{ related.description }}</p>
+ </div>
+ <span class="read-more cta-button">Learn More</span>
+ </a>
+ {% endfor %}
+ </div>
+ <button class="slider-nav next" data-next aria-label="Next">›</button>
+ </div>
+
+
+ <a href="javascript:history.back()" class="back-link cta-button">Back</a>
+
+
+ </div>
 </section>
 {% endblock %}

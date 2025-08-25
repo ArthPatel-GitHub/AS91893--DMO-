@@ -15,7 +15,11 @@
                 <p>From the snow-capped Himalayas to the sun-kissed beaches of Goa, and from ancient temples to bustling modern cities, our goal is to provide a comprehensive guide that goes beyond the typical tourist trails. We hope our content helps you plan your next adventure or simply learn something new about this magnificent country.</p>
             </div>
             <div class="about-image">
-                <img src="{{ url_for('static', filename='images/about-us.jpg') }}" alt="A team of people on a journey together" class="about-img">
+                {% if about_hero and about_hero.image_url %}
+                    <img src="{{ about_hero.image_url }}" alt="{{ about_hero.title }}" class="about-img">
+                {% else %}
+                    <img src="{{ url_for('static', filename='images/about-us.jpg') }}" alt="A team of people on a journey together" class="about-img">
+                {% endif %}
             </div>
         </div>
 

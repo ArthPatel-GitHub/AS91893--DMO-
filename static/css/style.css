@@ -79,6 +79,13 @@
     box-sizing: border-box;
 }
 
+.main-nav ul li a.active {
+    font-weight: 700;  /* Bold */
+    text-decoration: underline; /* Underline */
+    color: var(--saffron-orange); /* Highlight color */
+}
+
+
 html {
     scroll-behavior: smooth;
     font-size: var(--fz-base);
@@ -92,6 +99,8 @@ body {
     margin: 0;
     padding: 0;
     background-color: var(--background-color);
+    padding-top: var(--nav-height);
+    transition: padding-top 0.4s ease;
     color: var(--text-color);
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -116,7 +125,7 @@ body {
 }
 
 /* ========================================================================
-    SIDE MENU FOR COLOR SWITCHING
+    SIDE MENU FOR COLOR SWITCHING - IMPROVED POSITIONING
     ======================================================================== */
 .theme-toggle-btn {
     display: flex; /* Show the button on all screens */
@@ -134,13 +143,25 @@ body {
     color: var(--white);
     cursor: pointer;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s ease, transform 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.3s ease, right 0.4s ease;
     padding: 12px;
+}
+
+/* Move the toggle button to the left when menu is active - DESKTOP ONLY */
+@media (min-width: 768px) {
+    .theme-toggle-btn.menu-active {
+        right: 280px; /* Move left by approximately the width of the menu */
+    }
 }
 
 .theme-toggle-btn:hover,
 .theme-toggle-btn:focus-visible {
     background-color: rgba(0, 0, 0, 0.8);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.theme-toggle-btn.menu-active:hover,
+.theme-toggle-btn.menu-active:focus-visible {
     transform: translateY(-50%) scale(1.1);
 }
 
@@ -158,14 +179,16 @@ body {
     transform: translateY(-50%) translateX(100%); /* Position off-screen */
     display: flex;
     flex-direction: column;
-    padding: 10px;
-    gap: 5px;
+    padding: 15px;
+    gap: 8px;
     background-color: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(5px);
     border-radius: 8px 0 0 8px;
     z-index: 2000;
     transition: transform 0.4s ease; /* Animate the transition */
     visibility: visible;
+    min-width: 200px;
+    box-shadow: -4px 0 10px rgba(0, 0, 0, 0.2);
 }
 
 /* When the menu has the 'active' class, slide it into view */
@@ -175,13 +198,18 @@ body {
 
 .theme-button {
     border: none;
-    padding: 8px 12px;
+    padding: 10px 15px;
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
     border-radius: 6px;
-    min-width: 90px;
-    transition: background-color 0.3s, color 0.3s;
+    min-width: 100px;
+    transition: background-color 0.3s, color 0.3s, transform 0.2s;
+}
+
+.theme-button:hover,
+.theme-button:focus-visible {
+    transform: scale(1.02);
 }
 
 .theme-switcher-title {
@@ -189,7 +217,7 @@ body {
     font-size: 12px;
     font-weight: 500;
     text-align: center;
-    margin: 0 0 5px 0;
+    margin: 0 0 8px 0;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
@@ -231,7 +259,35 @@ body {
     color: #f1f1f1;
 }
 
+/* Responsive adjustments for smaller screens */
+@media (max-width: 767px) {
+    /* On mobile, keep toggle button in original position even when menu is active */
+    .theme-toggle-btn.menu-active {
+        right: 15px; /* Keep in original position */
+    }
+    
+    .color-switcher {
+        min-width: 180px;
+        padding: 12px;
+    }
+    
+    .theme-button {
+        min-width: 80px;
+        padding: 8px 12px;
+    }
+}
 
+@media (max-width: 480px) {
+    /* On very small screens, keep toggle button in original position */
+    .theme-toggle-btn.menu-active {
+        right: 15px; /* Keep in original position */
+    }
+    
+    .color-switcher {
+        min-width: 160px;
+        padding: 10px;
+    }
+}
 
 /* ========================================================================
     HEADER - Mobile-Optimized
@@ -241,9 +297,13 @@ body {
     background-color: var(--header-bg-color);
     color: var(--white);
     padding: 1rem 0;
-    position: relative;
+    position: fixed; /* Changed from 'relative' to 'fixed' */
+    top: 0;          /* Added to fix to the top */
+    left: 0;         /* Added to fix to the left */
+    width: 100%;     /* Added to span the full width */
     z-index: 1000;
     min-height: var(--nav-height);
+    transition: background-color 1.0s ease; /* Optional: for smooth theme changes */
 }
 
 .site-header .container {
@@ -252,6 +312,7 @@ body {
     align-items: center;
     min-height: var(--nav-height);
 }
+
 
 .site-title {
     font-family: "Playfair Display", Georgia, serif;
@@ -1030,3 +1091,21 @@ a.card-item .card-content {
     background-color: var(--saffron-orange) !important;
     color: var(--white) !important;
 }
+/* ========================================================================
+    NAVIGATION HEIGHT REDUCTION ON LARGE SCREENS
+    ======================================================================== */
+@media (min-width: 1024px) {
+    :root {
+        --nav-height: 40px; /* Reduced nav height for bigger screens */
+    }
+
+    .site-header {
+        min-height: var(--nav-height);
+        padding: 0.25rem 0; /* Slimmer padding to match new height */
+    }
+
+    .site-header .container {
+        min-height: var(--nav-height);
+    }
+}
+
