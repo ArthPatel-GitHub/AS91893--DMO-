@@ -131,7 +131,7 @@ body {
 .theme-toggle-btn {
     display: flex; /* Flexbox for centering icon */
     position: fixed; /* Fixed positioning */
-    top: calc(var(--nav-height) + 15px); /* Position below fixed header */
+    top: calc(var(--nav-height) + 25px); /* Position below fixed header */
     right: 15px; /* 15px from right edge */
     transform: none; /* No transform by default */
     z-index: 2001; /* Above everything else */
