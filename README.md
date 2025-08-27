@@ -92,6 +92,7 @@ This project was created for educational purposes. All content is for demonstrat
 * Inspired by the vibrant culture and history of India.
 * A special thanks to the Flask community for their excellent documentation and resources.
 
-### requirements.txt
+### requirements.txt (Run in terminal)
+pip freeze > requirements.txt
 Flask
 Gunicorn
