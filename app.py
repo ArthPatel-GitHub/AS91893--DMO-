@@ -803,4 +803,4 @@ if __name__ == '__main__':
     # Run the Flask development server
     # debug=True enables automatic reloading and detailed error messages
     # This should be set to False in production environments
-    app.run(debug=True)
+    app.run(debug=False) #For deploying on Render
