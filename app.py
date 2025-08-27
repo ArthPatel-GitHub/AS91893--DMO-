@@ -5,6 +5,7 @@
 # Import necessary Flask modules and extensions
 from flask import Flask, render_template, url_for, g
 from flask_sqlalchemy import SQLAlchemy
+
 import os
 
 # Create the Flask application instance
