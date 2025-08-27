@@ -748,27 +748,7 @@ body {
 }
 
 .slider-nav {
-    position: absolute; /* Absolute positioning */
-    top: 50%; /* Center vertically */
-    transform: translateY(-50%); /* Center with transform */
-    background: rgba(0, 0, 0, 0.3); /* Semi-transparent background */
-    color: white; /* White text */
-    border: none; /* No border */
-    border-radius: 50%; /* Circular button */
-    width: clamp(50px, 12vw, 60px); /* Responsive width */
-    height: clamp(50px, 12vw, 60px); /* Responsive height */
-    font-size: clamp(18px, 5vw, 24px); /* Responsive font size */
-    cursor: pointer; /* Pointer cursor */
-    display: flex; /* Flexbox layout */
-    align-items: center; /* Center vertically */
-    justify-content: center; /* Center horizontally */
-    opacity: 0.7; /* Semi-transparent */
-    transition: all 0.3s ease; /* Smooth transitions */
-    z-index: 10; /* Above slider content */
-    backdrop-filter: blur(5px); /* Blur background */
-    -webkit-backdrop-filter: blur(5px); /* Webkit blur */
-    touch-action: manipulation; /* Optimize for touch */
-    -webkit-tap-highlight-color: transparent; /* Remove tap highlight */
+    display: none !important;
 }
 
 .slider-nav:hover,
