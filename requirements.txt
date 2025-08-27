@@ -1,4 +1,3 @@
 Flask==3.0.3
 Jinja2==3.1.4
-pip freeze > requirements.txt
 SQLAlchemy==2.0.30
