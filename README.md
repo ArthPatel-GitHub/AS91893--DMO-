@@ -58,8 +58,8 @@ Discover India is a dynamic website that provides users with an immersive experi
     ```
 
 4.  Run the application locally:
-    ```bash
-    python3 app.py
+
+    python app.py
     ```
 
 5.  Access the website by opening your browser and navigating to `http://localhost:5000`.
