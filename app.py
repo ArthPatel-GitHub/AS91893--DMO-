@@ -25,12 +25,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'si
 # Disable modification tracking to save resources (not needed for this app)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# Set the server name and a secret key
-# SERVER_NAME is used for URL generation when not in a request context
-app.config['SERVER_NAME'] = 'localhost:5000'
 # SECRET_KEY is used for session encryption and CSRF protection
 # Note: In production, this should be a secure, randomly generated key
-app.config['SECRET_KEY'] = 'your-very-secret-key-that-you-should-change'
 
 # Initialize SQLAlchemy with our Flask app
 # This creates the database connection and ORM functionality
