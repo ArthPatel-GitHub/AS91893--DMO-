@@ -10,7 +10,7 @@ import os
 
 # Create the Flask application instance
 # This is the core of our web application
-app = Flask(__name__, static_url_path='/static/images', static_folder='static/images')
+app = Flask(__name__, static_url_path='/static/images')
 
 # Configuration Section
 # ===================
