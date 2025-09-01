@@ -10,7 +10,7 @@ import os
 
 # Create the Flask application instance
 # This is the core of our web application
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static')
 
 # Configuration Section
 # ===================
@@ -24,9 +24,6 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'site.db')
 # Disable modification tracking to save resources (not needed for this app)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-# SECRET_KEY is used for session encryption and CSRF protection
-# Note: In production, this should be a secure, randomly generated key
 
 # Initialize SQLAlchemy with our Flask app
 # This creates the database connection and ORM functionality
