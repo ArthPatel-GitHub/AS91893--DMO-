@@ -11,7 +11,7 @@
 <!-- Hero section - Large banner at top of homepage -->
 <!-- Uses inline CSS for dynamic background image from database -->
 <!-- The hero_image variable is passed from Flask's home() route -->
-<section class="hero-section" style="background-image: url('{{ hero_image.image_url }}');">
+<section class="hero-section" style="background-image: url('{{ url_for('static', filename=hero_image.image_url) }}');">
     <!-- Overlay div for text readability over background image -->
     <!-- Provides dark/transparent overlay to ensure text contrast -->
     <div class="hero-overlay">
@@ -52,7 +52,7 @@
                     <!-- Links to dynamic details page using highlight title -->
                     <a href="{{ url_for('details', title=highlight.title) }}" class="card-item">
                         <!-- Card image with alt text for accessibility -->
-                        <img src="{{ highlight.image_url }}" alt="{{ highlight.title }}">
+                        <img src="{{ url_for('static', filename=highlight.image_url) }}" alt="{{ highlight.title }}">
                         
                         <!-- Card text content container -->
                         <div class="card-content">
@@ -98,7 +98,7 @@
                     <!-- Culture card item -->
                     <a href="{{ url_for('details', title=highlight.title) }}" class="card-item">
                         <!-- Culture item image -->
-                        <img src="{{ highlight.image_url }}" alt="{{ highlight.title }}">
+                        <img src="{{ url_for('static', filename=highlight.image_url) }}" alt="{{ highlight.title }}">
                         
                         <!-- Culture card content -->
                         <div class="card-content">
@@ -141,7 +141,7 @@
                     <!-- History card item -->
                     <a href="{{ url_for('details', title=highlight.title) }}" class="card-item">
                         <!-- History item image -->
-                        <img src="{{ highlight.image_url }}" alt="{{ highlight.title }}">
+                        <img src="{{ url_for('static', filename=highlight.image_url) }}" alt="{{ highlight.title }}">
                         
                         <!-- History card content -->
                         <div class="card-content">
@@ -184,7 +184,7 @@
                     <!-- Nature card item -->
                     <a href="{{ url_for('details', title=highlight.title) }}" class="card-item">
                         <!-- Nature item image -->
-                        <img src="{{ highlight.image_url }}" alt="{{ highlight.title }}">
+                        <img src="{{ url_for('static', filename=highlight.image_url) }}" alt="{{ highlight.title }}">
                         
                         <!-- Nature card content -->
                         <div class="card-content">

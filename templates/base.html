@@ -31,13 +31,13 @@
     <!-- Conditional CSS custom property for hero background image -->
     <!-- Only renders if hero_image variable is passed from the Flask route -->
     <!-- This allows dynamic hero backgrounds on different pages -->
-    {% if hero_image %}
-    <style>
-      :root {
-        --hero-image-url: url("{{ hero_image.image_url }}");
-      }
-    </style>
-    {% endif %}
+   {% if hero_image %}
+<style>
+  :root {
+    --hero-image-url: url("{{ url_for('static', filename=hero_image.image_url) }}");
+  }
+</style>
+{% endif %}
   </head>
 
   <body>

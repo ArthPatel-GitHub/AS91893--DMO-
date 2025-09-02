@@ -57,12 +57,12 @@ Discover India is a dynamic website that provides users with an immersive experi
     pip install -r requirements.txt
     ```
 
-4.  Run the application locally:
+   
 
     python app.py
     ```
 
-5.  Access the website by opening your browser and navigating to `http://localhost:5000`.
+4.  Access the website by opening your browser and navigating to `http://127.0.0.1:5000`.
 
 ---
 

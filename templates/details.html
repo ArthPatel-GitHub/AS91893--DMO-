@@ -4,8 +4,8 @@
 
 <!-- Dynamic page title block -->
 <!-- Creates titles like "Explore Holi", "Explore Taj Mahal", etc. -->
-<!-- Note: Missing space between "Explore" and item title - should be "Explore {{ item.title }}" -->
-{% block title %}Explore{{ item.title }}{% endblock %}
+<!-- Fixed: Added space between "Explore" and item title -->
+{% block title %}Explore {{ item.title }}{% endblock %}
 
 <!-- Main content block that replaces the content section from base.html -->
 {% block content %}
@@ -31,7 +31,8 @@
             <div class="main-image">
                 <!-- Primary image for the destination -->
                 <!-- Uses item data from Flask route for dynamic content -->
-                <img src="{{ item.image_url }}" alt="{{ item.title }}" class="details-main-img">
+                <!-- Fixed: Added url_for('static') for proper image loading -->
+                <img src="{{ url_for('static', filename=item.image_url) }}" alt="{{ item.title }}" class="details-main-img">
             </div>
         </div>
 
@@ -59,7 +60,8 @@
                     <!-- Links to the details page of the related item -->
                     <a href="{{ url_for('details', title=related.title) }}" class="card-item">
                         <!-- Card image -->
-                        <img src="{{ related.image_url }}" alt="{{ related.title }}">
+                        <!-- Fixed: Added url_for('static') for proper image loading -->
+                        <img src="{{ url_for('static', filename=related.image_url) }}" alt="{{ related.title }}">
                         
                         <!-- Card text content container -->
                         <div class="card-content">

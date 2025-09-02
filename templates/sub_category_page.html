@@ -8,8 +8,8 @@
 {% block content %}
 
 <!-- Hero section with full-width background image for visual impact -->
-<!-- Inline style for dynamic background image from hero object - allows per-category customization -->
-<section class="hero-section" style="background-image: url('{{ hero.image_url }}');">
+<!-- FIXED: Using url_for to properly generate static file URLs -->
+<section class="hero-section" style="background-image: url({{url_for('static', filename=hero.image_url) }});">
     <!-- Overlay div to ensure text readability over background image -->
     <div class="hero-overlay">
         <!-- Container for consistent content width and centering -->
@@ -47,8 +47,8 @@
                 <!-- Each card is a clickable link to the detail page -->
                 <!-- Uses Flask's url_for to generate proper route with item title as parameter -->
                 <a href="{{ url_for('details', title=item.title) }}" class="card-item">
-                    <!-- Item image with alt text for accessibility -->
-                    <img src="{{ item.image_url }}" alt="{{ item.title }}">
+                    <!-- FIXED: Using url_for to properly generate static file URLs -->
+                    <img src="{{ url_for('static', filename=item.image_url) }}" alt="{{ item.title }}">
                     <!-- Card content section containing text information -->
                     <div class="card-content">
                         <!-- Item title as h3 for proper heading hierarchy -->

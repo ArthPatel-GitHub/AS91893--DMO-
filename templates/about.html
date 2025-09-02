@@ -43,9 +43,9 @@
                 <!-- Conditional image rendering using Jinja2 template logic -->
                 <!-- First checks if about_hero object exists and has an image_url -->
                 {% if about_hero and about_hero.image_url %}
-                    <!-- Dynamic image from database -->
+                    <!-- FIXED: Dynamic image from database using url_for -->
                     <!-- Uses hero image data passed from Flask route -->
-                    <img src="{{ about_hero.image_url }}" alt="{{ about_hero.title }}" class="about-img">
+                    <img src="{{ url_for('static', filename=about_hero.image_url) }}" alt="{{ about_hero.title }}" class="about-img">
                 {% else %}
                     <!-- Fallback static image if no database image is available -->
                     <!-- Ensures page always has visual content -->
