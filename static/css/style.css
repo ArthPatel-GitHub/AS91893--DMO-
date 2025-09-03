@@ -23,7 +23,7 @@
     --card-hover-shadow: rgba(0, 0, 0, 0.15); /* Card hover shadow */
 
     /* Layout variables - centralizing spacing and sizing for consistency */
-    --container-max: 1200px; /* Maximum container width */
+    --container-max: 1175px; /* Maximum container width */
     --container-pad: 16px; /* Container padding */
     --container-pad-lg: 20px; /* Large screen container padding */
     --card-img-h: 160px; /* Card image height */
